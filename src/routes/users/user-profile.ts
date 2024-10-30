@@ -5,15 +5,9 @@ import JWTUtil from '../../utils/jwt';
 
 export const getUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const token = req.header('Authorization')?.replace('Bearer ', '');
+        const user = await User.fromJwtPayload(req);
 
-        if (!token) {
-            throw new Error('Token not found');
-        }
-
-        const decoded = JWTUtil.decode(token);
-
-        next();
+        res.json(await user.prepareForCollection());
     } catch (err) {
         next(err);
     }

@@ -38,11 +38,11 @@ class JWTUtil {
 
         const body = jwt.decode(token);
 
-        if (!body || typeof body !== 'object' || !('payload' in body)) {
+        if (!body || typeof body !== 'object') {
             throw new Error('Invalid token');
         }
 
-        return body.payload;
+        return body;
     }
 }
 

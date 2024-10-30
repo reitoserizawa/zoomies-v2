@@ -1,13 +1,35 @@
 import { Prisma } from '@prisma/client';
+import { JwtPayload } from 'jsonwebtoken';
+
 import { UserInterface, UserModelInterface } from '../interfaces/user';
 
 import BaseModel from './base';
 
 import PasswordUtil from '../utils/password';
 import prisma from '../utils/prisma_client';
+import JWTUtil from '../utils/jwt';
+import { CustomRequest } from 'express';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
     public_properties = ['email', 'username'];
+
+    static async fromJwtPayload(req: CustomRequest): Promise<User> {
+        const token = req.header('Authorization')?.replace('Bearer ', '');
+
+        if (!token) {
+            throw new Error('Token not found');
+        }
+
+        const decoded = JWTUtil.decode(token);
+
+        if (!decoded.id) {
+            throw new Error('ID not found from token');
+        }
+
+        const user = await User.fromId(parseInt(decoded.id));
+
+        return user;
+    }
 
     static override fromProperties(properties: UserInterface): User {
         const user = new User(properties.id);
