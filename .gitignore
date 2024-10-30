@@ -4,3 +4,4 @@ dist
 .yarn
 .yarnrc
 .DS_Store
+src/migrations
