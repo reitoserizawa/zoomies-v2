@@ -17,7 +17,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
         const token = JWTUtil.generate(found_user.prepareForCollection());
 
-        return { user: found_user.prepareForCollection(), token: token };
+        res.json({ user: found_user.prepareForCollection(), token: token });
     } catch (err) {
         next(err);
     }
