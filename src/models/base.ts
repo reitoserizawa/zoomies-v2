@@ -31,7 +31,7 @@ class BaseModel<T, U extends Prisma.ModelName> implements BaseModelInterface<T> 
             throw new Error(`${model_name} not found.`);
         }
 
-        return item.fromProperties();
+        return this.fromProperties(item);
     }
 
     async fetch(): Promise<T> {

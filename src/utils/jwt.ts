@@ -5,16 +5,25 @@ type TokenPayload = {
 };
 
 class JWTUtil {
-    static generate(payload: TokenPayload, expires_in?: number) {
+    static generate(payload: TokenPayload, expires_in?: number): string {
+        if (!process.env.JWT_SECRET_KEY) {
+            throw new Error();
+        }
+
         const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-            algorithm: 'RS256',
             expiresIn: expires_in ? `${expires_in} days` : '2 days'
         });
+
+        return token;
     }
 
     static verify(token: string): boolean {
+        if (!process.env.JWT_SECRET_KEY) {
+            throw new Error();
+        }
+
         try {
-            jwt.verify(token, process.env.JWT_SECRET_KEY, { algorithms: ['RS256'] });
+            jwt.verify(token, process.env.JWT_SECRET_KEY);
 
             return true;
         } catch (e) {

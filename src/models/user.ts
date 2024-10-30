@@ -12,6 +12,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
     static override fromProperties(properties: UserInterface): User {
         const user = new User(properties.id);
         user.setProperties(properties);
+
         return user;
     }
 
@@ -34,7 +35,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
     async login(password: string): Promise<User> {
         const password_util = new PasswordUtil(password);
-        const is_match = password_util.verify(this.properties.password);
+        const is_match = await password_util.verify(this.properties.password);
 
         if (is_match) {
             return this;

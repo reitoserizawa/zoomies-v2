@@ -1,7 +1,14 @@
 import express from 'express';
 import morgan from 'morgan';
+import { JwtPayload } from 'jsonwebtoken';
 
 import routes from './routes';
+
+declare module 'express' {
+    interface CustomRequest extends Request {
+        token?: string | JwtPayload;
+    }
+}
 
 class App {
     public server;

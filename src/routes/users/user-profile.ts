@@ -1,13 +1,19 @@
-import { NextFunction, Request, Response } from 'express';
+import { CustomRequest, NextFunction, Response } from 'express';
 import User from '../../models/user';
 
-export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+import JWTUtil from '../../utils/jwt';
+
+export const getUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const id = 1;
+        const token = req.header('Authorization')?.replace('Bearer ', '');
 
-        const user = await User.fromId(id);
+        if (!token) {
+            throw new Error('Token not found');
+        }
 
-        res.json(await user.prepareForCollection());
+        const decoded = JWTUtil.decode(token);
+
+        next();
     } catch (err) {
         next(err);
     }

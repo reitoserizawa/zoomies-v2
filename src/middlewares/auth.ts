@@ -1,11 +1,6 @@
-import { JwtPayload } from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction, CustomRequest, Request } from 'express';
 
 import JWTUtils from '../utils/jwt';
-
-export interface CustomRequest extends Request {
-    token: string | JwtPayload;
-}
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {

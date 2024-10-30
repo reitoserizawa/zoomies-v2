@@ -6,7 +6,7 @@ model Pet {
   owner User @relation(fields: [owner_id], references: [id])
   owner_id Int
 
-  type String
+  type String?
   breed String?
 
   birthday DateTime

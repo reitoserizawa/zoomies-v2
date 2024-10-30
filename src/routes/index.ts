@@ -1,13 +1,13 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Router } from 'express';
 
 import userRoutes from './users';
+import publicRoutes from './public';
+
+import { auth } from '../middlewares/auth';
 
 const routes = Router();
 
-routes.get('', (req: Request, res: Response, next: NextFunction) => {
-    res.json('Hello');
-});
-
-routes.use('/users', userRoutes);
+routes.use('/public', publicRoutes);
+routes.use('/users', auth, userRoutes);
 
 export default routes;

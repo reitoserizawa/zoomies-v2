@@ -15,9 +15,9 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const user = await User.fromQuery('User', { username });
         const found_user = await user.login(password);
 
-        const token = JWTUtil.generate(found_user.prepareForCollection());
+        const token = JWTUtil.generate(await found_user.prepareForCollection());
 
-        res.json({ user: found_user.prepareForCollection(), token: token });
+        res.json({ user: await found_user.prepareForCollection(), token: token });
     } catch (err) {
         next(err);
     }
