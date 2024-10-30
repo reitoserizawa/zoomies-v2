@@ -1,16 +1,21 @@
 {
+    "include": ["./src"],
+    "exclude": ["tsconfig.json"],
     "compilerOptions": {
-        "module": "commonjs",
-        "esModuleInterop": true,
-        "target": "es6",
-        "noImplicitAny": true,
-        "moduleResolution": "node",
-        "sourceMap": true,
+        "module": "CommonJS",
         "outDir": "dist",
-        "baseUrl": ".",
-        "paths": {
-            "*": ["node_modules/*"]
-        }
-    },
-    "include": ["src/**/*"]
+        "target": "ES2018",
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "useUnknownInCatchVariables": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "checkJs": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true
+    }
 }

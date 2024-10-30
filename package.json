@@ -4,14 +4,23 @@
     "main": "index.js",
     "author": "Reito Serizawa",
     "license": "MIT",
+    "prisma": {
+        "schema": "src/prisma"
+    },
     "scripts": {
         "build": "tsc --project ./",
         "start": "nodemon src/server.ts",
         "deploy": "node dist/server.js"
     },
     "dependencies": {
+        "@prisma/client": "^5.21.1",
+        "@types/bcrypt": "^5.0.2",
+        "@types/pg": "^8.11.10",
+        "bcrypt": "^5.1.1",
         "dotenv": "^16.4.5",
-        "express": "^4.21.1"
+        "express": "^4.21.1",
+        "pg": "^8.13.1",
+        "prisma": "^5.21.1"
     },
     "devDependencies": {
         "@types/express": "^5.0.0",
