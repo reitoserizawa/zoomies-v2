@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { JwtPayload } from 'jsonwebtoken';
+import { CustomRequest } from 'express';
 
 import { UserInterface, UserModelInterface } from '../interfaces/user';
 
@@ -8,7 +8,6 @@ import BaseModel from './base';
 import PasswordUtil from '../utils/password';
 import prisma from '../utils/prisma_client';
 import JWTUtil from '../utils/jwt';
-import { CustomRequest } from 'express';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
     public_properties = ['email', 'username'];
