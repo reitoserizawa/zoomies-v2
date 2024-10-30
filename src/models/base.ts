@@ -22,7 +22,19 @@ class BaseModel<T, U extends Prisma.ModelName> implements BaseModelInterface<T> 
         return obj;
     }
 
-    private async fetch(): Promise<T> {
+    static async fromQuery(model_name: Prisma.ModelName, query: any): Promise<any> {
+        // @ts-ignore
+        const model = prisma_client[model_name];
+        const item = await model.findUnique({ where: query });
+
+        if (!item) {
+            throw new Error(`${model_name} not found.`);
+        }
+
+        return item.fromProperties();
+    }
+
+    async fetch(): Promise<T> {
         if (!this.id) {
             throw new Error('ID not set');
         }

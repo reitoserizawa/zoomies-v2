@@ -31,6 +31,17 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         super(id);
         this.model_name = 'User';
     }
+
+    async login(password: string): Promise<User> {
+        const password_util = new PasswordUtil(password);
+        const is_match = password_util.verify(this.properties.password);
+
+        if (is_match) {
+            return this;
+        } else {
+            throw new Error('Password is not correct');
+        }
+    }
 }
 
 export default User;
