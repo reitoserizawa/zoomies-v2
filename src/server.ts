@@ -6,5 +6,5 @@ import app from './app';
 const port = process.env.PORT || 3003;
 
 app.listen(port, () => {
-    console.log(`Initialized the app with the configuration on port ${port}`);
+    console.log(`********************\n\nInitialized API on port: ${port}\n\n********************`);
 });

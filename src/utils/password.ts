@@ -4,14 +4,11 @@ class PasswordUtil {
     salt_rounds: number;
 
     constructor(public password: string) {
-        this.salt_rounds = parseInt(process.env.SALT_ROUNDS);
+        this.salt_rounds = process.env.SALT_ROUNDS ? parseInt(process.env.SALT_ROUNDS) : 10;
     }
 
     async hash(): Promise<string> {
-        const hahsed_password = await bcrypt.hash(
-            this.password,
-            this.salt_rounds
-        );
+        const hahsed_password = await bcrypt.hash(this.password, this.salt_rounds);
 
         return hahsed_password;
     }
