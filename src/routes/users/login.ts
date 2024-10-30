@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 
 import User from '../../models/user';
+
+import JWTUtil from '../../utils/jwt';
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -14,9 +15,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const user = await User.fromQuery('User', { username });
         const found_user = await user.login(password);
 
-        const token = jwt.sign(user.prepareForCollection(), process.env.JWT_SECRET_KEY, {
-            expiresIn: '2 days'
-        });
+        const token = JWTUtil.generate(found_user.prepareForCollection());
 
         return { user: found_user.prepareForCollection(), token: token };
     } catch (err) {
