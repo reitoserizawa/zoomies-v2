@@ -1,0 +1,15 @@
+model Pet {
+  id    Int      @id @default(autoincrement())
+  
+  name String
+
+  owner User @relation(fields: [owner_id], references: [id])
+  owner_id Int
+
+  type String
+  breed String?
+
+  birthday DateTime
+
+  created_at DateTime @default(now())
+}
