@@ -10,7 +10,10 @@
     "scripts": {
         "build": "tsc --project ./",
         "start": "nodemon src/server.ts",
-        "deploy": "node dist/server.js"
+        "deploy": "node dist/server.js",
+        "db:migrate": "npx prisma migrate",
+        "db:push": "npx prisma db push",
+        "db:reset": "npx prisma migrate reset"
     },
     "dependencies": {
         "@prisma/client": "^5.21.1",
