@@ -2,11 +2,11 @@ import { Prisma } from '@prisma/client';
 
 import BaseModel from './base';
 
-import prisma from '../utils/prisma_client';
 import { PetInterface, PetModelInterface } from '../interfaces/pet';
+import PrismaClientModel from './prisma-client';
 
 class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
-    public_properties = [];
+    public_properties = ['name', 'owner', 'created_at'];
 
     static model_name: Prisma.ModelName = 'Pet';
     static uncap_model_name: Uncapitalize<Prisma.ModelName> = 'pet';
@@ -26,7 +26,7 @@ class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
     }
 
     static async create(properties: Prisma.PetCreateInput): Promise<Pet> {
-        const new_pet = await prisma.pet.create({ data: properties });
+        const new_pet = await PrismaClientModel.prisma.pet.create({ data: properties });
         const pet = Pet.fromProperties(new_pet);
 
         return pet;
@@ -34,6 +34,8 @@ class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
 
     constructor(id: number) {
         super(id);
+        this.model_name = 'Pet';
+        this.uncap_model_name = 'pet';
     }
 }
 

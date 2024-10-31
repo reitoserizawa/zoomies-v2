@@ -9,9 +9,13 @@ import PrismaClientModel from './prisma-client';
 
 import PasswordUtil from '../utils/password';
 import JWTUtil from '../utils/jwt';
+import Pet from './pet';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
-    public_properties = ['email', 'username'];
+    public_properties = ['email', 'username', 'pets'];
+    include_properties = ['pets'];
+
+    pets?: Pet[];
 
     static override async fromId(id: number): Promise<User> {
         const user = new User(id);
@@ -48,7 +52,6 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
         const user_id = typeof decoded.id === 'string' ? parseInt(decoded.id) : decoded.id;
         const user = await User.fromId(user_id);
-        console.log(user);
 
         return user;
     }
@@ -84,6 +87,12 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
     generateToken(): string {
         return JWTUtil.generate({ id: this.id });
+    }
+
+    override subObjectsForCollection(): { pets?: Pet[] } {
+        return {
+            pets: this.properties.pets && this.properties.pets.map(pet => Pet.fromProperties(pet))
+        };
     }
 }
 

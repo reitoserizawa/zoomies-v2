@@ -12,6 +12,10 @@ export type ExtractKeys<T, K extends keyof T> = {
     [P in K]: P;
 };
 
+export type Include<T> = {
+    [K in keyof T]?: T[K] extends Array<infer U> ? Include<U> | boolean : T[K] extends object ? Include<T[K]> | boolean : never;
+};
+
 export interface BaseInterface {
     id: number;
 }

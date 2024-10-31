@@ -1,7 +1,7 @@
 import { CustomRequest, NextFunction, Response } from 'express';
-import User from '../../models/user';
 
-import JWTUtil from '../../utils/jwt';
+import User from '../../models/user';
+import Pet from '../../models/pet';
 
 export const getUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {

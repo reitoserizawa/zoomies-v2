@@ -1,12 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { UserCreateInterface } from '../../interfaces/user';
-
 import User from '../../models/user';
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { username, password, email } = req.body as UserCreateInterface;
+        const { username, password, email } = req.body;
 
         if (!username || !password || !email) {
             throw new Error('Missing required parameters');

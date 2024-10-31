@@ -11,6 +11,4 @@ export interface UserInterface extends BaseInterface {
     created_at: Date;
 }
 
-export interface UserCreateInterface extends Omit<UserInterface, 'id' | 'created_at'> {}
-
 export interface UserModelInterface extends BaseModelInterface<UserInterface> {}

@@ -1,8 +1,13 @@
 import { Prisma } from '@prisma/client';
+import { isArray } from 'lodash';
 
-import { BaseModelInterface, ExtractKeys, WhereInput } from '../interfaces/base';
+import { BaseModelInterface, ExtractKeys, Include, WhereInput } from '../interfaces/base';
 
 import PrismaClientModel from './prisma-client';
+
+type SubObjectsList = {
+    [key: string]: BaseModel<any, any> | BaseModel<any, any>[] | undefined;
+};
 
 class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P> {
     prisma: PrismaClientModel;
@@ -12,7 +17,8 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
     model_name: MN;
     uncap_model_name: Uncapitalize<MN>;
 
-    public_properties?: string[] = [];
+    public_properties: string[] = [];
+    include_properties?: string[];
 
     // override in subclass
     static async fromId(id: number): Promise<any> {
@@ -71,11 +77,14 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
     }
 
     private async _fetch(query: WhereInput<MN>): Promise<P> {
-        console.log(this);
         const model = PrismaClientModel.prisma[this.uncap_model_name];
+        const include_query = this.prepareIncludeQuery();
 
         // @ts-expect-error
-        const item = await model.findUnique({ where: query });
+        const item = await model.findUnique({
+            where: query,
+            include: include_query
+        });
 
         if (!item) {
             throw new Error(`${this.model_name} not found.`);
@@ -88,20 +97,30 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
 
     constructor(public id: number) {}
 
+    prepareIncludeQuery(): { [key: string]: boolean } | void {
+        if (!this.include_properties) return;
+
+        const include: Record<string, boolean> = {};
+
+        for (const prop of this.include_properties) {
+            include[prop] = true;
+        }
+
+        return include;
+    }
+
     setProperties(properties: P): P {
         this.properties = properties;
 
         return properties;
     }
 
-    async prepareForCollection(): Promise<P> {
+    async prepareForCollection(chain: string[] = []): Promise<P> {
         if (!this.properties) {
             throw new Error('properties not set');
         }
 
-        let _properties: P = {
-            ...(await this.preCollectionHook(this.properties))
-        };
+        let _properties: P = await this.prepareSubObjectsForCollection(this.properties, chain);
 
         for (const key in _properties) {
             if (!(this.public_properties || []).includes(key) && key !== 'id') {
@@ -112,8 +131,51 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return _properties;
     }
 
-    async preCollectionHook(properties: P): Promise<P> {
-        return properties;
+    async prepareSubObjectsForCollection(properties: P, chain: string[]): Promise<P> {
+        const subObjects = this.subObjectsForCollection();
+        const keys = Object.keys(subObjects);
+
+        if (keys.length === 0) {
+            return properties;
+        }
+
+        const _properties = { ...properties } as { [key: string]: any };
+
+        // Prepare each sub-object for collection
+        for (const key of keys) {
+            const obj = subObjects[key];
+
+            if (obj && !(Array.isArray(obj) && obj.length === 0)) {
+                if (Array.isArray(obj)) {
+                    _properties[key] = await Promise.all(
+                        obj.map(async (item: BaseModel<any, any>) => {
+                            const objName = `${item.constructor.name}_${key}_${item.id}`;
+
+                            if (!chain.includes(objName)) {
+                                chain.push(objName);
+                                return await item.prepareForCollection(chain);
+                            }
+                            return undefined;
+                        })
+                    ).then(results => results.filter(Boolean));
+                } else {
+                    const objName = `${obj.constructor.name}_${key}_${obj.id}`;
+
+                    if (!chain.includes(objName)) {
+                        chain.push(objName);
+                        _properties[key] = await obj.prepareForCollection(chain);
+                    }
+                }
+            } else {
+                _properties[key] = Array.isArray(obj) ? [] : undefined;
+            }
+        }
+
+        return _properties as P;
+    }
+
+    subObjectsForCollection(): SubObjectsList {
+        return {};
     }
 }
 
