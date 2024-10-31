@@ -11,5 +11,7 @@ model Pet {
 
   birthday DateTime
 
+  check_in CheckIn[]
+
   created_at DateTime @default(now())
 }
