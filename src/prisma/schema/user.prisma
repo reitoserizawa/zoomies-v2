@@ -8,5 +8,7 @@ model User {
 
   pets Pet[]
 
+  check_in CheckIn[]
+
   created_at DateTime @default(now())
 }
