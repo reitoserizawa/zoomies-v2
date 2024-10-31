@@ -1,0 +1,16 @@
+model CheckIn {
+  id    Int      @id @default(autoincrement())
+  
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  pet Pet @relation(fields: [pet_id], references: [id])
+  pet_id Int
+  
+  address String
+
+  active Boolean
+
+  checked_in_at DateTime @default(now())
+  checked_out_at DateTime?
+}
