@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-type TokenPayload = {
-    [key: string]: string;
+export type TokenPayload = {
+    [key: string]: string | number;
 };
 
 class JWTUtil {

@@ -12,6 +12,13 @@ import JWTUtil from '../utils/jwt';
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
     public_properties = ['email', 'username'];
 
+    static override async fromId(id: number): Promise<User> {
+        const user = new User(id);
+        await user.fetch();
+
+        return user;
+    }
+
     static async fromJwtPayload(req: CustomRequest): Promise<User> {
         const token = req.header('Authorization')?.replace('Bearer ', '');
 
@@ -25,7 +32,8 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
             throw new Error('ID not found from token');
         }
 
-        const user = await User.fromId(parseInt(decoded.id));
+        const user_id = typeof decoded.id === 'string' ? parseInt(decoded.id) : decoded.id;
+        const user = await User.fromId(user_id);
 
         return user;
     }
@@ -63,6 +71,10 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         } else {
             throw new Error('Password is not correct');
         }
+    }
+
+    generateToken(): string {
+        return JWTUtil.generate({ id: this.id });
     }
 }
 

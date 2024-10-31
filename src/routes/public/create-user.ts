@@ -4,6 +4,8 @@ import { UserCreateInterface } from '../../interfaces/user';
 
 import User from '../../models/user';
 
+import JWTUtil, { TokenPayload } from '../../utils/jwt';
+
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { username, password, email } = req.body as UserCreateInterface;
@@ -12,13 +14,14 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
             throw new Error('Missing required parameters');
         }
 
-        const user = await User.create({
+        const user: User = await User.create({
             email,
             username,
             password
         });
+        const token = user.generateToken();
 
-        res.json(await user.prepareForCollection());
+        res.json({ user: await user.prepareForCollection(), token });
     } catch (err) {
         next(err);
     }
