@@ -5,3 +5,4 @@ dist
 .yarnrc
 .DS_Store
 src/migrations
+package-lock.json
