@@ -1,0 +1,7 @@
+model DogPark {
+  id    Int      @id @default(autoincrement())
+  
+  name String
+
+  address String
+}
