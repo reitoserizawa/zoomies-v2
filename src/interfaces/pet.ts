@@ -4,13 +4,13 @@ import { UserInterface } from './user';
 export interface PetInterface extends BaseInterface {
     name: string;
 
-    owner: UserInterface;
+    owner?: UserInterface;
     owner_id: number;
 
-    type?: number;
-    breed?: string;
+    type: string | null;
+    breed: string | null;
 
-    birthday?: Date;
+    birthday: Date | null;
 
     created_at: Date;
 }

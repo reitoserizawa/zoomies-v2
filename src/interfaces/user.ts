@@ -5,6 +5,7 @@ export interface UserInterface extends BaseInterface {
     email: string;
     username: string;
     password: string;
+
     pets?: PetInterface[];
 
     created_at: Date;
