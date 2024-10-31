@@ -15,7 +15,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const user = await User.fromQuery('User', { username });
         const found_user = await user.login(password);
 
-        const token = user.generateToken();
+        const token = found_user.generateToken();
 
         res.json({ user: await found_user.prepareForCollection(), token });
     } catch (err) {
