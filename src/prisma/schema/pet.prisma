@@ -9,7 +9,7 @@ model Pet {
   type String?
   breed String?
 
-  birthday DateTime
+  birthday DateTime?
 
   check_in CheckIn[]
 
