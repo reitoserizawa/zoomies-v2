@@ -2,8 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 
 import User from '../../models/user';
 
-import JWTUtil from '../../utils/jwt';
-
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { username, password } = req.body;

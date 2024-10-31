@@ -4,8 +4,6 @@ import { UserCreateInterface } from '../../interfaces/user';
 
 import User from '../../models/user';
 
-import JWTUtil, { TokenPayload } from '../../utils/jwt';
-
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { username, password, email } = req.body as UserCreateInterface;
