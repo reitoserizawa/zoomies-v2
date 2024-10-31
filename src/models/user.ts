@@ -2,11 +2,12 @@ import { Prisma } from '@prisma/client';
 import { CustomRequest } from 'express';
 
 import { UserInterface, UserModelInterface } from '../interfaces/user';
+import { ExtractKeys } from '../interfaces/base';
 
 import BaseModel from './base';
+import PrismaClientModel from './prisma-client';
 
 import PasswordUtil from '../utils/password';
-import prisma from '../utils/prisma_client';
 import JWTUtil from '../utils/jwt';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
@@ -15,6 +16,19 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
     static override async fromId(id: number): Promise<User> {
         const user = new User(id);
         await user.fetch();
+
+        return user;
+    }
+
+    static override fromProperties(properties: UserInterface): User {
+        const user = new User(properties.id);
+        user.setProperties(properties);
+
+        return user;
+    }
+
+    static async fromUsername(username: string): Promise<User> {
+        const user = await User.fromQuery<UserInterface, 'username', User>({ username } as ExtractKeys<UserInterface, 'username'>, 'user');
 
         return user;
     }
@@ -34,13 +48,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
         const user_id = typeof decoded.id === 'string' ? parseInt(decoded.id) : decoded.id;
         const user = await User.fromId(user_id);
-
-        return user;
-    }
-
-    static override fromProperties(properties: UserInterface): User {
-        const user = new User(properties.id);
-        user.setProperties(properties);
+        console.log(user);
 
         return user;
     }
@@ -51,7 +59,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
         properties.password = hashed_password;
 
-        const new_user = await prisma.user.create({ data: properties });
+        const new_user = await PrismaClientModel.prisma.user.create({ data: properties });
         const user = User.fromProperties(new_user);
 
         return user;
@@ -60,6 +68,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
     constructor(id: number) {
         super(id);
         this.model_name = 'User';
+        this.uncap_model_name = 'user';
     }
 
     async login(password: string): Promise<User> {

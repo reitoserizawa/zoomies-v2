@@ -10,7 +10,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
             throw new Error('Missing username or password');
         }
 
-        const user = await User.fromQuery('User', { username });
+        const user = await User.fromUsername(username);
         const found_user = await user.login(password);
 
         const token = found_user.generateToken();
