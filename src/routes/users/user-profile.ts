@@ -41,3 +41,15 @@ export const updatePassword = async (req: CustomRequest, res: Response, next: Ne
         next(err);
     }
 };
+
+export const deleteUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
+    try {
+        const user = await User.fromJwtPayload(req);
+
+        await user.delete();
+
+        res.json({ success: true });
+    } catch (err) {
+        next(err);
+    }
+};

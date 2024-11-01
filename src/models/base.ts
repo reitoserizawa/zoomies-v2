@@ -120,6 +120,23 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return item;
     }
 
+    async delete(): Promise<P> {
+        if (!this.id) {
+            throw new Error('ID not set');
+        }
+
+        const model = PrismaClientModel.prisma[this.uncap_model_name];
+
+        // @ts-expect-error
+        const item = await model.delete({
+            where: {
+                id: this.id
+            }
+        });
+
+        return item;
+    }
+
     validate(data: ValidateInput<P>): ValidateInput<P> {
         const filteredProperties: ValidateInput<P> = {};
 

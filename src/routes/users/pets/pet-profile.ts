@@ -26,3 +26,28 @@ export const updatePet = async (req: CustomRequest, res: Response, next: NextFun
         next(err);
     }
 };
+
+export const deletePet = async (req: CustomRequest, res: Response, next: NextFunction) => {
+    try {
+        const { id: pet_id } = req.query;
+
+        const user = await User.fromJwtPayload(req);
+
+        if (!pet_id || typeof pet_id !== 'number') {
+            throw new Error(`Invalid Pet ID`);
+        }
+
+        const pet = await Pet.fromId(pet_id);
+        const user_owns_pet = user.ownsPet(pet);
+
+        if (!user_owns_pet) {
+            throw new Error("You don't own this pet");
+        }
+
+        await pet.delete();
+
+        res.json({ success: true });
+    } catch (err) {
+        next(err);
+    }
+};
