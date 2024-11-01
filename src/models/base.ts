@@ -49,7 +49,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return this.fromProperties(item);
     }
 
-    static async manyFromQuery<T, K extends keyof T, M>(query: ExtractKeys<T, K>, uncap_model_name?: Uncapitalize<Prisma.ModelName>): Promise<M[]> {
+    static async manyFromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name?: Uncapitalize<Prisma.ModelName>): Promise<M[]> {
         if (!uncap_model_name) {
             throw new Error('Model name is required.');
         }
@@ -63,7 +63,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
             throw new Error(`${uncap_model_name} not found.`);
         }
 
-        return items.map((item: T) => this.fromProperties(item));
+        return items.map((item: P) => this.fromProperties(item));
     }
 
     constructor(public id: number) {}
