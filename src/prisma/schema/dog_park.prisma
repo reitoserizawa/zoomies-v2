@@ -6,4 +6,6 @@ model DogPark {
   address String
 
   type String?
+
+  check_in CheckIn[]
 }

@@ -6,10 +6,11 @@ model CheckIn {
 
   pet Pet @relation(fields: [pet_id], references: [id])
   pet_id Int
-  
-  address String
 
-  active Boolean
+  dog_park DogPark @relation(fields: [dog_park_id], references: [id])
+  dog_park_id Int
+
+  active Boolean @default(true)
 
   checked_in_at DateTime @default(now())
   checked_out_at DateTime?
