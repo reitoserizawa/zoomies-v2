@@ -5,7 +5,8 @@
     "author": "Reito Serizawa",
     "license": "MIT",
     "prisma": {
-        "schema": "src/prisma"
+        "schema": "src/prisma",
+        "seed": "ts-node src/prisma/seed.ts"
     },
     "scripts": {
         "build": "tsc --project ./",
@@ -13,7 +14,8 @@
         "deploy": "node dist/server.js",
         "db:migrate": "npx prisma migrate",
         "db:push": "npx prisma db push",
-        "db:reset": "npx prisma migrate reset"
+        "db:reset": "npx prisma migrate reset",
+        "db:seed": "npx prisma db seed"
     },
     "dependencies": {
         "@prisma/client": "^5.21.1",
