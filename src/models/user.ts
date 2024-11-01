@@ -3,6 +3,7 @@ import { CustomRequest } from 'express';
 
 import { UserInterface, UserModelInterface } from '../interfaces/user';
 import { ExtractKeys } from '../interfaces/base';
+import { PetInterface } from '../interfaces/pet';
 
 import BaseModel from './base';
 import PrismaClientModel from './prisma-client';
@@ -14,6 +15,7 @@ import Pet from './pet';
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
     public_properties = ['email', 'username', 'pets'];
     include_properties = ['pets'];
+    updatable_properties = ['email', 'username'];
 
     pets?: Pet[];
 
@@ -57,12 +59,18 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
     }
 
     static async create(properties: Prisma.UserCreateInput): Promise<User> {
+        const validated_payload = Prisma.validator<Prisma.UserCreateInput>()({
+            username: properties.username,
+            email: properties.email,
+            password: properties.password
+        });
+
         const password_util = new PasswordUtil(properties.password);
         const hashed_password = await password_util.hash();
 
-        properties.password = hashed_password;
+        validated_payload.password = hashed_password;
 
-        const new_user = await PrismaClientModel.prisma.user.create({ data: properties });
+        const new_user = await PrismaClientModel.prisma.user.create({ data: validated_payload });
         const user = User.fromProperties(new_user);
 
         return user;
@@ -85,13 +93,22 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         }
     }
 
+    async updatePassword(new_password: string): Promise<User> {
+        const password_util = new PasswordUtil(new_password);
+        const hashed_new_password = await password_util.hash();
+
+        this.update({ password: hashed_new_password });
+
+        return this;
+    }
+
     generateToken(): string {
         return JWTUtil.generate({ id: this.id });
     }
 
-    override subObjectsForCollection(): { pets?: Pet[] } {
+    override subObjectsForCollection(): { pets: BaseModel<PetInterface, 'Pet'>[] } {
         return {
-            pets: this.properties.pets && this.properties.pets.map(pet => Pet.fromProperties(pet))
+            pets: this.properties.pets ? this.properties.pets.map(pet => Pet.fromProperties(pet)) : []
         };
     }
 }

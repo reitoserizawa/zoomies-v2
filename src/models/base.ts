@@ -1,13 +1,8 @@
 import { Prisma } from '@prisma/client';
-import { isArray } from 'lodash';
 
-import { BaseModelInterface, ExtractKeys, Include, WhereInput } from '../interfaces/base';
+import { BaseModelInterface, ExtractKeys, UpdateInput, ValidateInput, WhereInput } from '../interfaces/base';
 
 import PrismaClientModel from './prisma-client';
-
-type SubObjectsList = {
-    [key: string]: BaseModel<any, any> | BaseModel<any, any>[] | undefined;
-};
 
 class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P> {
     prisma: PrismaClientModel;
@@ -17,8 +12,10 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
     model_name: MN;
     uncap_model_name: Uncapitalize<MN>;
 
-    public_properties: string[] = [];
+    public_properties: string[];
     include_properties?: string[];
+
+    updatable_properties: string[];
 
     // override in subclass
     static async fromId(id: number): Promise<any> {
@@ -35,7 +32,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return obj;
     }
 
-    static async fromQuery<T, K extends keyof T, M>(query: ExtractKeys<T, K>, uncap_model_name?: Uncapitalize<Prisma.ModelName>): Promise<M> {
+    static async fromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name?: Uncapitalize<Prisma.ModelName>): Promise<M> {
         if (!uncap_model_name) {
             throw new Error('Model name is required.');
         }
@@ -69,6 +66,8 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return items.map((item: T) => this.fromProperties(item));
     }
 
+    constructor(public id: number) {}
+
     async fetch(): Promise<P> {
         if (!this.id) {
             throw new Error('ID not set');
@@ -95,24 +94,42 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return item;
     }
 
-    constructor(public id: number) {}
-
-    prepareIncludeQuery(): { [key: string]: boolean } | void {
-        if (!this.include_properties) return;
-
-        const include: Record<string, boolean> = {};
-
-        for (const prop of this.include_properties) {
-            include[prop] = true;
+    async update(update_input: ValidateInput<P>): Promise<P> {
+        if (!this.id) {
+            throw new Error('id not set');
         }
 
-        return include;
+        const model = PrismaClientModel.prisma[this.uncap_model_name];
+
+        // @ts-expect-error
+        const item = await model.update({
+            where: {
+                id: this.id
+            },
+            data: {
+                update_input
+            }
+        });
+
+        if (!item) {
+            throw new Error(`${this.model_name} not found.`);
+        }
+
+        this.setProperties(item);
+
+        return item;
     }
 
-    setProperties(properties: P): P {
-        this.properties = properties;
+    validate(data: ValidateInput<P>): ValidateInput<P> {
+        const filteredProperties: ValidateInput<P> = {};
 
-        return properties;
+        for (const key in data) {
+            if (this.updatable_properties.includes(key)) {
+                filteredProperties[key as keyof ValidateInput<P>] = data[key as keyof ValidateInput<P>];
+            }
+        }
+
+        return filteredProperties;
     }
 
     async prepareForCollection(chain: string[] = []): Promise<P> {
@@ -174,7 +191,25 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return _properties as P;
     }
 
-    subObjectsForCollection(): SubObjectsList {
+    prepareIncludeQuery(): { [key: string]: boolean } | void {
+        if (!this.include_properties) return;
+
+        const include: Record<string, boolean> = {};
+
+        for (const prop of this.include_properties) {
+            include[prop] = true;
+        }
+
+        return include;
+    }
+
+    setProperties(properties: P): P {
+        this.properties = properties;
+
+        return properties;
+    }
+
+    subObjectsForCollection(): { [key: string]: BaseModel<any, any> | BaseModel<any, any>[] } {
         return {};
     }
 }

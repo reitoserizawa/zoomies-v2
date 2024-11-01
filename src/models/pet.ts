@@ -4,9 +4,11 @@ import BaseModel from './base';
 
 import { PetInterface, PetModelInterface } from '../interfaces/pet';
 import PrismaClientModel from './prisma-client';
+import User from './user';
 
 class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
     public_properties = ['name', 'owner', 'created_at'];
+    updatable_properties = ['name', 'owner'];
 
     static model_name: Prisma.ModelName = 'Pet';
     static uncap_model_name: Uncapitalize<Prisma.ModelName> = 'pet';
@@ -25,8 +27,19 @@ class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
         return pet;
     }
 
-    static async create(properties: Prisma.PetCreateInput): Promise<Pet> {
-        const new_pet = await PrismaClientModel.prisma.pet.create({ data: properties });
+    static async create(properties: Prisma.PetCreateInput, owner: User): Promise<Pet> {
+        const owner_info = Prisma.validator<Prisma.UserWhereInput>()({
+            id: owner.id
+        });
+
+        const validated_payload = Prisma.validator<Prisma.PetCreateInput>()({
+            name: properties.name,
+            owner: {
+                connect: owner_info
+            }
+        });
+
+        const new_pet = await PrismaClientModel.prisma.pet.create({ data: { ...validated_payload } });
         const pet = Pet.fromProperties(new_pet);
 
         return pet;
