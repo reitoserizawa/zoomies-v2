@@ -1,10 +1,14 @@
 import { Router } from 'express';
-import { getUser } from './user-profile';
-import { attachPetToUser } from './attach-pet-to-user';
+
+import { getUser, updateUser } from './user-profile';
+
+import petRoutes from './pets';
 
 const userRoutes = Router();
 
 userRoutes.get('/', getUser);
-userRoutes.get('/attach-pet', attachPetToUser);
+userRoutes.post('/', updateUser);
+
+userRoutes.use('/pets', petRoutes);
 
 export default userRoutes;

@@ -82,6 +82,10 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         this.uncap_model_name = 'user';
     }
 
+    async createPet(payload: Prisma.PetCreateInput) {
+        await Pet.create(payload, this);
+    }
+
     async login(password: string): Promise<User> {
         const password_util = new PasswordUtil(password);
         const is_match = await password_util.verify(this.properties.password);
@@ -100,6 +104,14 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         this.update({ password: hashed_new_password });
 
         return this;
+    }
+
+    ownsPet(pet: Pet): boolean {
+        if (pet.properties.owner_id === this.id) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     generateToken(): string {
