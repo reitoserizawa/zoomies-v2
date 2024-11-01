@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-import { BaseModelInterface, ExtractKeys, UpdateInput, ValidateInput, WhereInput } from '../interfaces/base';
+import { BaseModelInterface, ExtractKeys, ValidateInput, WhereInput } from '../interfaces/base';
 
 import PrismaClientModel from './prisma-client';
 

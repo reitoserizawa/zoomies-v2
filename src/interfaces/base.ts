@@ -4,7 +4,6 @@ type ModelDelegates = {
     [K in Prisma.ModelName]: PrismaClient[Uncapitalize<K>];
 };
 export type WhereInput<MN extends Prisma.ModelName> = MN extends keyof ModelDelegates ? Exclude<Parameters<ModelDelegates[MN]['findFirst']>[0], undefined | null>['where'] : never;
-export type UpdateInput<MN> = Partial<MN>;
 
 export type ValidateInput<P> = Partial<Omit<P, 'id'>>;
 export type ExtractKeys<P, K extends keyof P> = {
