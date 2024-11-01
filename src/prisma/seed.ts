@@ -1,7 +1,7 @@
 import PrismaClientModel from '../models/prisma-client';
 import dog_park_data from './data/dog-park-data';
 
-async function main() {
+const main = async () => {
     const prisma_client = PrismaClientModel.prisma;
     const filtered_data = dog_park_data.filter((data, index, self) => {
         return data['Name'] && data['Address'] && data['DogRuns_Type'] && index === self.findIndex(o => o['Name'] === data['Name']);
@@ -24,7 +24,7 @@ async function main() {
             });
         }
     }
-}
+};
 
 main()
     .then(() => {
