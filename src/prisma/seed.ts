@@ -27,12 +27,12 @@ async function main() {
 }
 
 main()
-    .then(async () => {
+    .then(() => {
         console.log('--------------------------------\n\nSeeding successful\n\n--------------------------------');
         return;
     })
-    .catch(async e => {
-        console.log('--------------------------------\n\nError occureding during seeding\n\n--------------------------------');
+    .catch(e => {
+        console.error('--------------------------------\n\nError occureding during seeding\n\n--------------------------------');
         console.error(e);
-        process.exit(1);
+        return;
     });
