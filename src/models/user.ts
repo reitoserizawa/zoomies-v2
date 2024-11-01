@@ -107,11 +107,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
     }
 
     ownsPet(pet: Pet): boolean {
-        if (pet.properties.owner_id === this.id) {
-            return true;
-        } else {
-            return false;
-        }
+        return pet.properties.owner_id === this.id;
     }
 
     generateToken(): string {
