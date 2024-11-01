@@ -12,10 +12,10 @@
         "build": "tsc --project ./",
         "start": "nodemon src/server.ts",
         "deploy": "node dist/server.js",
-        "db:migrate": "npx prisma migrate",
-        "db:push": "npx prisma db push",
-        "db:reset": "npx prisma migrate reset",
-        "db:seed": "npx prisma db seed"
+        "db:migrate-dev": "yarn prisma migrate dev",
+        "db:push": "yarn prisma db push",
+        "db:reset": "yarn prisma migrate reset",
+        "db:seed": "yarn prisma db seed"
     },
     "dependencies": {
         "@prisma/client": "^5.21.1",
