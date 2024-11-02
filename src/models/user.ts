@@ -82,11 +82,23 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         this.uncap_model_name = 'user';
     }
 
+    override async delete(): Promise<UserInterface> {
+        if (!this.id) {
+            throw new Error('id not set');
+        }
+
+        const deleted_user = await this.update({ deleted: true });
+
+        return deleted_user;
+    }
+
     async createPet(payload: Prisma.PetCreateInput) {
         await Pet.create(payload, this);
     }
 
     async login(password: string): Promise<User> {
+        if (this.properties.deleted) throw new Error('User is already deleted');
+
         const password_util = new PasswordUtil(password);
         const is_match = await password_util.verify(this.properties.password);
 

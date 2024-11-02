@@ -9,6 +9,8 @@ export interface UserInterface extends BaseInterface {
     pets?: PetInterface[];
 
     created_at: Date;
+
+    deleted: boolean;
 }
 
 export interface UserModelInterface extends BaseModelInterface<UserInterface> {}
