@@ -15,7 +15,8 @@
         "db:migrate-dev": "yarn prisma migrate dev",
         "db:push": "yarn prisma db push",
         "db:reset": "yarn prisma migrate reset",
-        "db:seed": "yarn prisma db seed"
+        "db:seed": "yarn prisma db seed",
+        "connect:docker": "docker exec -it zoomies-v2 bash && psql -h localhost -p 5432 -U postgres && \\c zoomies-v2"
     },
     "dependencies": {
         "@prisma/client": "^5.21.1",
