@@ -1,13 +1,13 @@
 import { Router } from 'express';
 
-import userRoutes from './users';
 import publicRoutes from './public';
+import protetdRoutes from './protected';
 
 import { auth } from '../middlewares/auth';
 
 const routes = Router();
 
 routes.use('/public', publicRoutes);
-routes.use('/users', auth, userRoutes);
+routes.use('/users', auth, protetdRoutes);
 
 export default routes;

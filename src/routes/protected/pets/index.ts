@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createPet } from './create-pet';
-import { updatePet } from './pet-profile';
+import { createPet } from './all-pet';
+import { updatePet } from './singe-pet';
 
 const petRoutes = Router();
 

@@ -1,6 +1,6 @@
 import { CustomRequest, NextFunction, Response } from 'express';
 
-import User from '../../models/user';
+import User from '../../../models/user';
 
 export const getUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {

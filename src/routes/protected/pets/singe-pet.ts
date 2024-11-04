@@ -1,4 +1,5 @@
 import { CustomRequest, NextFunction, Response } from 'express';
+
 import User from '../../../models/user';
 import Pet from '../../../models/pet';
 
