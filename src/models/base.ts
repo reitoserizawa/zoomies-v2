@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client';
 import { BaseModelInterface, ExtractKeys, ValidateInput, WhereInput } from '../interfaces/base';
 
 import PrismaClientModel from './prisma-client';
+import { BadRequestError, NotFoundError } from './errors';
 
 class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P> {
     prisma: PrismaClientModel;
@@ -34,7 +35,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
 
     static async fromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name?: Uncapitalize<Prisma.ModelName>): Promise<M> {
         if (!uncap_model_name) {
-            throw new Error('Model name is required.');
+            throw new BadRequestError('Model name is required.');
         }
 
         const model = PrismaClientModel.prisma[uncap_model_name];
@@ -43,7 +44,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         const item = await model.findUnique({ where: query });
 
         if (!item) {
-            throw new Error(`${uncap_model_name} not found.`);
+            throw new NotFoundError(`Item not found.`);
         }
 
         return this.fromProperties(item);
@@ -51,7 +52,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
 
     static async manyFromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name: Uncapitalize<Prisma.ModelName>): Promise<M[]> {
         if (!uncap_model_name) {
-            throw new Error('Model name is required.');
+            throw new BadRequestError('Model name is required.');
         }
 
         const model = PrismaClientModel.prisma[uncap_model_name];
@@ -60,7 +61,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         const items = await model.findMany({ where: query });
 
         if (!items || items.length === 0) {
-            throw new Error(`${uncap_model_name} not found.`);
+            throw new NotFoundError(`Item not found.`);
         }
 
         return items.map((item: P) => this.fromProperties(item));
@@ -73,7 +74,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         const items = await model.findMany();
 
         if (!items || items.length === 0) {
-            throw new Error(`${uncap_model_name} not found.`);
+            throw new NotFoundError(`Item not found.`);
         }
 
         return items.map((item: P) => this.fromProperties(item));
@@ -83,7 +84,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
 
     async fetch(): Promise<P> {
         if (!this.id) {
-            throw new Error('ID not set');
+            throw new BadRequestError('ID not set');
         }
         return await this._fetch({ id: this.id } as WhereInput<MN>);
     }
@@ -99,7 +100,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         });
 
         if (!item) {
-            throw new Error(`${this.model_name} not found.`);
+            throw new NotFoundError(`Item not found.`);
         }
 
         this.setProperties(item);
@@ -109,7 +110,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
 
     async update(update_input: ValidateInput<P>): Promise<P> {
         if (!this.id) {
-            throw new Error('id not set');
+            throw new BadRequestError('ID not set');
         }
 
         const model = PrismaClientModel.prisma[this.uncap_model_name];
@@ -125,7 +126,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         });
 
         if (!item) {
-            throw new Error(`${this.model_name} not found.`);
+            throw new NotFoundError(`Item not found.`);
         }
 
         this.setProperties(item);
@@ -135,7 +136,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
 
     async delete(): Promise<P> {
         if (!this.id) {
-            throw new Error('ID not set');
+            throw new BadRequestError('ID not set');
         }
 
         const model = PrismaClientModel.prisma[this.uncap_model_name];
@@ -164,7 +165,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
 
     async prepareForCollection(chain: string[] = []): Promise<P> {
         if (!this.properties) {
-            throw new Error('properties not set');
+            throw new Error('Properties not set');
         }
 
         let _properties: P = await this.prepareSubObjectsForCollection(this.properties, chain);

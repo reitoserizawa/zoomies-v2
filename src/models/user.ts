@@ -13,6 +13,7 @@ import CheckIn from './check-in';
 
 import PasswordUtil from '../utils/password';
 import JWTUtil from '../utils/jwt';
+import { AuthError, BadRequestError } from './errors';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
     public_properties = ['email', 'username', 'pets'];
@@ -45,13 +46,13 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         const token = req.header('Authorization')?.replace('Bearer ', '');
 
         if (!token) {
-            throw new Error('Token not found');
+            throw new AuthError();
         }
 
         const decoded = JWTUtil.decode(token);
 
         if (!decoded.id) {
-            throw new Error('ID not found from token');
+            throw new BadRequestError('ID not found from token');
         }
 
         const user_id = typeof decoded.id === 'string' ? parseInt(decoded.id) : decoded.id;
@@ -86,7 +87,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
     override async delete(): Promise<UserInterface> {
         if (!this.id) {
-            throw new Error('id not set');
+            throw new BadRequestError('ID not set');
         }
 
         const deleted_user = await this.update({ deleted: true });
@@ -107,7 +108,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         if (is_match) {
             return this;
         } else {
-            throw new Error('Password is not correct');
+            throw new AuthError('Password is not correct');
         }
     }
 

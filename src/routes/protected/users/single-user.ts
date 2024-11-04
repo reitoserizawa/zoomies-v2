@@ -1,6 +1,7 @@
 import { CustomRequest, NextFunction, Response } from 'express';
 
 import User from '../../../models/user';
+import { BadRequestError } from '../../../models/errors';
 
 export const getUserDetails = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
@@ -30,9 +31,7 @@ export const updatePassword = async (req: CustomRequest, res: Response, next: Ne
         const user = await User.fromJwtPayload(req);
         const { password } = req.body;
 
-        if (!password || typeof password !== 'string') {
-            throw new Error();
-        }
+        if (!password || typeof password !== 'string') throw new BadRequestError('Invalid user password');
 
         await user.updatePassword(password);
 

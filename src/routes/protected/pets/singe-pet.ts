@@ -2,6 +2,7 @@ import { CustomRequest, NextFunction, Response } from 'express';
 
 import User from '../../../models/user';
 import Pet from '../../../models/pet';
+import { BadRequestError, NoAccessError } from '../../../models/errors';
 
 export const updatePetProfile = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
@@ -9,16 +10,12 @@ export const updatePetProfile = async (req: CustomRequest, res: Response, next: 
 
         const user = await User.fromJwtPayload(req);
 
-        if (!pet_id || typeof pet_id !== 'number') {
-            throw new Error(`Invalid Pet ID`);
-        }
+        if (!pet_id || typeof pet_id !== 'number') throw new BadRequestError(`Invalid pet ID`);
 
         const pet = await Pet.fromId(pet_id);
         const user_owns_pet = user.ownsPet(pet);
 
-        if (!user_owns_pet) {
-            throw new Error("You don't own this pet");
-        }
+        if (!user_owns_pet) throw new NoAccessError("You don't own this pet");
 
         await pet.update(req.body);
 
@@ -34,16 +31,12 @@ export const deletePet = async (req: CustomRequest, res: Response, next: NextFun
 
         const user = await User.fromJwtPayload(req);
 
-        if (!pet_id || typeof pet_id !== 'number') {
-            throw new Error(`Invalid Pet ID`);
-        }
+        if (!pet_id || typeof pet_id !== 'number') throw new BadRequestError(`Invalid pet ID`);
 
         const pet = await Pet.fromId(pet_id);
         const user_owns_pet = user.ownsPet(pet);
 
-        if (!user_owns_pet) {
-            throw new Error("You don't own this pet");
-        }
+        if (!user_owns_pet) throw new NoAccessError("You don't own this pet");
 
         await pet.delete();
 
