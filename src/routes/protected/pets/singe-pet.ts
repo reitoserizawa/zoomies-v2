@@ -3,7 +3,7 @@ import { CustomRequest, NextFunction, Response } from 'express';
 import User from '../../../models/user';
 import Pet from '../../../models/pet';
 
-export const updatePet = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const updatePetProfile = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const { id: pet_id } = req.query;
 

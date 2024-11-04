@@ -1,10 +1,11 @@
 import { Router } from 'express';
 
-import { getUser, updateUser } from './single-user';
+import { deleteUser, getUserDetails, updateUserProfile } from './single-user';
 
 const userRoutes = Router();
 
-userRoutes.get('/', getUser);
-userRoutes.post('/', updateUser);
+userRoutes.get('/', getUserDetails);
+userRoutes.post('/', updateUserProfile);
+userRoutes.delete('/', deleteUser);
 
 export default userRoutes;

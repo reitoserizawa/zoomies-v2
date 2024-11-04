@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { createPet } from './all-pet';
-import { updatePet } from './singe-pet';
+import { deletePet, updatePetProfile } from './singe-pet';
 
 const petRoutes = Router();
 
 petRoutes.post('/', createPet);
 
-petRoutes.post('/:id', updatePet);
-petRoutes.delete('/:id', updatePet);
+petRoutes.post('/:id', updatePetProfile);
+petRoutes.delete('/:id', deletePet);
 
 export default petRoutes;

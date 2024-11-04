@@ -2,7 +2,7 @@ import { CustomRequest, NextFunction, Response } from 'express';
 
 import User from '../../../models/user';
 
-export const getUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const getUserDetails = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const user = await User.fromJwtPayload(req);
 
@@ -12,7 +12,7 @@ export const getUser = async (req: CustomRequest, res: Response, next: NextFunct
     }
 };
 
-export const updateUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const updateUserProfile = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const user = await User.fromJwtPayload(req);
         const payload = user.validate(req.body);
