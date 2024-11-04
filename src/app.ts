@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import { JwtPayload } from 'jsonwebtoken';
 
 import routes from './routes';
+import errorHandler from './middlewares/error-handler';
 
 declare module 'express' {
     interface CustomRequest extends Request {
@@ -20,6 +21,7 @@ class App {
 
         this.middlewares();
         this.routes();
+        this.errorHandler();
     }
 
     middlewares() {
@@ -29,6 +31,10 @@ class App {
 
     routes() {
         this.server.use('/api', routes);
+    }
+
+    errorHandler() {
+        this.server.use(errorHandler);
     }
 }
 
