@@ -4,6 +4,7 @@ import { CustomRequest } from 'express';
 import { UserInterface, UserModelInterface } from '../interfaces/user';
 import { ExtractKeys } from '../interfaces/base';
 import { PetInterface } from '../interfaces/pet';
+import { CheckInInterface } from '../interfaces/check-in';
 
 import BaseModel from './base';
 import PrismaClientModel from './prisma-client';
@@ -15,7 +16,7 @@ import JWTUtil from '../utils/jwt';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
     public_properties = ['email', 'username', 'pets'];
-    include_properties = ['pets'];
+    include_properties = ['pets', 'checkIns'];
     updatable_properties = ['email', 'username'];
 
     pets?: Pet[];
@@ -131,8 +132,9 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         return JWTUtil.generate({ id: this.id });
     }
 
-    override subObjectsForCollection(): { pets: BaseModel<PetInterface, 'Pet'>[] } {
+    override subObjectsForCollection(): { check_ins: BaseModel<CheckInInterface, 'CheckIn'>[]; pets: BaseModel<PetInterface, 'Pet'>[] } {
         return {
+            check_ins: this.properties.check_ins ? this.properties.check_ins.map(check_in => CheckIn.fromProperties(check_in)) : [],
             pets: this.properties.pets ? this.properties.pets.map(pet => Pet.fromProperties(pet)) : []
         };
     }
