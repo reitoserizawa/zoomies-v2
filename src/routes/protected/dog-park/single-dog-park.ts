@@ -8,9 +8,9 @@ export const getDogParkDetails = async (req: Request, res: Response, next: NextF
 
         if (!dog_park_id || typeof dog_park_id !== 'number') throw new Error();
 
-        const dog_parks = await DogPark.fromId(dog_park_id);
+        const dog_park = await DogPark.fromId(dog_park_id);
 
-        res.json(dog_parks.prepareForCollection());
+        res.json(await dog_park.prepareForCollection());
     } catch (err) {
         next(err);
     }

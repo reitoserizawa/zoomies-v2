@@ -20,6 +20,13 @@ class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
         return pet;
     }
 
+    static async fromIds(ids: number[]): Promise<Pet[]> {
+        const pets = ids.map(id => new Pet(id));
+        await Promise.all(pets.map(p => p.fetch()));
+
+        return pets;
+    }
+
     static override fromProperties(properties: PetInterface): Pet {
         const pet = new Pet(properties.id);
         pet.setProperties(properties);

@@ -8,7 +8,7 @@ export const getAllDogParks = async (req: Request, res: Response, next: NextFunc
     try {
         const dog_parks = await DogPark.getAll<DogParkInterface, DogPark>('dogPark');
 
-        res.json(dog_parks.map(dog_park => dog_park.prepareForCollection()));
+        res.json(await Promise.all(dog_parks.map(async dog_park => await dog_park.prepareForCollection())));
     } catch (err) {
         next(err);
     }

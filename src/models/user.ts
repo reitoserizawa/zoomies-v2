@@ -7,10 +7,11 @@ import { PetInterface } from '../interfaces/pet';
 
 import BaseModel from './base';
 import PrismaClientModel from './prisma-client';
+import Pet from './pet';
+import CheckIn from './check-in';
 
 import PasswordUtil from '../utils/password';
 import JWTUtil from '../utils/jwt';
-import Pet from './pet';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
     public_properties = ['email', 'username', 'pets'];
@@ -120,6 +121,10 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
     ownsPet(pet: Pet): boolean {
         return pet.properties.owner_id === this.id;
+    }
+
+    hasCheckIn(check_in: CheckIn): boolean {
+        return check_in.properties.user_id === this.id;
     }
 
     generateToken(): string {
