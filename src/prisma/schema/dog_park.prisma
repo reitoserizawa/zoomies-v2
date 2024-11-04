@@ -7,5 +7,5 @@ model DogPark {
 
   type String?
 
-  check_in CheckIn[]
+  check_ins CheckIn[]
 }

@@ -1,4 +1,5 @@
 import { BaseInterface, BaseModelInterface } from './base';
+import { CheckInInterface } from './check-in';
 import { PetInterface } from './pet';
 
 export interface UserInterface extends BaseInterface {
@@ -7,6 +8,7 @@ export interface UserInterface extends BaseInterface {
     password: string;
 
     pets?: PetInterface[];
+    check_ins?: CheckInInterface[];
 
     created_at: Date;
 

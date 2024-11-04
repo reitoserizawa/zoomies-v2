@@ -8,7 +8,7 @@ export interface DogParkInterface extends BaseInterface {
 
     type: string | null;
 
-    check_in?: CheckInInterface;
+    check_ins?: CheckInInterface[];
 }
 
 export interface DogParkModelInterface extends BaseModelInterface<DogParkInterface> {}
