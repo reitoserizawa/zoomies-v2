@@ -1,4 +1,4 @@
-import { UserState } from '../../interfaces/user';
+import { UserState } from '../../states/user';
 import { UserActionTypes, SET_USER, UPDATE_USER, SIGN_IN, SIGN_OUT } from '../actions/user';
 
 const initialState: UserState = {
@@ -7,8 +7,7 @@ const initialState: UserState = {
     username: '',
     pets: [],
     check_ins: [],
-    loading: false,
-    error: undefined
+    loading: false
 };
 
 const userReducer = (state = initialState, action: UserActionTypes): UserState => {
