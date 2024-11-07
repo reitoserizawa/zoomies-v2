@@ -15,10 +15,16 @@ export const FullScreenContainer = styled.div`
     height: 100vh;
     width: auto;
 
-    padding: 10px;
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `;
 
 export const FlexContainer = styled.div<FlexContainerProps>`
+    width: 100%;
+
     display: flex;
     flex-direction: ${({ flexDirection }) => (flexDirection ? flexDirection : 'column')};
     align-items: ${({ alignItems }) => (alignItems ? alignItems : 'center')};
