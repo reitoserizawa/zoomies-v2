@@ -21,7 +21,18 @@ export interface UserInterface extends BaseInterface {
     check_ins?: CheckInState[];
 }
 
+export interface UserLogInRequest {
+    username: string;
+    password: string;
+}
+
+export interface UserLogInPayload {
+    user: UserState;
+    token: string;
+}
+
 export interface UserLogInInterface {
     user: UserInterface;
+    password: string;
     token: string;
 }
