@@ -1,9 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
 import { JwtPayload } from 'jsonwebtoken';
+import cors from 'cors';
 
 import routes from './routes';
+
 import errorHandler from './middlewares/error-handler';
+import { notFoundHandler } from './middlewares/not-found-handler';
 
 declare module 'express' {
     interface CustomRequest extends Request {
@@ -26,6 +29,7 @@ class App {
 
     middlewares() {
         this.server.use(express.json());
+        this.server.use(cors());
         this.server.use(morgan('dev'));
     }
 
@@ -34,6 +38,7 @@ class App {
     }
 
     errorHandler() {
+        this.server.use(notFoundHandler);
         this.server.use(errorHandler);
     }
 }
