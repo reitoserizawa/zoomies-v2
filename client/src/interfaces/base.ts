@@ -5,3 +5,7 @@ export interface BaseState {
 
     error?: ErrorState;
 }
+
+export interface BaseInterface {
+    id: string;
+}
