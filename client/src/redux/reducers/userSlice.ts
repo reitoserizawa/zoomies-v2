@@ -15,6 +15,11 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        resetUserState: () => {
+            return {
+                ...initialState
+            };
+        },
         logIn: (state, action) => {
             return {
                 ...state,
@@ -22,7 +27,7 @@ const userSlice = createSlice({
                 signedIn: true
             };
         },
-        setError: (state, action) => {
+        setUserError: (state, action) => {
             return {
                 ...state,
                 error: {
@@ -33,6 +38,6 @@ const userSlice = createSlice({
     }
 });
 
-export const { logIn, setError } = userSlice.actions;
+export const { logIn, setUserError, resetUserState } = userSlice.actions;
 
 export default userSlice.reducer;

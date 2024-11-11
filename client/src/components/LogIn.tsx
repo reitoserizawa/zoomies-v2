@@ -1,12 +1,15 @@
 import React, { useCallback, useState } from 'react';
-import { FlexContainer, FullScreenContainer, ImgContainer } from '../ui/container.styles';
 
 import { dogPawImg } from '../images';
 import { H2, P } from '../ui/heading.styles';
 import { Button, Input, LogInForm } from '../ui/form.styles';
+import { FlexContainer, FullScreenContainer, ImgContainer } from '../ui/container.styles';
+
 import { useLogInUserMutation } from '../redux/reducers/public-api-slice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
-import { logIn, setError } from '../redux/reducers/userSlice';
+import { logIn, resetUserState, setUserError } from '../redux/reducers/userSlice';
+
+import Error from './Error';
 
 const LogIn = () => {
     const [username, setUsername] = useState<string>('');
@@ -15,11 +18,14 @@ const LogIn = () => {
     const [logInUser] = useLogInUserMutation();
 
     const dispatch = useAppDispatch();
-    const user = useAppSelector(state => state.user);
+    const error = useAppSelector(state => state?.user?.error);
+    // TODO: add signedIn case
+    // const signedIn = useAppSelector(state => state.user.signedIn);
 
     const login = useCallback(
         (e: React.FormEvent) => {
             e.preventDefault();
+            dispatch(resetUserState());
 
             logInUser({ username, password })
                 .unwrap()
@@ -28,7 +34,7 @@ const LogIn = () => {
                     if (token) localStorage.setItem('token', token);
 
                     const user_details = data?.user;
-                    if (user) {
+                    if (user_details) {
                         dispatch(logIn(user_details));
                     }
                 })
@@ -36,10 +42,10 @@ const LogIn = () => {
                     const statusCode = error.status;
                     const message = error.data.error.message;
 
-                    dispatch(setError({ message, statusCode }));
+                    dispatch(setUserError({ message, statusCode }));
                 });
         },
-        [username, password, logInUser, dispatch, user]
+        [username, password, logInUser, dispatch]
     );
 
     return (
@@ -57,6 +63,7 @@ const LogIn = () => {
                     <Button type='submit'>Sign in</Button>
                 </LogInForm>
                 <P>Not a member? Register here</P>
+                {error && <Error message={error.message} />}
             </FlexContainer>
         </FullScreenContainer>
     );
