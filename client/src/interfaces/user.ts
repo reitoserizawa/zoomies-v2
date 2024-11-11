@@ -13,15 +13,13 @@ export interface UserState extends BaseState {
     loading?: boolean;
 }
 
-// export interface UserInterface extends BaseInterface {
-//     email: string;
-//     username: string;
-
-//     pets?: PetState[];
-//     check_ins?: CheckInState[];
-// }
-
 export interface UserLogInRequest {
+    username: string;
+    password: string;
+}
+
+export interface UserCreateRequest {
+    email: string;
     username: string;
     password: string;
 }

@@ -20,16 +20,25 @@ const userSlice = createSlice({
                 ...initialState
             };
         },
+        setLoading: state => {
+            return {
+                ...state,
+                loading: true
+            };
+        },
         logIn: (state, action) => {
             return {
                 ...state,
                 ...action.payload,
+                loading: false,
                 signedIn: true
             };
         },
         setUserError: (state, action) => {
             return {
                 ...state,
+                loading: false,
+                signedIn: false,
                 error: {
                     ...action.payload
                 }
@@ -38,6 +47,6 @@ const userSlice = createSlice({
     }
 });
 
-export const { logIn, setUserError, resetUserState } = userSlice.actions;
+export const { logIn, setUserError, resetUserState, setLoading } = userSlice.actions;
 
 export default userSlice.reducer;

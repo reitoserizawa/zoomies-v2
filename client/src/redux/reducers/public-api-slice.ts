@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { UserLogInPayload, UserLogInRequest } from '../../interfaces/user';
+import { UserCreateRequest, UserLogInPayload, UserLogInRequest } from '../../interfaces/user';
 
 export const publicApiSlice = createApi({
     reducerPath: 'publicApiSlice',
@@ -16,8 +16,19 @@ export const publicApiSlice = createApi({
                     password
                 }
             })
+        }),
+        createUser: builder.mutation<UserLogInPayload, UserCreateRequest>({
+            query: ({ email, username, password }) => ({
+                url: `create-user`,
+                method: 'POST',
+                body: {
+                    email,
+                    username,
+                    password
+                }
+            })
         })
     })
 });
 
-export const { useLogInUserMutation } = publicApiSlice;
+export const { useLogInUserMutation, useCreateUserMutation } = publicApiSlice;

@@ -6,23 +6,24 @@ import { H2, P } from '../ui/heading.styles';
 import { Button, Input, LogInForm } from '../ui/form.styles';
 import { FlexContainer, FullScreenContainer, ImgContainer } from '../ui/container.styles';
 
-import { useLogInUserMutation } from '../redux/reducers/public-api-slice';
+import { useCreateUserMutation } from '../redux/reducers/public-api-slice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { logIn, resetUserState, setLoading, setUserError } from '../redux/reducers/userSlice';
 
 import Error from './Error';
 
-const LogIn: React.FC = () => {
+const Register: React.FC = () => {
+    const [email, setEmail] = useState<string>('');
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const [logInUser] = useLogInUserMutation();
+    const [createUser] = useCreateUserMutation();
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const signedIn = useAppSelector(state => state?.user?.signedIn);
     const error = useAppSelector(state => state?.user?.error);
+    const signedIn = useAppSelector(state => state.user.signedIn);
 
     useEffect(() => {
         if (signedIn) {
@@ -30,14 +31,14 @@ const LogIn: React.FC = () => {
         }
     }, [signedIn, navigate]);
 
-    const login = useCallback(
+    const register = useCallback(
         (e: React.FormEvent) => {
             e.preventDefault();
 
             dispatch(resetUserState());
             dispatch(setLoading());
 
-            logInUser({ username, password })
+            createUser({ email, username, password })
                 .unwrap()
                 .then(data => {
                     const token = data?.token;
@@ -53,12 +54,9 @@ const LogIn: React.FC = () => {
                     const message = error.data.error.message;
 
                     dispatch(setUserError({ message, statusCode }));
-                })
-                .finally(() => {
-                    navigate('/');
                 });
         },
-        [username, password, logInUser, dispatch, navigate]
+        [email, username, password, createUser, dispatch]
     );
 
     return (
@@ -67,19 +65,20 @@ const LogIn: React.FC = () => {
                 <ImgContainer size={dogPawImg.size.small}>
                     <img src={dogPawImg.src} alt={dogPawImg.alt} />
                 </ImgContainer>
-                <H2>Sign in to your Zoomies account</H2>
-                <LogInForm onSubmit={login}>
+                <H2>Register your Zoomies account</H2>
+                <LogInForm onSubmit={register}>
+                    <P>Email</P>
+                    <Input type='text' value={email} onChange={e => setEmail(e.target.value)}></Input>
                     <P>Username</P>
                     <Input type='text' value={username} onChange={e => setUsername(e.target.value)}></Input>
                     <P>Password</P>
                     <Input type='password' value={password} onChange={e => setPassword(e.target.value)}></Input>
-                    <Button type='submit'>Sign in</Button>
+                    <Button type='submit'>Register</Button>
                 </LogInForm>
-                <P>Not a member? Register here</P>
                 {error && <Error message={error.message} />}
             </FlexContainer>
         </FullScreenContainer>
     );
 };
 
-export default LogIn;
+export default Register;
