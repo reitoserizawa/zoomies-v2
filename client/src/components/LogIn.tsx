@@ -6,7 +6,7 @@ import { H2, P } from '../ui/heading.styles';
 import { Button, Input, LogInForm } from '../ui/form.styles';
 import { useLogInUserMutation } from '../redux/reducers/public-api-slice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
-import { logIn } from '../redux/reducers/userSlice';
+import { logIn, setError } from '../redux/reducers/userSlice';
 
 const LogIn = () => {
     const [username, setUsername] = useState<string>('');
@@ -21,15 +21,23 @@ const LogIn = () => {
         (e: React.FormEvent) => {
             e.preventDefault();
 
-            logInUser({ username, password }).then(({ data }) => {
-                const token = data?.token;
-                if (token) localStorage.setItem('token', token);
+            logInUser({ username, password })
+                .unwrap()
+                .then(data => {
+                    const token = data?.token;
+                    if (token) localStorage.setItem('token', token);
 
-                const user_details = data?.user;
-                if (user) {
-                    dispatch(logIn(user_details));
-                }
-            });
+                    const user_details = data?.user;
+                    if (user) {
+                        dispatch(logIn(user_details));
+                    }
+                })
+                .catch(error => {
+                    const statusCode = error.status;
+                    const message = error.data.error.message;
+
+                    dispatch(setError({ message, statusCode }));
+                });
         },
         [username, password, logInUser, dispatch, user]
     );
