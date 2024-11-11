@@ -7,6 +7,7 @@ import Profile from './Profile';
 import RequiredLogin from './RequiredLogIn';
 
 const Main: React.FC = () => {
+    // TODO: add jwt verification and lead to log in page if not verified
     return (
         <BrowserRouter>
             <Routes>
