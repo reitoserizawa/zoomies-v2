@@ -12,14 +12,20 @@ interface ImgContainerProps {
 }
 
 export const FullScreenContainer = styled.div`
-    height: 100vh;
-    width: auto;
-
-    padding: 30px;
-
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: 999999;
+    max-width: 100%;
+    max-height: 100%;
+
+    background-color: rgba(247, 247, 247, 0.95);
 `;
 
 export const FlexContainer = styled.div<FlexContainerProps>`
