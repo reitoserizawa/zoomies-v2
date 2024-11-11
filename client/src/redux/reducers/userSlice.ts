@@ -7,7 +7,8 @@ const initialState: UserState = {
     pets: [],
     check_ins: [],
     loading: false,
-    signedIn: false
+    signedIn: false,
+    error: undefined
 };
 
 const userSlice = createSlice({
@@ -20,10 +21,18 @@ const userSlice = createSlice({
                 ...action.payload,
                 signedIn: true
             };
+        },
+        setError: (state, action) => {
+            return {
+                ...state,
+                error: {
+                    ...action.payload
+                }
+            };
         }
     }
 });
 
-export const { logIn } = userSlice.actions;
+export const { logIn, setError } = userSlice.actions;
 
 export default userSlice.reducer;

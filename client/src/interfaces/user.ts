@@ -1,4 +1,4 @@
-import { BaseInterface, BaseState } from './base';
+import { BaseState } from './base';
 import { CheckInState } from './check-in';
 import { PetState } from './pet';
 
@@ -10,16 +10,16 @@ export interface UserState extends BaseState {
     check_ins?: CheckInState[];
 
     signedIn: boolean;
-    loading: boolean;
+    loading?: boolean;
 }
 
-export interface UserInterface extends BaseInterface {
-    email: string;
-    username: string;
+// export interface UserInterface extends BaseInterface {
+//     email: string;
+//     username: string;
 
-    pets?: PetState[];
-    check_ins?: CheckInState[];
-}
+//     pets?: PetState[];
+//     check_ins?: CheckInState[];
+// }
 
 export interface UserLogInRequest {
     username: string;
@@ -28,11 +28,5 @@ export interface UserLogInRequest {
 
 export interface UserLogInPayload {
     user: UserState;
-    token: string;
-}
-
-export interface UserLogInInterface {
-    user: UserInterface;
-    password: string;
     token: string;
 }
