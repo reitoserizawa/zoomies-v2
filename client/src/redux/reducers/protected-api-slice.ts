@@ -5,9 +5,8 @@ export const protectedApiSlice = createApi({
     reducerPath: 'protectedApiSlice',
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3000/api/public',
-        prepareHeaders: (headers, { getState }) => {
-            // TODO: add state for token
-            const token = (getState() as any).auth.token;
+        prepareHeaders: headers => {
+            const token = localStorage.getItem('token');
 
             if (token) {
                 headers.set('authorization', `Bearer ${token}`);

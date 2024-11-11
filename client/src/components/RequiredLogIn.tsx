@@ -14,7 +14,9 @@ const RequiredLogin: React.FC<ChildrenProps> = ({ children }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!signedIn && !loading) {
+        const token = localStorage.getItem('token');
+
+        if (!token && !signedIn && !loading) {
             navigate('/login');
         }
     }, [signedIn, loading, navigate]);

@@ -52,7 +52,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         const decoded = JWTUtil.decode(token);
 
         if (!decoded.id) {
-            throw new BadRequestError('ID not found from token');
+            throw new BadRequestError('Invalid token');
         }
 
         const user_id = typeof decoded.id === 'string' ? parseInt(decoded.id) : decoded.id;
