@@ -35,6 +35,10 @@ const LogIn: React.FC = () => {
             e.preventDefault();
 
             dispatch(resetUserState());
+
+            if (!username) return dispatch(setUserError({ message: 'Username is required' }));
+            if (!password) return dispatch(setUserError({ message: 'Password is required' }));
+
             dispatch(setLoading());
 
             logInUser({ username, password })
@@ -49,8 +53,8 @@ const LogIn: React.FC = () => {
                     }
                 })
                 .catch(error => {
-                    const statusCode = error.status;
-                    const message = error.data.error.message;
+                    const statusCode = error?.status;
+                    const message = error?.data?.error?.message;
 
                     dispatch(setUserError({ message, statusCode }));
                 })
@@ -70,12 +74,16 @@ const LogIn: React.FC = () => {
                 <H2>Sign in to your Zoomies account</H2>
                 <LogInForm onSubmit={login}>
                     <P>Username</P>
-                    <Input type='text' value={username} onChange={e => setUsername(e.target.value)}></Input>
+                    <Input type='text' value={username} onChange={e => setUsername(e.target.value)} $outlineRed={!username}></Input>
                     <P>Password</P>
-                    <Input type='password' value={password} onChange={e => setPassword(e.target.value)}></Input>
-                    <Button type='submit'>Sign in</Button>
+                    <Input type='password' value={password} onChange={e => setPassword(e.target.value)} $outlineRed={!password}></Input>
+                    <Button type='submit' $disabled={!username || !password}>
+                        Sign in
+                    </Button>
                 </LogInForm>
-                <P>Not a member? Register here</P>
+                <P>
+                    Not a member? <a href='/register'>Register here</a>
+                </P>
                 {error && <Error message={error.message} />}
             </FlexContainer>
         </FullScreenContainer>

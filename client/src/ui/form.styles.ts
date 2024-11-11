@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 
-export const Input = styled.input`
+interface InputProps {
+    $outlineRed?: boolean;
+}
+
+interface ButtonProps {
+    $disabled?: boolean;
+}
+
+export const Input = styled.input<InputProps>`
     width: 100%;
     padding: 8px;
 
@@ -8,7 +16,7 @@ export const Input = styled.input`
     border-radius: 4px;
 
     &:focus {
-        outline: 2px solid #999;
+        outline: 2px solid ${({ $outlineRed }) => ($outlineRed ? 'red' : '#999')};
     }
 `;
 
@@ -17,7 +25,7 @@ export const LogInForm = styled.form`
     max-width: 1200px;
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<ButtonProps>`
     margin: 32px 0px;
 
     height: 33px;
@@ -29,7 +37,10 @@ export const Button = styled.button`
     background-color: gray;
     color: white;
 
-    cursor: pointer;
+    cursor: ${({ $disabled }) => ($disabled ? 'normal' : 'pointer')};
+    opacity: ${({ $disabled }) => ($disabled ? '0.5' : '1.0')};
+
+    z-index: 100000000;
 
     font-size: 1em;
 

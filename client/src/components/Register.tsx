@@ -36,6 +36,11 @@ const Register: React.FC = () => {
             e.preventDefault();
 
             dispatch(resetUserState());
+
+            if (!username) return dispatch(setUserError({ message: 'Username is required' }));
+            if (!password) return dispatch(setUserError({ message: 'Password is required' }));
+            if (!email) return dispatch(setUserError({ message: 'Email is required' }));
+
             dispatch(setLoading());
 
             createUser({ email, username, password })
@@ -68,14 +73,19 @@ const Register: React.FC = () => {
                 <H2>Register your Zoomies account</H2>
                 <LogInForm onSubmit={register}>
                     <P>Email</P>
-                    <Input type='text' value={email} onChange={e => setEmail(e.target.value)}></Input>
+                    <Input type='text' value={email} onChange={e => setEmail(e.target.value)} $outlineRed={!email}></Input>
                     <P>Username</P>
-                    <Input type='text' value={username} onChange={e => setUsername(e.target.value)}></Input>
+                    <Input type='text' value={username} onChange={e => setUsername(e.target.value)} $outlineRed={!username}></Input>
                     <P>Password</P>
-                    <Input type='password' value={password} onChange={e => setPassword(e.target.value)}></Input>
-                    <Button type='submit'>Register</Button>
+                    <Input type='password' value={password} onChange={e => setPassword(e.target.value)} $outlineRed={!password}></Input>
+                    <Button type='submit' $disabled={!username || !password || !email}>
+                        Register
+                    </Button>
                 </LogInForm>
                 {error && <Error message={error.message} />}
+                <P>
+                    Already a member? <a href='/login'>Login here</a>
+                </P>
             </FlexContainer>
         </FullScreenContainer>
     );
