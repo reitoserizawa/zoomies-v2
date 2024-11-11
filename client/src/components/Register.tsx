@@ -55,8 +55,8 @@ const Register: React.FC = () => {
                     }
                 })
                 .catch(error => {
-                    const statusCode = error.status;
-                    const message = error.data.error.message;
+                    const statusCode = error?.status;
+                    const message = error?.data?.error?.message;
 
                     dispatch(setUserError({ message, statusCode }));
                 });
