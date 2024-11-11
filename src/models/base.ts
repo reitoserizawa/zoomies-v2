@@ -4,6 +4,7 @@ import { BaseModelInterface, ExtractKeys, ValidateInput, WhereInput } from '../i
 
 import PrismaClientModel from './prisma-client';
 import { BadRequestError, NotFoundError } from './errors';
+import capitalizeFirstLetter from '../utils/capitalize-first-letter';
 
 class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P> {
     prisma: PrismaClientModel;
@@ -35,7 +36,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
 
     static async fromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name?: Uncapitalize<Prisma.ModelName>): Promise<M> {
         if (!uncap_model_name) {
-            throw new BadRequestError('Model name is required.');
+            throw new BadRequestError('Model name is required');
         }
 
         const model = PrismaClientModel.prisma[uncap_model_name];
@@ -44,7 +45,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         const item = await model.findUnique({ where: query });
 
         if (!item) {
-            throw new NotFoundError(`Item not found.`);
+            throw new NotFoundError(`${capitalizeFirstLetter(uncap_model_name)} not found`);
         }
 
         return this.fromProperties(item);
@@ -52,7 +53,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
 
     static async manyFromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name: Uncapitalize<Prisma.ModelName>): Promise<M[]> {
         if (!uncap_model_name) {
-            throw new BadRequestError('Model name is required.');
+            throw new BadRequestError('Model name is required');
         }
 
         const model = PrismaClientModel.prisma[uncap_model_name];
@@ -61,7 +62,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         const items = await model.findMany({ where: query });
 
         if (!items || items.length === 0) {
-            throw new NotFoundError(`Item not found.`);
+            throw new NotFoundError(`${capitalizeFirstLetter(uncap_model_name)} not found`);
         }
 
         return items.map((item: P) => this.fromProperties(item));
@@ -74,7 +75,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         const items = await model.findMany();
 
         if (!items || items.length === 0) {
-            throw new NotFoundError(`Item not found.`);
+            throw new NotFoundError(`${capitalizeFirstLetter(uncap_model_name)}s not found`);
         }
 
         return items.map((item: P) => this.fromProperties(item));
@@ -100,7 +101,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         });
 
         if (!item) {
-            throw new NotFoundError(`Item not found.`);
+            throw new NotFoundError(`${this.model_name} not found`);
         }
 
         this.setProperties(item);
@@ -126,7 +127,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         });
 
         if (!item) {
-            throw new NotFoundError(`Item not found.`);
+            throw new NotFoundError(`${this.model_name} not found`);
         }
 
         this.setProperties(item);
