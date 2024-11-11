@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Provider } from 'react-redux';
+
+import { GlobalStyle } from '../ui/index.styles';
 
 import { store } from '../redux/store';
 
 import Main from './Main';
 
-import { GlobalStyle } from '../ui/index.styles';
-
-function App() {
+function App(): ReactElement {
     return (
         <Provider store={store}>
             <GlobalStyle />
