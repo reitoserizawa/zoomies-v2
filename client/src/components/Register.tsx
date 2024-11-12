@@ -67,7 +67,7 @@ const Register: React.FC = () => {
     return (
         <FullScreenContainer>
             <FlexContainer gap='10px'>
-                <ImgContainer size={dogPawImg.size.small}>
+                <ImgContainer height={dogPawImg.size.small}>
                     <img src={dogPawImg.src} alt={dogPawImg.alt} />
                 </ImgContainer>
                 <H2>Register your Zoomies account</H2>
