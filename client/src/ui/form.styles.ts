@@ -5,7 +5,10 @@ interface InputProps {
 }
 
 interface ButtonProps {
+    $width?: string;
+    $opacity?: number;
     $disabled?: boolean;
+    $margin?: string;
 }
 
 export const Input = styled.input<InputProps>`
@@ -26,10 +29,10 @@ export const LogInForm = styled.form`
 `;
 
 export const Button = styled.button<ButtonProps>`
-    margin: 32px 0px;
+    margin: ${({ $margin }) => ($margin ? $margin : '32px 0px;')};
 
     height: 33px;
-    width: 100%;
+    width: ${({ $width }) => ($width ? $width : '100%')};
 
     border-radius: 4px;
     border: none;
@@ -38,7 +41,7 @@ export const Button = styled.button<ButtonProps>`
     color: white;
 
     cursor: ${({ $disabled }) => ($disabled ? 'normal' : 'pointer')};
-    opacity: ${({ $disabled }) => ($disabled ? '0.5' : '1.0')};
+    opacity: ${({ $opacity, $disabled }) => ($opacity ? $opacity : $disabled ? 0.5 : 1.0)};
 
     z-index: 100000000;
 
