@@ -1,19 +1,54 @@
 import styled from 'styled-components';
 
-export const H1 = styled.h1`
-    font-size: 2em;
-`;
+interface TextTagProps {
+    fontWeight?: number;
 
-export const H2 = styled.h2`
-    font-size: 1.5em;
-`;
+    color?: string;
+    size?: string;
 
-export const H3 = styled.h3`
-    font-size: 1em;
-`;
+    margin?: string;
+    noMargin?: boolean;
+}
 
-export const P = styled.p<{ color?: string; margin?: string }>`
-    font-size: 1em;
+export const H1 = styled.h1<TextTagProps>`
+    font-size: ${({ size }) => (size ? size : '2em')};
+
     color: ${({ color }) => (color ? color : 'black')};
-    margin: ${({ margin }) => (margin ? margin : '16px')};
+    margin: ${({ margin, noMargin }) => (margin ? margin : noMargin ? '0px' : '16px')};
+
+    font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : '700')};
+`;
+
+export const H2 = styled.h2<TextTagProps>`
+    font-size: ${({ size }) => (size ? size : '1.5em')};
+
+    color: ${({ color }) => (color ? color : 'black')};
+    margin: ${({ margin, noMargin }) => (margin ? margin : noMargin ? '0px' : '16px')};
+
+    font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : '700')};
+`;
+
+export const H3 = styled.h3<TextTagProps>`
+    font-size: ${({ size }) => (size ? size : '1em')};
+
+    color: ${({ color }) => (color ? color : 'black')};
+    margin: ${({ margin, noMargin }) => (margin ? margin : noMargin ? '0px' : '16px')};
+
+    font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : '700')};
+`;
+
+export const H4 = styled.h3<TextTagProps>`
+    font-size: ${({ size }) => (size ? size : '1em')};
+
+    color: ${({ color }) => (color ? color : 'black')};
+    margin: ${({ margin, noMargin }) => (margin ? margin : noMargin ? '0px' : '16px')};
+
+    font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : '700')};
+`;
+
+export const P = styled.p<TextTagProps>`
+    font-size: ${({ size }) => (size ? size : '1em')};
+
+    color: ${({ color }) => (color ? color : 'black')};
+    margin: ${({ margin, noMargin }) => (margin ? margin : noMargin ? '0px' : '16px')};
 `;
