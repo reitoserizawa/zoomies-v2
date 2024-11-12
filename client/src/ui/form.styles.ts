@@ -43,8 +43,6 @@ export const Button = styled.button<ButtonProps>`
     cursor: ${({ $disabled }) => ($disabled ? 'normal' : 'pointer')};
     opacity: ${({ $opacity, $disabled }) => ($opacity ? $opacity : $disabled ? 0.5 : 1.0)};
 
-    z-index: 100000000;
-
     font-size: 1em;
 
     display: flex;

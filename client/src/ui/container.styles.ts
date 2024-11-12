@@ -32,7 +32,7 @@ export const FullScreenContainer = styled.div`
     right: 0;
     bottom: 0;
     overflow-y: auto;
-    z-index: 999999;
+
     max-width: 100%;
     max-height: 100%;
 
