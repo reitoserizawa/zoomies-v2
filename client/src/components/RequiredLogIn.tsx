@@ -6,6 +6,7 @@ import { ChildrenProps } from '../interfaces/react-children';
 import { useAppSelector } from '../redux/hooks/hooks';
 
 import FullScreenLoader from './FullScreenLoader';
+import NavBar from './NavBar';
 
 const RequiredLogin: React.FC<ChildrenProps> = ({ children }) => {
     const loading = useAppSelector(state => state.user.loading);
@@ -21,7 +22,18 @@ const RequiredLogin: React.FC<ChildrenProps> = ({ children }) => {
         }
     }, [signedIn, loading, navigate]);
 
-    return <>{loading ? <FullScreenLoader /> : children}</>;
+    return (
+        <>
+            {loading ? (
+                <FullScreenLoader />
+            ) : (
+                <>
+                    <NavBar />
+                    {children}
+                </>
+            )}
+        </>
+    );
 };
 
 export default RequiredLogin;
