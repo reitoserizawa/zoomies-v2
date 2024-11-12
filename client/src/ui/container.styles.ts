@@ -8,8 +8,19 @@ interface FlexContainerProps {
 }
 
 interface ImgContainerProps {
-    size?: string;
+    height?: string;
+    width?: string;
 }
+
+export const Container = styled.div`
+    min-height: 100vh;
+    width: 1200px;
+    min-width: 340px;
+
+    padding-top: 60px;
+
+    margin: auto;
+`;
 
 export const FullScreenContainer = styled.div`
     display: flex;
@@ -29,6 +40,7 @@ export const FullScreenContainer = styled.div`
 `;
 
 export const FlexContainer = styled.div<FlexContainerProps>`
+    height: 100%;
     width: 100%;
 
     display: flex;
@@ -38,13 +50,56 @@ export const FlexContainer = styled.div<FlexContainerProps>`
     gap: ${({ gap }) => (gap ? gap : '0em')};
 `;
 
+// img
+
 export const ImgContainer = styled.div<ImgContainerProps>`
     display: flex;
     align-items: center;
     justify-content: center;
 
     img {
-        height: ${({ size }) => (size ? size : '100px')};
-        width: auto;
+        object-fit: cover;
+
+        border-radius: 5px;
+
+        height: ${({ height }) => (height ? height : '100px')};
+        width: ${({ width }) => (width ? width : 'auto')};
     }
+`;
+
+export const RoundImgContainer = styled.div<ImgContainerProps>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        height: ${({ height }) => (height ? height : '40px')};
+        width: ${({ width }) => (width ? width : '40px')};
+
+        object-fit: cover;
+        border-radius: 50%;
+    }
+`;
+
+// nav
+
+export const NavBarContainer = styled.nav`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 60px;
+    background: #f7f7f7;
+
+    padding: 5px 20px;
+`;
+
+export const NavBarIconContainer = styled.div`
+    width: 150px;
+    background: #f7f7f7;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
