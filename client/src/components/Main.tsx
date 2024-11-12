@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import LogIn from './LogIn';
 import Register from './Register';
-import Profile from './Profile';
 import RequiredLogin from './RequiredLogIn';
+import Dashboard from './Dashboard';
 
 const Main: React.FC = () => {
     // TODO: add jwt verification and lead to log in page if not verified
@@ -15,7 +15,7 @@ const Main: React.FC = () => {
                     path={'/'}
                     element={
                         <RequiredLogin>
-                            <Profile />
+                            <Dashboard />
                         </RequiredLogin>
                     }
                 />
@@ -26,7 +26,7 @@ const Main: React.FC = () => {
                     path='*'
                     element={
                         <RequiredLogin>
-                            <Profile />
+                            <Dashboard />
                         </RequiredLogin>
                     }
                 />
