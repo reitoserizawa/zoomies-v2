@@ -7,8 +7,9 @@ import PrismaClientModel from './prisma-client';
 import User from './user';
 
 class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
-    public_properties = ['name', 'owner', 'owner_id', 'created_at'];
-    updatable_properties = ['name', 'owner'];
+    public_properties = ['name', 'owner', 'type', 'breed', 'birthday', 'owner_id', 'created_at'];
+    include_properties = ['owner', 'checkIns'];
+    updatable_properties = ['name', 'owner', 'type', 'breed', 'birthday'];
 
     static model_name: Prisma.ModelName = 'Pet';
     static uncap_model_name: Uncapitalize<Prisma.ModelName> = 'pet';
@@ -43,7 +44,11 @@ class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
             name: properties.name,
             owner: {
                 connect: owner_info
-            }
+            },
+            type: 'Dog',
+            breed: properties.breed,
+            birthday: properties.birthday,
+            introduction: properties.introduction
         });
 
         const new_pet = await PrismaClientModel.prisma.pet.create({ data: { ...validated_payload } });

@@ -8,10 +8,12 @@ export interface PetInterface extends BaseInterface {
     owner?: UserInterface;
     owner_id: number;
 
-    type: string | null;
-    breed: string | null;
+    type: string;
+    breed: string;
 
     birthday: Date | null;
+
+    introduction: string;
 
     check_ins?: CheckInInterface[];
 
