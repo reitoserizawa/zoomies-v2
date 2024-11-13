@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ChildrenProps } from '../interfaces/react-children';
+import { ChildrenProps } from '../states/react-children';
 
 import { useAppSelector } from '../redux/hooks/hooks';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconProps } from '../../interfaces/icon';
+import { IconProps } from '../../states/icon';
 
 const BirthdayCakeIcon: React.FC<IconProps> = ({ size = '24px', color = '#000' }) => (
     <svg height={size} viewBox='0 -960 960 960' width={size} fill={color}>

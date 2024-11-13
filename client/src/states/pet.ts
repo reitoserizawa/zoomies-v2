@@ -8,10 +8,12 @@ export interface PetState extends BaseState {
     owner?: UserState;
     owner_id: number;
 
-    type: string | null;
-    breed: string | null;
+    type: string;
+    breed: string;
 
     birthday: Date | null;
+
+    introduction: string;
 
     check_ins?: CheckInState[];
 

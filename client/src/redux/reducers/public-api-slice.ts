@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { UserCreateRequest, UserLogInPayload, UserLogInRequest } from '../../interfaces/user';
+import { UserCreateRequest, UserLogInPayload, UserLogInRequest } from '../../states/user';
 
 export const publicApiSlice = createApi({
     reducerPath: 'publicApiSlice',

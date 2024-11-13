@@ -2,7 +2,7 @@ import React from 'react';
 
 import { P } from '../ui/heading.styles';
 
-import { ErrorState } from '../interfaces/error';
+import { ErrorState } from '../states/error';
 
 const Error: React.FC<ErrorState> = ({ message = 'Unknown error occured' }) => {
     return (

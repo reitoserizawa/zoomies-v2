@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AppState } from '../../interfaces/app';
+import { AppState } from '../../states/app';
 
 const initialState: AppState = {
     isPetFormModalOpen: false
