@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { UserLogInRequest, UserState } from '../../interfaces/user';
+import { UserLogInRequest, UserState } from '../../states/user';
+import { PetCreateState, PetState } from '../../states/pet';
 
 export const protectedApiSlice = createApi({
     reducerPath: 'protectedApiSlice',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3000/api/public',
+        baseUrl: 'http://localhost:3000/api/protected',
         prepareHeaders: headers => {
             const token = localStorage.getItem('token');
 
@@ -25,8 +26,20 @@ export const protectedApiSlice = createApi({
                     password
                 }
             })
+        }),
+        createPet: builder.mutation<PetState, PetCreateState>({
+            query: ({ name, breed, birthday, introduction }) => ({
+                url: `pets`,
+                method: 'POST',
+                body: {
+                    name,
+                    breed,
+                    birthday,
+                    introduction
+                }
+            })
         })
     })
 });
 
-export const { useLogInUserMutation } = protectedApiSlice;
+export const { useLogInUserMutation, useCreatePetMutation } = protectedApiSlice;

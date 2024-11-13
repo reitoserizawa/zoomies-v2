@@ -19,3 +19,15 @@ export interface PetState extends BaseState {
 
     created_at: Date;
 }
+
+export interface PetCreateState {
+    name: string;
+
+    // *: type Dog is added in the backend for now
+    // type: string;
+    breed: string;
+
+    birthday: Date | null;
+
+    introduction: string;
+}
