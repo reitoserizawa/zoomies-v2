@@ -6,9 +6,10 @@ export interface PetState extends BaseState {
     name: string;
 
     owner?: UserState;
-    owner_id: number;
+    owner_id?: number;
 
-    type: string;
+    // *: type Dog is added in the backend for now
+    // type: string;
     breed: string;
 
     birthday: Date | null;
@@ -17,7 +18,7 @@ export interface PetState extends BaseState {
 
     check_ins?: CheckInState[];
 
-    created_at: Date;
+    created_at?: Date;
 }
 
 export interface PetCreateState {
