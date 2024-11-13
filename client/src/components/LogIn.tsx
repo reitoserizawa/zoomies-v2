@@ -67,7 +67,7 @@ const LogIn: React.FC = () => {
 
     return (
         <FullScreenContainer>
-            <FlexContainer gap='10px'>
+            <FlexContainer $gap='10px'>
                 <ImgContainer height={dogPawImg.size.small}>
                     <img src={dogPawImg.src} alt={dogPawImg.alt} />
                 </ImgContainer>

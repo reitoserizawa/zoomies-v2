@@ -18,11 +18,11 @@ const PetCard: React.FC = () => (
         <H3 size='1.3em' style={{ marginBottom: '0px' }}>
             Tsuki
         </H3>
-        <FlexContainer flexDirection='row'>
+        <FlexContainer $flexDirection='row'>
             <BirthdayCakeIcon size='1em' />
             <H4>January 26th, 2023</H4>
         </FlexContainer>
-        <P noMargin>Hi, my name is Tsuki. I am a daughter of Davide and Reito. I love running around the dog park and do fetching. Sometimes I like to eat shit! Nice to meet you.</P>
+        <P $noMargin>Hi, my name is Tsuki. I am a daughter of Davide and Reito. I love running around the dog park and do fetching. Nice to meet you.</P>
     </FlexContainer>
 );
 

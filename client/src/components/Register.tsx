@@ -66,17 +66,17 @@ const Register: React.FC = () => {
 
     return (
         <FullScreenContainer>
-            <FlexContainer gap='10px'>
+            <FlexContainer $gap='10px'>
                 <ImgContainer height={dogPawImg.size.small}>
                     <img src={dogPawImg.src} alt={dogPawImg.alt} />
                 </ImgContainer>
                 <H2>Register your Zoomies account</H2>
                 <LogInForm onSubmit={register}>
-                    <P>Email</P>
+                    <P>Email*</P>
                     <Input type='text' value={email} onChange={e => setEmail(e.target.value)} $outlineRed={!email}></Input>
-                    <P>Username</P>
+                    <P>Username*</P>
                     <Input type='text' value={username} onChange={e => setUsername(e.target.value)} $outlineRed={!username}></Input>
-                    <P>Password</P>
+                    <P>Password*</P>
                     <Input type='password' value={password} onChange={e => setPassword(e.target.value)} $outlineRed={!password}></Input>
                     <Button type='submit' $disabled={!username || !password || !email}>
                         Register

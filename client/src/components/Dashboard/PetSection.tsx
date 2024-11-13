@@ -17,7 +17,7 @@ const PetSection: React.FC = () => {
 
     return (
         <>
-            <FlexContainer flexDirection='row' justifyContent='space-between'>
+            <FlexContainer $flexDirection='row' $justifyContent='space-between'>
                 <H2>Pet</H2>
                 <Button $width='auto' $margin='0px' onClick={() => dispatch(setIsPetFormModalOpen(true))}>
                     <AddIcon size='24px' color='#fff' />

@@ -17,7 +17,7 @@ const ProfileHeader: React.FC = () => (
                 <img src={coverExaple.src} alt={coverExaple.alt} />
             </ImgContainer>
         </div>
-        <FlexContainer flexDirection='row' style={{ marginBottom: '30px' }}>
+        <FlexContainer $flexDirection='row' style={{ marginBottom: '30px' }}>
             <div
                 style={{
                     marginTop: '-100px',
@@ -39,8 +39,8 @@ const ProfileHeader: React.FC = () => (
                     flex: '80%'
                 }}
             >
-                <H2 margin='16px 0px 0px 0px'>Reito Serizawa</H2>
-                <FlexContainer flexDirection='row' justifyContent='flex-start'>
+                <H2 $margin='16px 0px 0px 0px'>Reito Serizawa</H2>
+                <FlexContainer $flexDirection='row' $justifyContent='flex-start'>
                     <MailIcon />
                     <H3 fontWeight={500}>reitoserizawa@gmail.com</H3>
                 </FlexContainer>

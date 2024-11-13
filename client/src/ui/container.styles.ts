@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 interface FlexContainerProps {
-    flexDirection?: string;
-    alignItems?: string;
-    justifyContent?: string;
-    gap?: string;
+    $flexDirection?: string;
+    $alignItems?: string;
+    $justifyContent?: string;
+    $gap?: string;
 }
 
 interface ImgContainerProps {
@@ -44,10 +44,10 @@ export const FlexContainer = styled.div<FlexContainerProps>`
     width: 100%;
 
     display: flex;
-    flex-direction: ${({ flexDirection }) => (flexDirection ? flexDirection : 'column')};
-    align-items: ${({ alignItems }) => (alignItems ? alignItems : 'center')};
-    justify-content: ${({ justifyContent }) => (justifyContent ? justifyContent : 'center')};
-    gap: ${({ gap }) => (gap ? gap : '0em')};
+    flex-direction: ${({ $flexDirection }) => ($flexDirection ? $flexDirection : 'column')};
+    align-items: ${({ $alignItems }) => ($alignItems ? $alignItems : 'center')};
+    justify-content: ${({ $justifyContent }) => ($justifyContent ? $justifyContent : 'center')};
+    gap: ${({ $gap }) => ($gap ? $gap : '0em')};
 `;
 
 // img

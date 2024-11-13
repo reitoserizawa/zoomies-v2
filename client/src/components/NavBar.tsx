@@ -10,13 +10,13 @@ import DogParkIcon from '../images/icons/DogParkicon';
 const NavBar: React.FC = () => {
     return (
         <NavBarContainer>
-            <FlexContainer flexDirection='row' justifyContent='space-between' alignItems='center'>
+            <FlexContainer $flexDirection='row' $justifyContent='space-between' $alignItems='center'>
                 <ImgContainer height='40px'>
                     <img src={dogPawWithWhiteImg.src} alt={dogPawWithWhiteImg.alt} />
                 </ImgContainer>
                 <H1 style={{ margin: '0px' }}>Zoomies</H1>
 
-                <FlexContainer flexDirection='row'>
+                <FlexContainer $flexDirection='row'>
                     <NavBarIconContainer>
                         <HomeIcon size='30px' />
                     </NavBarIconContainer>
