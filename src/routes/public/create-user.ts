@@ -11,11 +11,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
         if (!password || typeof password !== 'string') throw new BadRequestError('Username is not valid');
         if (!email || typeof email !== 'string') throw new BadRequestError('Username is not valid');
 
-        const user: User = await User.create({
-            email,
-            username,
-            password
-        });
+        const user: User = await User.create(req.body);
         const token = user.generateToken();
 
         res.json({ user: await user.prepareForCollection(), token });
