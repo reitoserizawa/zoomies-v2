@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import LogIn from './LogIn';
 import Register from './Register';
-import RequiredLogin from './RequiredLogIn';
+import PreLogin from './PreLogi';
 import Dashboard from './Dashboard';
 
 const Main: React.FC = () => {
@@ -14,20 +14,33 @@ const Main: React.FC = () => {
                 <Route
                     path={'/'}
                     element={
-                        <RequiredLogin>
+                        <PreLogin>
                             <Dashboard />
-                        </RequiredLogin>
+                        </PreLogin>
                     }
                 />
-                <Route path={'/login'} element={<LogIn />} />
-                <Route path={'/register'} element={<Register />} />
-
+                <Route
+                    path={'/login'}
+                    element={
+                        <PreLogin>
+                            <LogIn />
+                        </PreLogin>
+                    }
+                />
+                <Route
+                    path={'/register'}
+                    element={
+                        <PreLogin>
+                            <Register />
+                        </PreLogin>
+                    }
+                />
                 <Route
                     path='*'
                     element={
-                        <RequiredLogin>
+                        <PreLogin>
                             <Dashboard />
-                        </RequiredLogin>
+                        </PreLogin>
                     }
                 />
             </Routes>

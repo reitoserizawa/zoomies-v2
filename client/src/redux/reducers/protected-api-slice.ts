@@ -27,6 +27,11 @@ export const protectedApiSlice = createApi({
                 }
             })
         }),
+        getUserDetails: builder.query<UserState, null>({
+            query: () => ({
+                url: `users`
+            })
+        }),
         createPet: builder.mutation<PetState, PetCreateState>({
             query: ({ name, breed, birthday, introduction }) => ({
                 url: `pets`,
@@ -42,4 +47,4 @@ export const protectedApiSlice = createApi({
     })
 });
 
-export const { useLogInUserMutation, useCreatePetMutation } = protectedApiSlice;
+export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation } = protectedApiSlice;

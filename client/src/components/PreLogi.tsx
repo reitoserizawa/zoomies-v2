@@ -3,28 +3,38 @@ import { useNavigate } from 'react-router-dom';
 
 import { ChildrenProps } from '../states/react-children';
 
-import { useAppSelector } from '../redux/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 
 import FullScreenLoader from './FullScreenLoader';
 import NavBar from './NavBar';
+import { useGetUserDetailsQuery } from '../redux/reducers/protected-api-slice';
+import { setLoading, setUserDetails } from '../redux/reducers/userSlice';
 
-const RequiredLogin: React.FC<ChildrenProps> = ({ children }) => {
+const PreLogin: React.FC<ChildrenProps> = ({ children }) => {
     const loading = useAppSelector(state => state.user.loading);
     const signedIn = useAppSelector(state => state.user.signedIn);
 
+    const { data, isLoading } = useGetUserDetailsQuery(null);
+
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        if (!token && !signedIn && !loading) {
+        if (!isLoading && data && !signedIn && token) {
+            dispatch(setLoading());
+            dispatch(setUserDetails(data));
+        }
+
+        if (!isLoading && (!data || !signedIn || !token)) {
             navigate('/login');
         }
-    }, [signedIn, loading, navigate]);
+    }, [signedIn, data, isLoading, navigate, dispatch]);
 
     return (
         <>
-            {loading ? (
+            {loading || isLoading ? (
                 <FullScreenLoader />
             ) : (
                 <>
@@ -36,4 +46,4 @@ const RequiredLogin: React.FC<ChildrenProps> = ({ children }) => {
     );
 };
 
-export default RequiredLogin;
+export default PreLogin;

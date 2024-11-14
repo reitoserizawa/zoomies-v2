@@ -8,7 +8,7 @@ import { FlexContainer, FullScreenContainer, ImgContainer } from '../ui/containe
 
 import { useLogInUserMutation } from '../redux/reducers/public-api-slice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
-import { logIn, resetUserState, setLoading, setUserError } from '../redux/reducers/userSlice';
+import { setUserDetails, resetUserState, setLoading, setUserError } from '../redux/reducers/userSlice';
 
 import Error from './Error';
 
@@ -49,7 +49,7 @@ const LogIn: React.FC = () => {
 
                     const user_details = data?.user;
                     if (user_details) {
-                        dispatch(logIn(user_details));
+                        dispatch(setUserDetails(user_details));
                     }
                 })
                 .catch(error => {
