@@ -1,3 +1,4 @@
 export interface AppState {
-    isPetFormModalOpen: boolean;
+    isPetCreateFormModalOpen: boolean;
+    isPetUpdateFormModalOpen: boolean;
 }

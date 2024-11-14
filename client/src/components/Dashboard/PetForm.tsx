@@ -2,15 +2,17 @@ import React, { useCallback, useRef, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import DatePicker from 'react-datepicker';
 
+import { PetState } from '../../states/pet';
+
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
+import { togglePetCreateFormModal, togglePetUpdateFormModal } from '../../redux/reducers/appSlice';
+import { setPetError } from '../../redux/reducers/petSlice';
+import { useCreatePetMutation, useUpdatePetDetailsMutation } from '../../redux/reducers/protected-api-slice';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Input, InputProps } from '../../ui/form.styles';
 import { P } from '../../ui/heading.styles';
 import { FlexContainer } from '../../ui/container.styles';
-
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
-import { setIsPetFormModalOpen } from '../../redux/reducers/appSlice';
-import { setPetError } from '../../redux/reducers/petSlice';
-import { useCreatePetMutation } from '../../redux/reducers/protected-api-slice';
 
 import useClickOutside from '../../hooks/useClickOutisde';
 
@@ -67,57 +69,70 @@ const DatePickerStyles = createGlobalStyle<InputProps>`
     }
 `;
 
-const PetForm: React.FC = () => {
-    const [name, setName] = useState<string>('');
-    const [breed, setBreed] = useState<string>('');
-    const [introduction, setIntroduction] = useState<string>('');
-    const [birthday, setBirthday] = useState<Date | null>(null);
+const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, name: current_name, breed: current_breed, introduction: current_introduction, birthday: current_birthday, toUpdate }) => {
+    const [name, setName] = useState<string>(current_name ? current_name : '');
+    const [breed, setBreed] = useState<string>(current_breed ? current_breed : '');
+    const [introduction, setIntroduction] = useState<string>(current_introduction ? current_introduction : '');
+    const [birthday, setBirthday] = useState<Date | null>(current_birthday ? current_birthday : null);
 
     const ref = useRef<HTMLDivElement>(null);
 
-    const isPetFormModalOpen = useAppSelector(state => state.app.isPetFormModalOpen);
     const error = useAppSelector(state => state?.pet?.error);
 
     const [createPet] = useCreatePetMutation();
+    const [updatePetDetails] = useUpdatePetDetailsMutation();
 
     const dispatch = useAppDispatch();
 
     const closeModal = useCallback(() => {
-        dispatch(setIsPetFormModalOpen(false));
-    }, [dispatch]);
+        toUpdate ? dispatch(togglePetUpdateFormModal(false)) : dispatch(togglePetCreateFormModal(false));
+    }, [toUpdate, dispatch]);
 
     useClickOutside(closeModal, ref);
 
-    const handleCreatePet = useCallback(
-        (e: React.FormEvent) => {
-            e.preventDefault();
+    const handleCreateOrUpdatePet = (e: React.FormEvent) => {
+        e.preventDefault();
 
-            if (!name) return dispatch(setPetError({ message: 'Name is required' }));
-            if (!breed) return dispatch(setPetError({ message: 'Password is required' }));
-            if (!introduction) return dispatch(setPetError({ message: 'Introduction is required' }));
+        if (!name) return dispatch(setPetError({ message: 'Name is required' }));
+        if (!breed) return dispatch(setPetError({ message: 'Password is required' }));
+        if (!introduction) return dispatch(setPetError({ message: 'Introduction is required' }));
 
-            createPet({ name, breed, introduction, birthday })
-                .unwrap()
-                .then(() => {
-                    closeModal();
-                })
-                .catch(error => {
-                    const statusCode = error?.status;
-                    const message = error?.data?.error?.message;
+        toUpdate ? handleUpdatePet() : handleCreatePet();
+    };
 
-                    dispatch(setPetError({ message, statusCode }));
-                });
-        },
-        [name, breed, introduction, birthday, createPet, dispatch, closeModal]
-    );
+    const handleUpdatePet = useCallback(() => {
+        updatePetDetails({ id, name, breed, introduction, birthday })
+            .unwrap()
+            .then(() => {
+                closeModal();
+            })
+            .catch(error => {
+                const statusCode = error?.status;
+                const message = error?.data?.error?.message;
 
-    if (!isPetFormModalOpen) return null;
+                dispatch(setPetError({ message, statusCode }));
+            });
+    }, [id, name, breed, introduction, birthday, updatePetDetails, dispatch, closeModal]);
+
+    const handleCreatePet = useCallback(() => {
+        createPet({ name, breed, introduction, birthday })
+            .unwrap()
+            .then(() => {
+                closeModal();
+            })
+            .catch(error => {
+                const statusCode = error?.status;
+                const message = error?.data?.error?.message;
+
+                dispatch(setPetError({ message, statusCode }));
+            });
+    }, [name, breed, introduction, birthday, createPet, dispatch, closeModal]);
 
     return (
         <ModalContainer>
             <FlexContainer>
                 <ModalContentContainer ref={ref}>
-                    <form onSubmit={handleCreatePet}>
+                    <form onSubmit={handleCreateOrUpdatePet}>
                         <P>Name*</P>
                         <Input type='text' value={name} onChange={e => setName(e.target.value)} $outlineRed={!name} />
                         <P>Birthday</P>
@@ -129,7 +144,7 @@ const PetForm: React.FC = () => {
                         <Input type='text' value={introduction} onChange={e => setIntroduction(e.target.value)} $outlineRed={!introduction} />
 
                         <Button type='submit' $margin='18px 0px 0px 0px'>
-                            Add Pet
+                            {toUpdate ? 'Update Pet' : 'Add Pet'}
                         </Button>
                     </form>
                     {error && <Error message={error.message} />}

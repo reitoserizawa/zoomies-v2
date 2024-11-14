@@ -1,5 +1,11 @@
 import React, { useCallback } from 'react';
 
+import { PetState } from '../../states/pet';
+
+import { useDeletePetMutation } from '../../redux/reducers/protected-api-slice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
+import { togglePetUpdateFormModal } from '../../redux/reducers/appSlice';
+
 import { FlexContainer, RoundImgContainer } from '../../ui/container.styles';
 import { H3, H4, P } from '../../ui/heading.styles';
 import { Button } from '../../ui/form.styles';
@@ -10,11 +16,13 @@ import BirthdayCakeIcon from '../../images/icons/BirthdayCakeIcon';
 import EditIcon from '../../images/icons/EditIcon';
 import DeleteIcon from '../../images/icons/DeleteIcon';
 
-import { useDeletePetMutation } from '../../redux/reducers/protected-api-slice';
-
-import { PetState } from '../../states/pet';
+import PetForm from './PetForm';
 
 const PetCard: React.FC<Partial<PetState>> = ({ id, name, breed, birthday, introduction }) => {
+    const dispatch = useAppDispatch();
+
+    const isPetUpdateFormModalOpen = useAppSelector(state => state.app.isPetUpdateFormModalOpen);
+
     const [deletePet] = useDeletePetMutation();
 
     const handleDeletePet = useCallback(() => {
@@ -30,36 +38,39 @@ const PetCard: React.FC<Partial<PetState>> = ({ id, name, breed, birthday, intro
     // TODO: update date formatting
 
     return (
-        <FlexContainer style={{ marginTop: '30px', marginBottom: '30px' }}>
-            <RoundImgContainer height='150px' width='150px'>
-                <img src={dogProfileImg.src} alt={dogProfileImg.alt} />
-            </RoundImgContainer>
-            <Button $disabled $margin='10px 0px 0px 0px' $opacity={1.0} $width='auto'>
-                {breed}
-            </Button>
-            <H3 size='1.3em'>{name}</H3>
-            {birthday && (
-                <FlexContainer $flexDirection='row' $gap='10px' style={{ marginBottom: '16px' }}>
-                    <BirthdayCakeIcon size='1em' />
-                    <H4 $noMargin>{birthday.toString()}</H4>
+        <>
+            <FlexContainer style={{ marginTop: '30px', marginBottom: '30px' }}>
+                <RoundImgContainer height='150px' width='150px'>
+                    <img src={dogProfileImg.src} alt={dogProfileImg.alt} />
+                </RoundImgContainer>
+                <Button $disabled $margin='10px 0px 0px 0px' $opacity={1.0} $width='auto'>
+                    {breed}
+                </Button>
+                <H3 size='1.3em'>{name}</H3>
+                {birthday && (
+                    <FlexContainer $flexDirection='row' $gap='10px' style={{ marginBottom: '16px' }}>
+                        <BirthdayCakeIcon size='1em' />
+                        <H4 $noMargin>{birthday.toString()}</H4>
+                    </FlexContainer>
+                )}
+                <P $noMargin style={{ marginBottom: '16px' }}>
+                    {introduction}
+                </P>
+                <FlexContainer $flexDirection='row' $gap='50px'>
+                    <Button $width='150px' $margin='0px' $borderRadius='30px' $edit onClick={() => dispatch(togglePetUpdateFormModal(true))}>
+                        <FlexContainer $flexDirection='row' $gap='5px'>
+                            Edit <EditIcon size='1em' color='white' />
+                        </FlexContainer>
+                    </Button>
+                    <Button $width='150px' $margin='0px' $borderRadius='30px' $delete onClick={handleDeletePet}>
+                        <FlexContainer $flexDirection='row' $gap='5px'>
+                            Delete <DeleteIcon size='1em' color='white' />
+                        </FlexContainer>
+                    </Button>
                 </FlexContainer>
-            )}
-            <P $noMargin style={{ marginBottom: '16px' }}>
-                {introduction}
-            </P>
-            <FlexContainer $flexDirection='row' $gap='50px'>
-                <Button $width='150px' $margin='0px' $borderRadius='30px' $edit onClick={() => window.confirm('Are you sure you want to delete the pet?')}>
-                    <FlexContainer $flexDirection='row' $gap='5px'>
-                        Edit <EditIcon size='1em' color='white' />
-                    </FlexContainer>
-                </Button>
-                <Button $width='150px' $margin='0px' $borderRadius='30px' $delete onClick={handleDeletePet}>
-                    <FlexContainer $flexDirection='row' $gap='5px'>
-                        Delete <DeleteIcon size='1em' color='white' />
-                    </FlexContainer>
-                </Button>
             </FlexContainer>
-        </FlexContainer>
+            {isPetUpdateFormModalOpen && <PetForm id={id} name={name} breed={breed} birthday={birthday} introduction={introduction} toUpdate={true} />}
+        </>
     );
 };
 

@@ -2,22 +2,29 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AppState } from '../../states/app';
 
 const initialState: AppState = {
-    isPetFormModalOpen: false
+    isPetCreateFormModalOpen: false,
+    isPetUpdateFormModalOpen: false
 };
 
 const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
-        setIsPetFormModalOpen: (state, action) => {
+        togglePetCreateFormModal: (state, action) => {
             return {
                 ...state,
-                isPetFormModalOpen: action.payload
+                isPetCreateFormModalOpen: action.payload
+            };
+        },
+        togglePetUpdateFormModal: (state, action) => {
+            return {
+                ...state,
+                isPetUpdateFormModalOpen: action.payload
             };
         }
     }
 });
 
-export const { setIsPetFormModalOpen } = appSlice.actions;
+export const { togglePetCreateFormModal, togglePetUpdateFormModal } = appSlice.actions;
 
 export default appSlice.reducer;
