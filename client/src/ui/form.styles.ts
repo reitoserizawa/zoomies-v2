@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface InputProps {
+export interface InputProps {
     $outlineRed?: boolean;
 }
 
@@ -9,6 +9,9 @@ interface ButtonProps {
     $opacity?: number;
     $disabled?: boolean;
     $margin?: string;
+    $borderRadius?: string;
+    $delete?: boolean;
+    $edit?: boolean;
 }
 
 export const Input = styled.input<InputProps>`
@@ -26,6 +29,10 @@ export const Input = styled.input<InputProps>`
 export const LogInForm = styled.form`
     min-width: 320px;
     max-width: 1200px;
+
+    p {
+        margin: 16px 16px 16px 8px;
+    }
 `;
 
 export const Button = styled.button<ButtonProps>`
@@ -34,11 +41,8 @@ export const Button = styled.button<ButtonProps>`
     height: 33px;
     width: ${({ $width }) => ($width ? $width : '100%')};
 
-    border-radius: 4px;
+    border-radius: ${({ $borderRadius }) => ($borderRadius ? $borderRadius : '4px')};
     border: none;
-
-    background-color: gray;
-    color: white;
 
     cursor: ${({ $disabled }) => ($disabled ? 'normal' : 'pointer')};
     opacity: ${({ $opacity, $disabled }) => ($opacity ? $opacity : $disabled ? 0.5 : 1.0)};
@@ -49,4 +53,19 @@ export const Button = styled.button<ButtonProps>`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    background-color: gray;
+    color: white;
+
+    ${({ $delete }) =>
+        $delete &&
+        `
+        background-color: #bb2124;
+    `}
+
+    ${({ $edit }) =>
+        $edit &&
+        `
+        background-color: #f0ad4e;
+    `}
 `;
