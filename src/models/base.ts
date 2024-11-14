@@ -122,7 +122,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
                 id: this.id
             },
             data: {
-                update_input
+                ...update_input
             }
         });
 
