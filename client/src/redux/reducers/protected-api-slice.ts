@@ -44,6 +44,18 @@ export const protectedApiSlice = createApi({
                 }
             })
         }),
+        updatePetDetails: builder.mutation<PetState, Partial<PetState>>({
+            query: ({ id, name, breed, birthday, introduction }) => ({
+                url: `pets/${id}`,
+                method: 'POST',
+                body: {
+                    name,
+                    breed,
+                    birthday,
+                    introduction
+                }
+            })
+        }),
         deletePet: builder.mutation<{ success: boolean }, { id: number }>({
             query: ({ id }) => ({
                 url: `pets/${id}`,
@@ -53,4 +65,4 @@ export const protectedApiSlice = createApi({
     })
 });
 
-export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useDeletePetMutation } = protectedApiSlice;
+export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useUpdatePetDetailsMutation, useDeletePetMutation } = protectedApiSlice;
