@@ -17,7 +17,7 @@ export const protectedApiSlice = createApi({
         }
     }),
     endpoints: builder => ({
-        logInUser: builder.mutation<Partial<UserState>, UserLogInRequest>({
+        logInUser: builder.mutation<UserState, UserLogInRequest>({
             query: ({ username, password }) => ({
                 url: `login`,
                 method: 'POST',
@@ -43,8 +43,14 @@ export const protectedApiSlice = createApi({
                     introduction
                 }
             })
+        }),
+        deletePet: builder.mutation<{ success: boolean }, { id: number }>({
+            query: ({ id }) => ({
+                url: `pets/${id}`,
+                method: 'DELETE'
+            })
         })
     })
 });
 
-export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation } = protectedApiSlice;
+export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useDeletePetMutation } = protectedApiSlice;

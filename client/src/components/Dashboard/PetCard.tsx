@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { FlexContainer, RoundImgContainer } from '../../ui/container.styles';
 import { H3, H4, P } from '../../ui/heading.styles';
@@ -7,23 +7,60 @@ import { Button } from '../../ui/form.styles';
 import { dogProfileImg } from '../../images';
 import BirthdayCakeIcon from '../../images/icons/BirthdayCakeIcon';
 
-const PetCard: React.FC = () => (
-    <FlexContainer style={{ marginTop: '30px', marginBottom: '30px' }}>
-        <RoundImgContainer height='150px' width='150px'>
-            <img src={dogProfileImg.src} alt={dogProfileImg.alt} />
-        </RoundImgContainer>
-        <Button $disabled $margin='10px 0px 0px 0px' $opacity={1.0} $width='auto'>
-            Golden Doddle Mini
-        </Button>
-        <H3 size='1.3em' style={{ marginBottom: '0px' }}>
-            Tsuki
-        </H3>
-        <FlexContainer $flexDirection='row'>
-            <BirthdayCakeIcon size='1em' />
-            <H4>January 26th, 2023</H4>
+import EditIcon from '../../images/icons/EditIcon';
+import DeleteIcon from '../../images/icons/DeleteIcon';
+
+import { useDeletePetMutation } from '../../redux/reducers/protected-api-slice';
+
+import { PetState } from '../../states/pet';
+
+const PetCard: React.FC<Partial<PetState>> = ({ id, name, breed, birthday, introduction }) => {
+    const [deletePet] = useDeletePetMutation();
+
+    const handleDeletePet = useCallback(() => {
+        if (window.confirm(`Are you sure you want to delete ${name}?`) && id) {
+            deletePet({ id })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(err => console.log({ err }));
+        }
+    }, [id, name, deletePet]);
+
+    // TODO: update date formatting
+
+    return (
+        <FlexContainer style={{ marginTop: '30px', marginBottom: '30px' }}>
+            <RoundImgContainer height='150px' width='150px'>
+                <img src={dogProfileImg.src} alt={dogProfileImg.alt} />
+            </RoundImgContainer>
+            <Button $disabled $margin='10px 0px 0px 0px' $opacity={1.0} $width='auto'>
+                {breed}
+            </Button>
+            <H3 size='1.3em'>{name}</H3>
+            {birthday && (
+                <FlexContainer $flexDirection='row' $gap='10px' style={{ marginBottom: '16px' }}>
+                    <BirthdayCakeIcon size='1em' />
+                    <H4 $noMargin>{birthday.toString()}</H4>
+                </FlexContainer>
+            )}
+            <P $noMargin style={{ marginBottom: '16px' }}>
+                {introduction}
+            </P>
+            <FlexContainer $flexDirection='row' $gap='50px'>
+                <Button $width='150px' $margin='0px' $borderRadius='30px' $edit onClick={() => window.confirm('Are you sure you want to delete the pet?')}>
+                    <FlexContainer $flexDirection='row' $gap='5px'>
+                        Edit <EditIcon size='1em' color='white' />
+                    </FlexContainer>
+                </Button>
+                <Button $width='150px' $margin='0px' $borderRadius='30px' $delete onClick={handleDeletePet}>
+                    <FlexContainer $flexDirection='row' $gap='5px'>
+                        Delete <DeleteIcon size='1em' color='white' />
+                    </FlexContainer>
+                </Button>
+            </FlexContainer>
         </FlexContainer>
-        <P $noMargin>Hi, my name is Tsuki. I am a daughter of Davide and Reito. I love running around the dog park and do fetching. Nice to meet you.</P>
-    </FlexContainer>
-);
+    );
+};
 
 export default PetCard;
