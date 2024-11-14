@@ -121,6 +121,12 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         return this;
     }
 
+    setPets(): void {
+        if (this.pets) return;
+
+        this.pets = this.properties.pets?.map(pet => Pet.fromProperties(pet));
+    }
+
     ownsPet(pet: Pet): boolean {
         return pet.properties.owner_id === this.id;
     }
