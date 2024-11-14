@@ -6,11 +6,12 @@ import { BadRequestError, NoAccessError } from '../../../models/errors';
 
 export const updatePetProfile = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const { id: pet_id } = req.query;
-
-        const user = await User.fromJwtPayload(req);
+        const { id } = req.params;
+        const pet_id = parseInt(id);
 
         if (!pet_id || typeof pet_id !== 'number') throw new BadRequestError(`Invalid pet ID`);
+
+        const user = await User.fromJwtPayload(req);
 
         const pet = await Pet.fromId(pet_id);
         const user_owns_pet = user.ownsPet(pet);
@@ -27,11 +28,12 @@ export const updatePetProfile = async (req: CustomRequest, res: Response, next: 
 
 export const deletePet = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const { id: pet_id } = req.query;
-
-        const user = await User.fromJwtPayload(req);
+        const { id } = req.params;
+        const pet_id = parseInt(id);
 
         if (!pet_id || typeof pet_id !== 'number') throw new BadRequestError(`Invalid pet ID`);
+
+        const user = await User.fromJwtPayload(req);
 
         const pet = await Pet.fromId(pet_id);
         const user_owns_pet = user.ownsPet(pet);
