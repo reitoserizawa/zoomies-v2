@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAppDispatch } from '../../redux/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { setIsPetFormModalOpen } from '../../redux/reducers/appSlice';
 
 import { FlexContainer } from '../../ui/container.styles';
@@ -14,6 +14,7 @@ import PetForm from './PetForm';
 
 const PetSection: React.FC = () => {
     const dispatch = useAppDispatch();
+    const pets = useAppSelector(state => state.user.pets);
 
     return (
         <>
@@ -25,7 +26,7 @@ const PetSection: React.FC = () => {
             </FlexContainer>
             <hr />
             <PetForm />
-            <PetCard />
+            {pets && pets.map((pet, idx) => <PetCard key={idx} id={pet.id} name={pet.name} breed={pet.breed} birthday={pet?.birthday} introduction={pet.introduction} />)}
         </>
     );
 };

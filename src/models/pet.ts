@@ -7,7 +7,7 @@ import PrismaClientModel from './prisma-client';
 import User from './user';
 
 class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
-    public_properties = ['name', 'owner', 'type', 'breed', 'birthday', 'owner_id', 'created_at'];
+    public_properties = ['name', 'owner', 'type', 'breed', 'birthday', 'owner_id', 'created_at', 'introduction'];
     include_properties = ['owner', 'check_ins'];
     updatable_properties = ['name', 'owner', 'type', 'breed', 'birthday'];
 
