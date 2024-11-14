@@ -17,7 +17,7 @@ import { AuthError, BadRequestError } from './errors';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
     public_properties = ['email', 'username', 'pets'];
-    include_properties = ['pets', 'checkIns'];
+    include_properties = ['pets', 'check_ins'];
     updatable_properties = ['email', 'username'];
 
     pets?: Pet[];

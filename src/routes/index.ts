@@ -8,6 +8,6 @@ import { auth } from '../middlewares/auth';
 const routes = Router();
 
 routes.use('/public', publicRoutes);
-routes.use('/users', auth, protetdRoutes);
+routes.use('/protected', auth, protetdRoutes);
 
 export default routes;
