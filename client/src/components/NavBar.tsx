@@ -11,12 +11,14 @@ const NavBar: React.FC = () => {
     return (
         <NavBarContainer>
             <FlexContainer $flexDirection='row' $justifyContent='space-between' $alignItems='center'>
-                <ImgContainer height='40px'>
-                    <img src={dogPawWithWhiteImg.src} alt={dogPawWithWhiteImg.alt} />
-                </ImgContainer>
-                <H1 style={{ margin: '0px' }}>Zoomies</H1>
+                <FlexContainer $flexDirection='row' $justifyContent='flex-start' style={{ flexBasis: '33.33%' }}>
+                    <ImgContainer height='40px'>
+                        <img src={dogPawWithWhiteImg.src} alt={dogPawWithWhiteImg.alt} />
+                    </ImgContainer>
+                    <H1 style={{ margin: '0px' }}>Zoomies</H1>
+                </FlexContainer>
 
-                <FlexContainer $flexDirection='row'>
+                <FlexContainer $flexDirection='row' style={{ flexBasis: '33.33%' }}>
                     <NavBarIconContainer>
                         <HomeIcon size='30px' />
                     </NavBarIconContainer>
@@ -24,9 +26,11 @@ const NavBar: React.FC = () => {
                         <DogParkIcon size='30px' />
                     </NavBarIconContainer>
                 </FlexContainer>
-                <RoundImgContainer>
-                    <img src={blankProfileImg.src} alt={blankProfileImg.alt} />
-                </RoundImgContainer>
+                <FlexContainer $flexDirection='row' $justifyContent='flex-end' style={{ flexBasis: '33.33%' }}>
+                    <RoundImgContainer>
+                        <img src={blankProfileImg.src} alt={blankProfileImg.alt} />
+                    </RoundImgContainer>
+                </FlexContainer>
             </FlexContainer>
         </NavBarContainer>
     );
