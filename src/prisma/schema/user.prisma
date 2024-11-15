@@ -2,6 +2,8 @@ model User {
   id    Int      @id @default(autoincrement())
 
   email String   @unique
+
+  // TODO: add name and profile img
   
   username  String @unique
   password String 
@@ -14,3 +16,5 @@ model User {
 
   deleted Boolean @default(false)
 }
+
+// TODO: add UserFavoritePark table
