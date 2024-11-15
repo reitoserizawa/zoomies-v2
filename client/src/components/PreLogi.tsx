@@ -25,10 +25,12 @@ const PreLogin: React.FC<ChildrenProps> = ({ children }) => {
         if (!isLoading && data && !signedIn && token) {
             dispatch(setLoading());
             dispatch(setUserDetails(data));
+            return;
         }
 
         if (!isLoading && (!data || !signedIn || !token)) {
             navigate('/login');
+            return;
         }
     }, [signedIn, data, isLoading, navigate, dispatch]);
 
