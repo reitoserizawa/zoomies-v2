@@ -5,6 +5,7 @@ import LogIn from './LogIn';
 import Register from './Register';
 import PreLogin from './PreLogi';
 import Dashboard from './Dashboard';
+import DogPark from './DogPark';
 
 const Main: React.FC = () => {
     // TODO: add jwt verification and lead to log in page if not verified
@@ -32,6 +33,14 @@ const Main: React.FC = () => {
                     element={
                         <PreLogin>
                             <Register />
+                        </PreLogin>
+                    }
+                />
+                <Route
+                    path={'/parks'}
+                    element={
+                        <PreLogin>
+                            <DogPark />
                         </PreLogin>
                     }
                 />
