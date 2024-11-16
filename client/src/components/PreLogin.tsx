@@ -13,26 +13,31 @@ import { setLoading, setUserDetails } from '../redux/reducers/userSlice';
 const PreLogin: React.FC<ChildrenProps> = ({ children }) => {
     const loading = useAppSelector(state => state.user.loading);
     const signedIn = useAppSelector(state => state.user.signedIn);
+    const token = localStorage.getItem('token');
 
-    const { data, isLoading } = useGetUserDetailsQuery(null);
+    const { data, isLoading } = useGetUserDetailsQuery(null, {
+        skip: signedIn || !token
+    });
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        if (signedIn) {
+            return;
+        }
 
-        if (!loading && isLoading && data && !signedIn && token) {
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        if (!isLoading && data && token) {
             dispatch(setLoading());
             dispatch(setUserDetails(data));
             return;
         }
-
-        if (!loading && !isLoading && (!data || !signedIn || !token)) {
-            navigate('/login');
-            return;
-        }
-    }, [loading, signedIn, data, isLoading, navigate, dispatch]);
+    }, [token, signedIn, data, isLoading, navigate, dispatch]);
 
     return (
         <>
