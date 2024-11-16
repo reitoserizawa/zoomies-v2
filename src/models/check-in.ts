@@ -36,9 +36,7 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
 
     static async fromUser(user: User): Promise<CheckIn[]> {
         const user_id = user.id;
-        const check_ins = await CheckIn.manyFromQuery<CheckInInterface, 'user_id', CheckIn>({ user_id } as unknown as ExtractKeys<CheckInInterface, 'user_id'>, 'checkIn');
-
-        return check_ins;
+        return await CheckIn.manyFromQuery<CheckInInterface, 'user_id', CheckIn>({ user_id } as unknown as ExtractKeys<CheckInInterface, 'user_id'>, 'checkIn');
     }
 
     static async create(user: User, pets: Pet[], dog_park: DogPark): Promise<number> {

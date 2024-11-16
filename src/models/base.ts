@@ -5,18 +5,17 @@ import { BaseModelInterface, ExtractKeys, ValidateInput, WhereInput } from '../i
 import PrismaClientModel from './prisma-client';
 import { BadRequestError, NotFoundError } from './errors';
 import capitalizeFirstLetter from '../utils/capitalize-first-letter';
+import User from './user';
 
 class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P> {
     prisma: PrismaClientModel;
 
     properties: P;
-
     model_name: MN;
     uncap_model_name: Uncapitalize<MN>;
 
     public_properties: string[];
     include_properties?: string[];
-
     updatable_properties: string[];
 
     // override in subclass
@@ -34,15 +33,20 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return obj;
     }
 
-    static async fromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name?: Uncapitalize<Prisma.ModelName>): Promise<M> {
+    static async fromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name?: Uncapitalize<Prisma.ModelName>, include_properties?: string[]): Promise<M> {
         if (!uncap_model_name) {
             throw new BadRequestError('Model name is required');
         }
 
         const model = PrismaClientModel.prisma[uncap_model_name];
 
+        const include = include_properties?.reduce((acc, property) => {
+            acc[property] = true;
+            return acc;
+        }, {} as Record<string, boolean>);
+
         // @ts-expect-error
-        const item = await model.findUnique({ where: query });
+        const item = await model.findUnique({ where: query, include });
 
         if (!item) {
             throw new NotFoundError(`${capitalizeFirstLetter(uncap_model_name)} not found`);
@@ -51,15 +55,20 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return this.fromProperties(item);
     }
 
-    static async manyFromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name: Uncapitalize<Prisma.ModelName>): Promise<M[]> {
+    static async manyFromQuery<P, K extends keyof P, M>(query: ExtractKeys<P, K>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_properties?: string[]): Promise<M[]> {
         if (!uncap_model_name) {
             throw new BadRequestError('Model name is required');
         }
 
         const model = PrismaClientModel.prisma[uncap_model_name];
 
+        const include = include_properties?.reduce((acc, property) => {
+            acc[property] = true;
+            return acc;
+        }, {} as Record<string, boolean>);
+
         // @ts-expect-error
-        const items = await model.findMany({ where: query });
+        const items = await model.findMany({ where: query, include });
 
         if (!items || items.length === 0) {
             throw new NotFoundError(`${capitalizeFirstLetter(uncap_model_name)} not found`);
@@ -224,6 +233,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
     }
 
     prepareIncludeQuery(): { [key: string]: boolean } | void {
+        console.log({ this: this });
         if (!this.include_properties) return;
 
         const include: Record<string, boolean> = {};
