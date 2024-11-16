@@ -13,9 +13,6 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
     public_properties = ['active', 'checked_in_at', 'checked_out_at', 'dog_park', 'dog_park_id', 'pet', 'pet_id', 'user', 'user_id'];
     updatable_properties = ['pet', 'dog_park', 'active', 'checked_in_at', 'checked_out_at'];
 
-    static model_name: Prisma.ModelName = 'CheckIn';
-    static uncap_model_name: Uncapitalize<Prisma.ModelName> = 'checkIn';
-
     static override async fromId(id: number): Promise<CheckIn> {
         const check_in = new CheckIn(id);
         await check_in.fetch();
