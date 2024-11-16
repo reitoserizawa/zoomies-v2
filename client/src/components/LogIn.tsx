@@ -17,7 +17,6 @@ const LogIn: React.FC = () => {
     const [password, setPassword] = useState<string>('');
 
     const [logInUser] = useLogInUserMutation();
-
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -43,23 +42,17 @@ const LogIn: React.FC = () => {
 
             logInUser({ username, password })
                 .unwrap()
-                .then(data => {
-                    const token = data?.token;
-                    if (token) localStorage.setItem('token', token);
+                .then(({ token, user }) => {
+                    localStorage.setItem('token', token);
+                    dispatch(setUserDetails(user));
 
-                    const user_details = data?.user;
-                    if (user_details) {
-                        dispatch(setUserDetails(user_details));
-                    }
+                    navigate('/');
                 })
                 .catch(error => {
                     const statusCode = error?.status;
                     const message = error?.data?.error?.message;
 
                     dispatch(setUserError({ message, statusCode }));
-                })
-                .finally(() => {
-                    navigate('/');
                 });
         },
         [username, password, logInUser, dispatch, navigate]
