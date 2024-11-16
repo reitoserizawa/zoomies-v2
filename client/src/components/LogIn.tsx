@@ -23,11 +23,13 @@ const LogIn: React.FC = () => {
     const signedIn = useAppSelector(state => state?.user?.signedIn);
     const error = useAppSelector(state => state?.user?.error);
 
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
-        if (signedIn) {
+        if (signedIn || token) {
             navigate('/');
         }
-    }, [signedIn, navigate]);
+    }, [token, signedIn, navigate]);
 
     const login = useCallback(
         (e: React.FormEvent) => {

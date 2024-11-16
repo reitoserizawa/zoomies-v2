@@ -25,11 +25,13 @@ const Register: React.FC = () => {
     const error = useAppSelector(state => state?.user?.error);
     const signedIn = useAppSelector(state => state.user.signedIn);
 
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
-        if (signedIn) {
+        if (signedIn || token) {
             navigate('/');
         }
-    }, [signedIn, navigate]);
+    }, [token, signedIn, navigate]);
 
     const register = useCallback(
         (e: React.FormEvent) => {

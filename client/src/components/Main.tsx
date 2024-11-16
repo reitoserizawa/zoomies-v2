@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import LogIn from './LogIn';
 import Register from './Register';
-import PreLogin from './PreLogi';
+import AuthRequired from './AuthRequired';
 import Dashboard from './Dashboard';
 import DogPark from './DogPark';
 
@@ -15,41 +15,27 @@ const Main: React.FC = () => {
                 <Route
                     path={'/'}
                     element={
-                        <PreLogin>
+                        <AuthRequired>
                             <Dashboard />
-                        </PreLogin>
+                        </AuthRequired>
                     }
                 />
-                <Route
-                    path={'/login'}
-                    element={
-                        <PreLogin>
-                            <LogIn />
-                        </PreLogin>
-                    }
-                />
-                <Route
-                    path={'/register'}
-                    element={
-                        <PreLogin>
-                            <Register />
-                        </PreLogin>
-                    }
-                />
+                <Route path={'/login'} element={<LogIn />} />
+                <Route path={'/register'} element={<Register />} />
                 <Route
                     path={'/parks'}
                     element={
-                        <PreLogin>
+                        <AuthRequired>
                             <DogPark />
-                        </PreLogin>
+                        </AuthRequired>
                     }
                 />
                 <Route
                     path='*'
                     element={
-                        <PreLogin>
+                        <AuthRequired>
                             <Dashboard />
-                        </PreLogin>
+                        </AuthRequired>
                     }
                 />
             </Routes>

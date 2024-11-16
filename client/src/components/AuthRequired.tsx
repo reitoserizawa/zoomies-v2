@@ -10,7 +10,7 @@ import NavBar from './NavBar';
 import { useGetUserDetailsQuery } from '../redux/reducers/protected-api-slice';
 import { setLoading, setUserDetails } from '../redux/reducers/userSlice';
 
-const PreLogin: React.FC<ChildrenProps> = ({ children }) => {
+const AuthRequired: React.FC<ChildrenProps> = ({ children }) => {
     const loading = useAppSelector(state => state.user.loading);
     const signedIn = useAppSelector(state => state.user.signedIn);
     const token = localStorage.getItem('token');
@@ -53,4 +53,4 @@ const PreLogin: React.FC<ChildrenProps> = ({ children }) => {
     );
 };
 
-export default PreLogin;
+export default AuthRequired;
