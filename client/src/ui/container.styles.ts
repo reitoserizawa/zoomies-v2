@@ -50,6 +50,16 @@ export const FlexContainer = styled.div<FlexContainerProps>`
     gap: ${({ $gap }) => ($gap ? $gap : '0em')};
 `;
 
+export const GridContainer = styled.div<FlexContainerProps>`
+    height: 100%;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 30px;
+`;
+
 // img
 
 export const ImgContainer = styled.div<ImgContainerProps>`

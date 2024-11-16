@@ -1,7 +1,8 @@
 import React from 'react';
-import { Container, FlexContainer } from '../../ui/container.styles';
+import { Container, FlexContainer, GridContainer } from '../../ui/container.styles';
 import { Input } from '../../ui/form.styles';
 import SearchIcon from '../../images/icons/SearchIcon';
+import DogParkCard from './DogParkCard';
 
 const DogPark: React.FC = () => {
     return (
@@ -12,6 +13,11 @@ const DogPark: React.FC = () => {
                     <SearchIcon size='20px' />
                 </div>
             </FlexContainer>
+            <GridContainer>
+                <DogParkCard />
+                <DogParkCard />
+                <DogParkCard />
+            </GridContainer>
         </Container>
     );
 };

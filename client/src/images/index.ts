@@ -3,6 +3,7 @@ import whitePaw from './WhitePaw.png';
 import blankProfile from './BlankProfile.png';
 import dogProfileExample from './DogProfileExample.png';
 import coverExample from './CoverExample.jpeg';
+import dogParkImage from './DogProfileExample.png';
 
 export const dogPawImg = {
     src: dogPaw,
@@ -47,6 +48,16 @@ export const dogProfileImg = {
 export const coverExaple = {
     src: coverExample,
     alt: 'Cover example',
+    size: {
+        small: '50px',
+        midium: '100px',
+        big: '150px'
+    }
+};
+
+export const dogParkExample = {
+    src: dogParkImage,
+    alt: 'Dog park example',
     size: {
         small: '50px',
         midium: '100px',
