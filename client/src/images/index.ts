@@ -3,7 +3,7 @@ import whitePaw from './WhitePaw.png';
 import blankProfile from './BlankProfile.png';
 import dogProfileExample from './DogProfileExample.png';
 import coverExample from './CoverExample.jpeg';
-import dogParkImage from './DogProfileExample.png';
+import dogParkImage from './DogParkImage.jpg';
 
 export const dogPawImg = {
     src: dogPaw,
