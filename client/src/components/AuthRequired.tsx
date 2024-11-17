@@ -27,6 +27,7 @@ const AuthRequired: React.FC<ChildrenProps> = ({ children }) => {
             return;
         }
 
+        // TODO: handle error in better way
         if (!token || error) {
             navigate('/login');
             return;
