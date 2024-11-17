@@ -15,7 +15,7 @@ const AuthRequired: React.FC<ChildrenProps> = ({ children }) => {
     const signedIn = useAppSelector(state => state.user.signedIn);
     const token = localStorage.getItem('token');
 
-    const { data, isLoading } = useGetUserDetailsQuery(null, {
+    const { data, isLoading, error } = useGetUserDetailsQuery(null, {
         skip: signedIn || !token
     });
 
@@ -27,7 +27,7 @@ const AuthRequired: React.FC<ChildrenProps> = ({ children }) => {
             return;
         }
 
-        if (!token) {
+        if (!token || error) {
             navigate('/login');
             return;
         }
@@ -37,7 +37,7 @@ const AuthRequired: React.FC<ChildrenProps> = ({ children }) => {
             dispatch(setUserDetails(data));
             return;
         }
-    }, [token, signedIn, data, isLoading, navigate, dispatch]);
+    }, [token, signedIn, data, error, isLoading, navigate, dispatch]);
 
     return (
         <>
