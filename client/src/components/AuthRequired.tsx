@@ -28,7 +28,11 @@ const AuthRequired: React.FC<ChildrenProps> = ({ children }) => {
         }
 
         // TODO: handle error in better way
-        if (!token || error) {
+        if (error) {
+            localStorage.removeItem('token');
+        }
+
+        if (!token) {
             navigate('/login');
             return;
         }
