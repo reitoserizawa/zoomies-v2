@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { FlexContainer, ImgContainer, NavBarContainer, NavBarIconContainer, RoundImgContainer } from '../ui/container.styles';
-import { H1 } from '../ui/heading.styles';
+import { FlexContainer, ImgContainer, RoundImgContainer } from '../ui/container.styles';
+import { NavBarContainer, NavBarIconContainer, NavBarLink } from '../ui/navbar.styles';
+import { H1 } from '../ui/text-tags.styles';
 
 import { blankProfileImg, dogPawWithWhiteImg } from '../images';
 import HomeIcon from '../images/icons/HomeIcon';
 import DogParkIcon from '../images/icons/DogParkicon';
+import { NavLink } from 'react-router-dom';
 
 const NavBar: React.FC = () => {
     return (
@@ -17,14 +19,13 @@ const NavBar: React.FC = () => {
                     </ImgContainer>
                     <H1 style={{ margin: '0px' }}>Zoomies</H1>
                 </FlexContainer>
-
                 <FlexContainer $flexDirection='row' style={{ flexBasis: '33.33%' }}>
-                    <NavBarIconContainer>
+                    <NavBarLink to='/' className={({ isActive }) => (isActive ? 'active' : '')}>
                         <HomeIcon size='30px' />
-                    </NavBarIconContainer>
-                    <NavBarIconContainer>
+                    </NavBarLink>
+                    <NavBarLink to='/parks' className={({ isActive }) => (isActive ? 'active' : '')}>
                         <DogParkIcon size='30px' />
-                    </NavBarIconContainer>
+                    </NavBarLink>
                 </FlexContainer>
                 <FlexContainer $flexDirection='row' $justifyContent='flex-end' style={{ flexBasis: '33.33%' }}>
                     <RoundImgContainer>

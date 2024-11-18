@@ -90,26 +90,3 @@ export const RoundImgContainer = styled.div<ImgContainerProps>`
         border-radius: 50%;
     }
 `;
-
-// nav
-
-export const NavBarContainer = styled.nav`
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 60px;
-    background: #f7f7f7;
-
-    padding: 5px 20px;
-`;
-
-export const NavBarIconContainer = styled.div`
-    width: 150px;
-    background: #f7f7f7;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
