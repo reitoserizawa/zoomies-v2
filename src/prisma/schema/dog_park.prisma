@@ -7,5 +7,7 @@ model DogPark {
 
   type String?
 
+  geo Int[] @default([])
+
   check_ins CheckIn[]
 }

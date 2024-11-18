@@ -1,28 +1,27 @@
 import PrismaClientModel from '../models/prisma-client';
-import dog_park_data from './data/dog-park-data';
+import dog_park_with_geo from './data/dog-park-data-with-geo';
 
 const main = async () => {
     const prisma_client = PrismaClientModel.prisma;
-    const filtered_data = dog_park_data.filter((data, index, self) => {
-        return data['Name'] && data['Address'] && data['DogRuns_Type'] && index === self.findIndex(o => o['Name'] === data['Name']);
-    });
 
-    for (let data of filtered_data) {
-        if (data['Name'] && data['Address']) {
-            await prisma_client.dogPark.upsert({
-                where: {
-                    name: data['Name']
-                },
-                update: {
-                    name: data['Name'],
-                    address: data['Address']
-                },
-                create: {
-                    name: data['Name'],
-                    address: data['Address']
-                }
-            });
-        }
+    for (let data of dog_park_with_geo.features) {
+        const dog_park_props = data.properties;
+        const dog_park_geo = data.geometry;
+        await prisma_client.dogPark.upsert({
+            where: {
+                name: dog_park_props.PROPERTY_NAME ? dog_park_props.PROPERTY_NAME : dog_park_props.DP_NAME
+            },
+            update: {
+                name: dog_park_props.PROPERTY_NAME ? dog_park_props.PROPERTY_NAME : dog_park_props.DP_NAME,
+                address: dog_park_props.ADDRESS,
+                geo: dog_park_geo.coordinates
+            },
+            create: {
+                name: dog_park_props.PROPERTY_NAME ? dog_park_props.PROPERTY_NAME : dog_park_props.DP_NAME,
+                address: dog_park_props.ADDRESS,
+                geo: dog_park_geo.coordinates
+            }
+        });
     }
 };
 
