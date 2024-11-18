@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { dogPawImg } from '../images';
-import { H2, P } from '../ui/heading.styles';
+import { H2, P } from '../ui/text-tags.styles';
 import { Button, Input, LogInForm } from '../ui/form.styles';
 import { FlexContainer, FullScreenContainer, ImgContainer } from '../ui/container.styles';
 

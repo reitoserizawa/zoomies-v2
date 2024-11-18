@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoaderContainer, LoaderDotsContainer } from '../ui/loader.styled';
 import { LoaderDot } from '../ui/loader.styled';
-import { H1 } from '../ui/heading.styles';
+import { H1 } from '../ui/text-tags.styles';
 
 const FullScreenLoader: React.FC<{ text?: string }> = ({ text }) => {
     return (

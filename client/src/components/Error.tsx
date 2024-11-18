@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { P } from '../ui/heading.styles';
+import { P } from '../ui/text-tags.styles';
 
 import { ErrorState } from '../states/error';
 

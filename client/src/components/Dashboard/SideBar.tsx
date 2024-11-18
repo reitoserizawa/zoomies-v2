@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FlexContainer, RoundImgContainer } from '../../ui/container.styles';
-import { P } from '../../ui/heading.styles';
+import { P } from '../../ui/text-tags.styles';
 
 import DogIcon from '../../images/icons/DogIconx';
 import RightArrow from '../../images/icons/RightArrow';

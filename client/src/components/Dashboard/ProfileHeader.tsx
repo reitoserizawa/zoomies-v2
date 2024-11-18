@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FlexContainer, ImgContainer, RoundImgContainer } from '../../ui/container.styles';
-import { H2, H3 } from '../../ui/heading.styles';
+import { H2, H3 } from '../../ui/text-tags.styles';
 
 import { blankProfileImg, coverExaple } from '../../images';
 import MailIcon from '../../images/icons/MailIcon';

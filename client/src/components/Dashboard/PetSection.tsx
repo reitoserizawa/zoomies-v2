@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { togglePetCreateFormModal } from '../../redux/reducers/appSlice';
 
 import { FlexContainer } from '../../ui/container.styles';
-import { H2 } from '../../ui/heading.styles';
+import { H2 } from '../../ui/text-tags.styles';
 import { Button } from '../../ui/form.styles';
 
 import AddIcon from '../../images/icons/AddIcon';

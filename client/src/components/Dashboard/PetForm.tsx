@@ -11,7 +11,7 @@ import { useCreatePetMutation, useUpdatePetDetailsMutation } from '../../redux/r
 
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Input, InputProps } from '../../ui/form.styles';
-import { P } from '../../ui/heading.styles';
+import { P } from '../../ui/text-tags.styles';
 import { FlexContainer } from '../../ui/container.styles';
 
 import useClickOutside from '../../hooks/useClickOutisde';

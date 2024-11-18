@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { togglePetUpdateFormModal } from '../../redux/reducers/appSlice';
 
 import { FlexContainer, RoundImgContainer } from '../../ui/container.styles';
-import { H3, H4, P } from '../../ui/heading.styles';
+import { H3, H4, P } from '../../ui/text-tags.styles';
 import { Button } from '../../ui/form.styles';
 
 import { dogProfileImg } from '../../images';
