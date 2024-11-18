@@ -8,6 +8,8 @@ export interface DogParkInterface extends BaseInterface {
 
     type: string | null;
 
+    geo: BigInteger[];
+
     check_ins?: CheckInInterface[];
 }
 
