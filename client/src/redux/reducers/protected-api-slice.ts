@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { UserLogInRequest, UserState } from '../../states/user';
 import { PetCreateState, PetState } from '../../states/pet';
+import { DogParkState } from '../../states/dog-park';
 
 export const protectedApiSlice = createApi({
     reducerPath: 'protectedApiSlice',
@@ -61,8 +62,13 @@ export const protectedApiSlice = createApi({
                 url: `pets/${id}`,
                 method: 'DELETE'
             })
+        }),
+        getAllDogParks: builder.query<DogParkState[], null>({
+            query: () => ({
+                url: `dog-parks`
+            })
         })
     })
 });
 
-export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useUpdatePetDetailsMutation, useDeletePetMutation } = protectedApiSlice;
+export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useUpdatePetDetailsMutation, useDeletePetMutation, useGetAllDogParksQuery } = protectedApiSlice;
