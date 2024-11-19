@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ImgContainer } from '../../ui/container.styles';
+import { FlexContainer, ImgContainer } from '../../ui/container.styles';
 import { dogParkExample } from '../../images';
+import Map from './Map';
+import { H2, P } from '../../ui/text-tags.styles';
+import { DogParkState } from '../../states/dog-park';
 
-const DogParkCardContainer = styled.div`
-    min-height: 250px;
-    background-color: red;
+const DogParkCardImageContainer = styled.div`
+    height: 50%;
+
+    img {
+        object-fit: cover;
+
+        height: 100%;
+        width: 100%;
+    }
 `;
 
-const DogParkCard = () => {
+const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, check_ins }) => {
     return (
-        <DogParkCardContainer>
-            <ImgContainer>
+        <>
+            <DogParkCardImageContainer>
                 <img src={dogParkExample.src} alt={dogParkExample.alt} />
-            </ImgContainer>
-        </DogParkCardContainer>
+            </DogParkCardImageContainer>
+            <FlexContainer $justifyContent='flex-start' $alignItems='flex-start' style={{ height: 'inherit' }}>
+                <H2>{name}</H2>
+                <P>{address}</P>
+                <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap='10px' style={{ marginBottom: '10px', marginLeft: '16px' }}>
+                    <P $noMargin>0 puppies</P>
+                    <P $noMargin>|</P>
+                    <P $noMargin>Total 10 puppies today</P>
+                </FlexContainer>
+            </FlexContainer>
+        </>
     );
 };
 
