@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Container, FlexContainer } from '../../ui/container.styles';
+import { ContainerWithWidth, FlexContainer } from '../../ui/container.styles';
 
 import ProfileHeader from './ProfileHeader';
 import SideBar from './SideBar';
 import PetSection from './PetSection';
 
 const Dashboard: React.FC = () => (
-    <Container>
+    <ContainerWithWidth>
         <ProfileHeader />
         <FlexContainer $flexDirection='row' $justifyContent='center' $alignItems='center' style={{ maxHeight: 'calc(100vh-120px)' }}>
             <SideBar />
@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => (
                 <PetSection />
             </div>
         </FlexContainer>
-    </Container>
+    </ContainerWithWidth>
 );
 
 export default Dashboard;

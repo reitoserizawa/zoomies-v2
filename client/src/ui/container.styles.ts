@@ -10,14 +10,26 @@ interface FlexContainerProps {
 interface ImgContainerProps {
     height?: string;
     width?: string;
+    $borderRadius?: string;
 }
 
-export const Container = styled.div`
+export const ContainerWithWidth = styled.div`
     min-height: 100vh;
     width: 1200px;
     min-width: 340px;
 
     padding-top: 60px;
+
+    margin: auto;
+`;
+
+export const Container = styled.div`
+    min-height: 100vh;
+    width: 100%;
+
+    padding-top: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
 
     margin: auto;
 `;
@@ -70,7 +82,7 @@ export const ImgContainer = styled.div<ImgContainerProps>`
     img {
         object-fit: cover;
 
-        border-radius: 5px;
+        border-radius: ${({ $borderRadius }) => ($borderRadius ? $borderRadius : '5px')};
 
         height: ${({ height }) => (height ? height : '100px')};
         width: ${({ width }) => (width ? width : 'auto')};

@@ -31,6 +31,7 @@ export const NavBarLink = styled(NavLink)`
     justify-content: center;
 
     &.active {
+        padding-top: 3px;
         border-bottom: 3px solid black;
     }
 `;
