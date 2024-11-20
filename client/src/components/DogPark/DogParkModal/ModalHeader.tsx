@@ -6,7 +6,7 @@ import { FlexContainer } from '../../../ui/container.styles';
 import FavoriteIcon from '../../../images/icons/FavoriteIcon';
 import CloseIcon from '../../../images/icons/CloseIco';
 
-const DogParkModalHeaderContainer = styled.div`
+const ModalHeaderContainer = styled.div`
     position: fixed;
     top: 60px;
     bottom: 0;
@@ -25,7 +25,7 @@ const DogParkModalHeaderContainer = styled.div`
     margin: 0px auto;
 `;
 
-const DogParkModalHeaderAnchor = styled.a`
+const ModalHeaderAnchor = styled.a`
     cursor: pointer;
 
     color: white;
@@ -45,7 +45,7 @@ const DogParkModalHeaderAnchor = styled.a`
     // font-weight: bold;
 `;
 
-const DogParkModalFavoriteButton = styled.button`
+const ModalFavoriteButton = styled.button`
     all: unset;
 
     cursor: pointer;
@@ -60,26 +60,26 @@ const DogParkModalFavoriteButton = styled.button`
     font-size: 1em;
 `;
 
-const DogParkModalHeader: React.FC<{ closeDogParkModal: () => void }> = ({ closeDogParkModal }) => {
+const ModalHeader: React.FC<{ closeDogParkModal: () => void }> = ({ closeDogParkModal }) => {
     return (
-        <DogParkModalHeaderContainer>
+        <ModalHeaderContainer>
             <FlexContainer $flexDirection='row' $gap='30px'>
                 <div style={{ flexBasis: '33.33%' }}></div>
                 <FlexContainer $flexDirection='row' $gap='30px' style={{ flexBasis: '33.33%' }}>
-                    <DogParkModalHeaderAnchor style={{ flexBasis: '50%' }}>Details</DogParkModalHeaderAnchor>
-                    <DogParkModalHeaderAnchor style={{ flexBasis: '50%' }}>Check-ins</DogParkModalHeaderAnchor>
+                    <ModalHeaderAnchor style={{ flexBasis: '50%' }}>Details</ModalHeaderAnchor>
+                    <ModalHeaderAnchor style={{ flexBasis: '50%' }}>Check-ins</ModalHeaderAnchor>
                 </FlexContainer>
                 <FlexContainer $flexDirection='row' $gap='30px' style={{ flexBasis: '33.33%' }}>
-                    <DogParkModalFavoriteButton style={{ marginLeft: 'auto' }}>
+                    <ModalFavoriteButton style={{ marginLeft: 'auto' }}>
                         <FavoriteIcon color='white' size='1.75em' />
-                    </DogParkModalFavoriteButton>
-                    <DogParkModalFavoriteButton onClick={() => closeDogParkModal()}>
+                    </ModalFavoriteButton>
+                    <ModalFavoriteButton onClick={() => closeDogParkModal()}>
                         <CloseIcon color='white' size='1.75em' />
-                    </DogParkModalFavoriteButton>
+                    </ModalFavoriteButton>
                 </FlexContainer>
             </FlexContainer>
-        </DogParkModalHeaderContainer>
+        </ModalHeaderContainer>
     );
 };
 
-export default DogParkModalHeader;
+export default ModalHeader;

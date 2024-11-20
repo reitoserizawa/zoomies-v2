@@ -15,7 +15,7 @@ const ModalMapContainer = styled.div`
     }
 `;
 
-const DogParkModalMap: React.FC = () => {
+const ModalMap: React.FC = () => {
     const [viewport, setViewport] = useState({
         latitude: 37.7577,
         longitude: -122.4376,
@@ -35,4 +35,4 @@ const DogParkModalMap: React.FC = () => {
     );
 };
 
-export default DogParkModalMap;
+export default ModalMap;

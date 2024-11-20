@@ -14,9 +14,9 @@ import { setDogParkModalId } from '../../../redux/reducers/appSlice';
 
 import useClickOutside from '../../../hooks/useClickOutisde';
 
-import DogParkModalHeader from './DogParkModalHeader';
-import DogParkModalMap from './DogParkModalMap';
-import DogParkModalCheckInList from './DogParkModalCheckInList';
+import DogParkModalHeader from './ModalHeader';
+import DogParkModalMap from './ModalMap';
+import DogParkModalCheckInList from './ModalCheckInList';
 
 const TagContainer = styled.ul`
     display: block;
@@ -36,7 +36,7 @@ const TagList = styled.li`
     margin-right: 10px;
 `;
 
-const DogParkModal: React.FC = () => {
+const Modal: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLDivElement>(null);
@@ -113,4 +113,4 @@ const DogParkModal: React.FC = () => {
     );
 };
 
-export default DogParkModal;
+export default Modal;

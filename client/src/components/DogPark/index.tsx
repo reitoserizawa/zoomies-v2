@@ -10,7 +10,7 @@ import { setDogParkModalId } from '../../redux/reducers/appSlice';
 
 import DogParkCard from './DogParkCard';
 import Map from './Map';
-import DogParkModal from './DogParkModal/DogParkModal';
+import DogParkModal from './DogParkModal/Modal';
 
 const DogParkCardListContainer = styled.div`
     min-height: 300px;

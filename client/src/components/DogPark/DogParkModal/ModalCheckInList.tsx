@@ -5,7 +5,7 @@ import { BorderlineContainer, FlexContainer, RoundImgContainer } from '../../../
 
 import { blankProfileImg, dogProfileImg } from '../../../images';
 
-const DogParkModalCheckInList: React.FC = () => {
+const ModalCheckInList: React.FC = () => {
     return (
         <BorderlineContainer>
             <FlexContainer $flexDirection='row' $justifyContent='space-between' style={{ padding: '5px 15px' }}>
@@ -27,4 +27,4 @@ const DogParkModalCheckInList: React.FC = () => {
     );
 };
 
-export default DogParkModalCheckInList;
+export default ModalCheckInList;
