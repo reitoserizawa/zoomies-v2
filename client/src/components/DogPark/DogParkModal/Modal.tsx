@@ -59,13 +59,17 @@ export const colourOptions: readonly ColourOption[] = [
 ];
 
 const ReactSelectStyles = createGlobalStyle`
-:nth-child(1 of div.css-1xc3v61-indicatorContainer) {
-    display: none;
-}
+    :nth-child(1 of div.css-1xc3v61-indicatorContainer) {
+        display: none;
+    }
 
-:nth-child(1 of div.css-15lsz6c-indicatorContainer) {
-    display: none;
-}
+    :nth-child(1 of div.css-15lsz6c-indicatorContainer) {
+        display: none;
+    }
+
+    .css-1u9des2-indicatorSeparator {
+        display: none;
+    }
 `;
 
 const Modal: React.FC = () => {
@@ -132,7 +136,7 @@ const Modal: React.FC = () => {
                     <FlexContainer $gap='30px' $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
                         <BorderlineContainer>
                             <div style={{ padding: '10px' }}>
-                                <Select maxMenuHeight={80} closeMenuOnSelect={true} defaultValue={[colourOptions[4], colourOptions[5]]} isMulti options={colourOptions} />
+                                <Select maxMenuHeight={300} closeMenuOnSelect={true} defaultValue={[colourOptions[4], colourOptions[5]]} isMulti options={colourOptions} />
                                 <ReactSelectStyles />
                             </div>
                             <Button $width='200px' $margin='10px auto'>
