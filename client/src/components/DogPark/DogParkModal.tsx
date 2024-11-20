@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { FlexContainer, ImgContainer, RoundImgContainer } from '../../ui/container.styles';
 import { blankProfileImg, dogParkExample, dogProfileImg } from '../../images';
@@ -10,6 +10,9 @@ import HistoryIcon from '../../images/icons/HistoryIcon';
 import { Button } from '../../ui/form.styles';
 import { Map, Marker } from 'react-map-gl';
 import pin from '../../images/pointer.svg';
+import { useAppDispatch } from '../../redux/hooks/hooks';
+import { setDogParkModalId } from '../../redux/reducers/appSlice';
+import useClickOutside from '../../hooks/useClickOutisde';
 
 const MapStyles = createGlobalStyle`
 .map-modal {
@@ -137,17 +140,26 @@ const TagList = styled.li`
 `;
 
 const DogParkModal: React.FC = () => {
+    const dispatch = useAppDispatch();
     const [viewport, setViewport] = useState({
         latitude: 37.7577,
         longitude: -122.4376,
         zoom: 10
     });
 
+    const ref = useRef<HTMLDivElement>(null);
+
+    const closeDogParkModal = useCallback(() => {
+        dispatch(setDogParkModalId(undefined));
+    }, [dispatch]);
+
+    useClickOutside(closeDogParkModal, ref);
+
     const token = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
     return (
         <Overlay>
-            <DogParkModalContainer>
+            <DogParkModalContainer ref={ref}>
                 <DogParkModalHeaderContainer>
                     <FlexContainer $flexDirection='row' $gap='30px'>
                         <div style={{ flexBasis: '33.33%' }}></div>
@@ -159,7 +171,7 @@ const DogParkModal: React.FC = () => {
                             <DogParkModalFavoriteButton style={{ marginLeft: 'auto' }}>
                                 <FavoriteIcon color='white' size='1.75em' />
                             </DogParkModalFavoriteButton>
-                            <DogParkModalFavoriteButton>
+                            <DogParkModalFavoriteButton onClick={() => closeDogParkModal()}>
                                 <CloseIcon color='white' size='1.75em' />
                             </DogParkModalFavoriteButton>
                         </FlexContainer>

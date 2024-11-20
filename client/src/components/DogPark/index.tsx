@@ -7,6 +7,8 @@ import { useGetAllDogParksQuery } from '../../redux/reducers/protected-api-slice
 import Map from './Map';
 import styled from 'styled-components';
 import DogParkModal from './DogParkModal';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
+import { setDogParkModalId } from '../../redux/reducers/appSlice';
 
 const DogParkCardListContainer = styled.div`
     min-height: 300px;
@@ -21,6 +23,8 @@ const DogParkCardListContainer = styled.div`
 `;
 
 const DogPark: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
     const { data } = useGetAllDogParksQuery(null);
 
     if (!data) return null;
@@ -34,20 +38,20 @@ const DogPark: React.FC = () => {
                 </div>
             </FlexContainer>
             <FlexContainer $flexDirection='row' $gap='20px' style={{ paddingBottom: '15px' }}>
-                <div style={{ alignSelf: 'flex-start', justifySelf: 'flex-start', flexBasis: '50%', overflowY: 'hidden', paddingLeft: '5px' }}>
+                <div style={{ alignSelf: 'flex-start', justifySelf: 'flex-start', flexBasis: '60%', overflowY: 'hidden', paddingLeft: '5px' }}>
                     <Map />
                 </div>
-                <div style={{ flexBasis: '50%', overflowY: 'scroll', height: 'calc(100vh - 138px)', padding: '5px', overflowX: 'hidden' }}>
+                <div style={{ flexBasis: '40%', overflowY: 'scroll', height: 'calc(100vh - 138px)', padding: '5px', overflowX: 'hidden' }}>
                     <GridContainer>
                         {data.map(({ id, name, address, check_ins }, idx) => (
-                            <DogParkCardListContainer>
+                            <DogParkCardListContainer onClick={() => dispatch(setDogParkModalId(id))}>
                                 <DogParkCard key={idx} id={id} name={name} address={address} check_ins={check_ins} />
                             </DogParkCardListContainer>
                         ))}
                     </GridContainer>
                 </div>
             </FlexContainer>
-            <DogParkModal />
+            {dogParkModalId && <DogParkModal />}
         </Container>
     );
 };
