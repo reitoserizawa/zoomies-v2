@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+import Select from 'react-select';
 
 import { BorderlineContainer, FlexContainer, FullScreenContainer, ImgContainer, ModalContainer } from '../../../ui/container.styles';
 import { H2, H3, P } from '../../../ui/text-tags.styles';
@@ -34,6 +35,37 @@ const TagList = styled.li`
     padding: 3px 10px;
 
     margin-right: 10px;
+`;
+
+export interface ColourOption {
+    readonly value: string;
+    readonly label: string;
+    readonly color: string;
+    readonly isFixed?: boolean;
+    readonly isDisabled?: boolean;
+}
+
+export const colourOptions: readonly ColourOption[] = [
+    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
+    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
+    { value: 'purple', label: 'Purple', color: '#5243AA' },
+    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
+    { value: 'orange', label: 'Orange', color: '#FF8B00' },
+    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
+    { value: 'green', label: 'Green', color: '#36B37E' },
+    { value: 'forest', label: 'Forest', color: '#00875A' },
+    { value: 'slate', label: 'Slate', color: '#253858' },
+    { value: 'silver', label: 'Silver', color: '#666666' }
+];
+
+const ReactSelectStyles = createGlobalStyle`
+:nth-child(1 of div.css-1xc3v61-indicatorContainer) {
+    display: none;
+}
+
+:nth-child(1 of div.css-15lsz6c-indicatorContainer) {
+    display: none;
+}
 `;
 
 const Modal: React.FC = () => {
@@ -99,7 +131,11 @@ const Modal: React.FC = () => {
                     {/* sub content */}
                     <FlexContainer $gap='30px' $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
                         <BorderlineContainer>
-                            <Button $width='200px' $margin='32px auto'>
+                            <div style={{ padding: '10px' }}>
+                                <Select maxMenuHeight={80} closeMenuOnSelect={true} defaultValue={[colourOptions[4], colourOptions[5]]} isMulti options={colourOptions} />
+                                <ReactSelectStyles />
+                            </div>
+                            <Button $width='200px' $margin='10px auto'>
                                 Check in here
                             </Button>
                         </BorderlineContainer>
