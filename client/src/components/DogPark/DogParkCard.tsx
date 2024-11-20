@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { FlexContainer, ImgContainer } from '../../ui/container.styles';
+import { FlexContainer } from '../../ui/container.styles';
 import { dogParkExample } from '../../images';
-import Map from './Map';
 import { H2, P } from '../../ui/text-tags.styles';
 import { DogParkState } from '../../states/dog-park';
+import DogIcon from '../../images/icons/DogIconx';
+import HistoryIcon from '../../images/icons/HistoryIcon';
 
 const DogParkCardImageContainer = styled.div`
     height: 50%;
@@ -23,14 +24,21 @@ const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, check
             <DogParkCardImageContainer>
                 <img src={dogParkExample.src} alt={dogParkExample.alt} />
             </DogParkCardImageContainer>
-            <FlexContainer $justifyContent='flex-start' $alignItems='flex-start' style={{ height: 'inherit' }}>
-                <H2>{name}</H2>
-                <P>{address}</P>
-                <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap='10px' style={{ marginBottom: '10px', marginLeft: '16px' }}>
-                    <P $noMargin>0 puppies</P>
-                    <P $noMargin>|</P>
-                    <P $noMargin>Total 10 puppies today</P>
-                </FlexContainer>
+            <FlexContainer $justifyContent='flex-start' $alignItems='flex-start' style={{ height: '150px' }}>
+                <div style={{ flexBasis: '80%' }}>
+                    <H2 size='1.2em'>{name}</H2>
+                    <P>{address}</P>
+                </div>
+
+                <div style={{ flexBasis: '20%' }}>
+                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap='10px' style={{ marginBottom: '10px', marginLeft: '16px' }}>
+                        <DogIcon size='16px' />
+                        <P $noMargin>0</P>
+                        <P $noMargin>|</P>
+                        <HistoryIcon size='16px' />
+                        <P $noMargin>Last visit: 3min</P>
+                    </FlexContainer>
+                </div>
             </FlexContainer>
         </>
     );
