@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import Map, { Marker, Popup } from 'react-map-gl';
+import ReactMapGl, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { DogParkState } from '../../states/dog-park';
 import { createGlobalStyle } from 'styled-components';
 
-import pin from '../../images/pointer.svg';
 import { useGetAllDogParksQuery } from '../../redux/reducers/protected-api-slice';
 import DogParkCard from './DogParkCard';
+import PointerIcon from '../../images/icons/PointerIcon';
 
 const MapStyles = createGlobalStyle`
 .map {
@@ -28,7 +27,7 @@ const MapStyles = createGlobalStyle`
 }
 `;
 
-const Mapping: React.FC = () => {
+const Map: React.FC = () => {
     const [popupOpen, setPopupOpen] = useState<{ [key: number]: boolean }>({});
     const [viewport, setViewport] = useState({
         latitude: 37.7577,
@@ -50,7 +49,7 @@ const Mapping: React.FC = () => {
     return (
         <>
             <div className='map'>
-                <Map {...viewport} mapStyle='mapbox://styles/mapbox/streets-v12' onMove={evt => setViewport(evt.viewState)} mapboxAccessToken={token}>
+                <ReactMapGl {...viewport} mapStyle='mapbox://styles/mapbox/streets-v12' onMove={evt => setViewport(evt.viewState)} mapboxAccessToken={token}>
                     {data.map(dogPark => {
                         if (!dogPark) return null;
 
@@ -62,7 +61,9 @@ const Mapping: React.FC = () => {
                         return (
                             <div key={id}>
                                 <Marker longitude={geoArray[0]} latitude={geoArray[1]} onClick={() => handleMarkerClick(id)}>
-                                    <img src={pin} alt='pin' />
+                                    <div style={{ height: '24px', width: '24px' }}>
+                                        <PointerIcon />
+                                    </div>
                                 </Marker>
 
                                 {popupOpen[id] && (
@@ -75,11 +76,11 @@ const Mapping: React.FC = () => {
                             </div>
                         );
                     })}
-                </Map>
+                </ReactMapGl>
             </div>
             <MapStyles />
         </>
     );
 };
 
-export default Mapping;
+export default Map;

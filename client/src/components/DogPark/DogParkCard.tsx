@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { FlexContainer } from '../../ui/container.styles';
-import { dogParkExample } from '../../images';
 import { H2, P } from '../../ui/text-tags.styles';
+
+import { dogParkExample } from '../../images';
+
 import { DogParkState } from '../../states/dog-park';
+
 import DogIcon from '../../images/icons/DogIconx';
 import HistoryIcon from '../../images/icons/HistoryIcon';
 
@@ -30,15 +34,13 @@ const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, check
                     <P>{address}</P>
                 </div>
 
-                <div style={{ flexBasis: '20%' }}>
-                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap='10px' style={{ marginBottom: '10px', marginLeft: '16px' }}>
-                        <DogIcon size='16px' />
-                        <P $noMargin>0</P>
-                        <P $noMargin>|</P>
-                        <HistoryIcon size='16px' />
-                        <P $noMargin>Last visit: 3min</P>
-                    </FlexContainer>
-                </div>
+                <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap='10px' style={{ marginBottom: '10px', marginLeft: '16px', flexBasis: '20%' }}>
+                    <DogIcon size='16px' />
+                    <P $noMargin>0</P>
+                    <P $noMargin>|</P>
+                    <HistoryIcon size='16px' />
+                    <P $noMargin>Last visit: 3min</P>
+                </FlexContainer>
             </FlexContainer>
         </>
     );

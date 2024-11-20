@@ -34,7 +34,7 @@ export const Container = styled.div`
     margin: auto;
 `;
 
-export const FullScreenContainer = styled.div`
+export const FullScreenContainer = styled.div<{ $backgroundColor?: string }>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,7 +48,9 @@ export const FullScreenContainer = styled.div`
     max-width: 100%;
     max-height: 100%;
 
-    background-color: rgba(247, 247, 247, 0.95);
+    background-color: ${({ $backgroundColor }) => ($backgroundColor ? $backgroundColor : 'rgba(247, 247, 247, 0.95)')};
+
+    z-index: 10;
 `;
 
 export const FlexContainer = styled.div<FlexContainerProps>`
@@ -78,6 +80,31 @@ export const GridContainer = styled.div<FlexContainerProps>`
     @media (max-width: 1300px) {
         grid-template-columns: repeat(1, 1fr);
     }
+`;
+
+export const BorderlineContainer = styled.div`
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+    border-radius: 5px;
+`;
+
+export const ModalContainer = styled.div`
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: white;
+    opacity: 1;
+
+    overflow-y: scroll;
+
+    height: ft-content;
+    width: 1000px;
+
+    margin: auto;
 `;
 
 // img

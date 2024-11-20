@@ -1,14 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Container, FlexContainer, GridContainer } from '../../ui/container.styles';
 import { Input } from '../../ui/form.styles';
 import SearchIcon from '../../images/icons/SearchIcon';
-import DogParkCard from './DogParkCard';
+
 import { useGetAllDogParksQuery } from '../../redux/reducers/protected-api-slice';
-import Map from './Map';
-import styled from 'styled-components';
-import DogParkModal from './DogParkModal';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { setDogParkModalId } from '../../redux/reducers/appSlice';
+
+import DogParkCard from './DogParkCard';
+import Map from './Map';
+import DogParkModal from './DogParkModal/DogParkModal';
 
 const DogParkCardListContainer = styled.div`
     min-height: 300px;
