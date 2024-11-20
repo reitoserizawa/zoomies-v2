@@ -9,7 +9,7 @@ import PetSection from './PetSection';
 const Dashboard: React.FC = () => (
     <ContainerWithWidth>
         <ProfileHeader />
-        <FlexContainer $flexDirection='row' $justifyContent='center' $alignItems='center' style={{ maxHeight: 'calc(100vh-120px)' }}>
+        <FlexContainer $flexDirection='row' $justifyContent='center' $alignItems='flex-start'>
             <SideBar />
             <div style={{ maxHeight: '100%', width: '100%', padding: '0px 60px', overflowY: 'auto' }}>
                 <PetSection />
