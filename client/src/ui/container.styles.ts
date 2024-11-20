@@ -70,6 +70,14 @@ export const GridContainer = styled.div<FlexContainerProps>`
     grid-template-columns: repeat(3, 1fr);
 
     gap: 30px;
+
+    @media (max-width: 1800px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 1300px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 // img
