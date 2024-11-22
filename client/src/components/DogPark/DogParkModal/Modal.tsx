@@ -1,6 +1,6 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 
 import { BorderlineContainer, FlexContainer, FullScreenContainer, ImgContainer, ModalContainer } from '../../../ui/container.styles';
 import { H2, H3, P } from '../../../ui/text-tags.styles';
@@ -18,6 +18,7 @@ import useClickOutside from '../../../hooks/useClickOutisde';
 import DogParkModalHeader from './ModalHeader';
 import DogParkModalMap from './ModalMap';
 import DogParkModalCheckInList from './ModalCheckInList';
+import { useCreateCheckInsMutation, useGetUncheckedInPetsQuery } from '../../../redux/reducers/protected-api-slice';
 
 const TagContainer = styled.ul`
     display: block;
@@ -37,27 +38,6 @@ const TagList = styled.li`
     margin-right: 10px;
 `;
 
-export interface ColourOption {
-    readonly value: string;
-    readonly label: string;
-    readonly color: string;
-    readonly isFixed?: boolean;
-    readonly isDisabled?: boolean;
-}
-
-export const colourOptions: readonly ColourOption[] = [
-    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
-    { value: 'purple', label: 'Purple', color: '#5243AA' },
-    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-    { value: 'orange', label: 'Orange', color: '#FF8B00' },
-    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-    { value: 'green', label: 'Green', color: '#36B37E' },
-    { value: 'forest', label: 'Forest', color: '#00875A' },
-    { value: 'slate', label: 'Slate', color: '#253858' },
-    { value: 'silver', label: 'Silver', color: '#666666' }
-];
-
 const ReactSelectStyles = createGlobalStyle`
     :nth-child(1 of div.css-1xc3v61-indicatorContainer) {
         display: none;
@@ -72,8 +52,23 @@ const ReactSelectStyles = createGlobalStyle`
     }
 `;
 
-const Modal: React.FC = () => {
+const Modal: React.FC<{ dogParkModalId: number }> = ({ dogParkModalId: dog_park_id }) => {
+    const [checkInPets, setCheckInPets] = useState<MultiValue<{ value: number; label: string }>>([]);
     const dispatch = useAppDispatch();
+
+    // TODO: add a loader
+    const { data } = useGetUncheckedInPetsQuery(null);
+    const [createCheckIns] = useCreateCheckInsMutation();
+
+    // TODO: handle error
+    const options = (data || []).map(pet => {
+        if (!pet.id) throw new Error(`No pet id found from ${pet.name}`);
+
+        return {
+            value: pet.id,
+            label: pet.name
+        };
+    });
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -83,8 +78,23 @@ const Modal: React.FC = () => {
 
     useClickOutside(closeDogParkModal, ref);
 
+    const handleCheckIn = useCallback(
+        (e: React.FormEvent) => {
+            e.preventDefault();
+
+            const pet_ids = checkInPets.map(pet => pet.value);
+
+            if (!pet_ids || pet_ids.length === 0) {
+                return;
+            }
+
+            createCheckIns({ dog_park_id, pet_ids });
+        },
+        [checkInPets, dog_park_id, createCheckIns]
+    );
+
     return (
-        <FullScreenContainer $backgroundColor='rgba(0, 0, 0, 0.4)'>
+        <FullScreenContainer $top={60} $backgroundColor='rgba(0, 0, 0, 0.4)'>
             <ModalContainer ref={ref}>
                 {/* header */}
                 <DogParkModalHeader closeDogParkModal={closeDogParkModal} />
@@ -135,13 +145,15 @@ const Modal: React.FC = () => {
                     {/* sub content */}
                     <FlexContainer $gap='30px' $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
                         <BorderlineContainer>
-                            <div style={{ padding: '10px' }}>
-                                <Select maxMenuHeight={300} closeMenuOnSelect={true} defaultValue={[colourOptions[4], colourOptions[5]]} isMulti options={colourOptions} />
-                                <ReactSelectStyles />
-                            </div>
-                            <Button $width='200px' $margin='10px auto'>
-                                Check in here
-                            </Button>
+                            <form onSubmit={handleCheckIn}>
+                                <div style={{ padding: '10px' }}>
+                                    <Select maxMenuHeight={300} closeMenuOnSelect={true} defaultValue={checkInPets} isMulti options={options} onChange={setCheckInPets} />
+                                    <ReactSelectStyles />
+                                </div>
+                                <Button type='submit' $width='200px' $margin='10px auto'>
+                                    Check in here
+                                </Button>
+                            </form>
                         </BorderlineContainer>
                         <BorderlineContainer>
                             <DogParkModalMap />

@@ -17,3 +17,8 @@ export interface CheckInState extends BaseState {
     checked_in_at: Date;
     checked_out_at: Date | null;
 }
+
+export interface CreateCheckInState {
+    dog_park_id: number;
+    pet_ids: number[];
+}

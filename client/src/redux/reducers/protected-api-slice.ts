@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { UserLogInRequest, UserState } from '../../states/user';
 import { PetCreateState, PetState } from '../../states/pet';
 import { DogParkState } from '../../states/dog-park';
+import { CheckInState, CreateCheckInState } from '../../states/check-in';
 
 export const protectedApiSlice = createApi({
     reducerPath: 'protectedApiSlice',
@@ -63,12 +64,26 @@ export const protectedApiSlice = createApi({
                 method: 'DELETE'
             })
         }),
+        getUncheckedInPets: builder.query<PetState[], null>({
+            query: () => ({
+                url: `pets/unchecked-in`
+            })
+        }),
         getAllDogParks: builder.query<DogParkState[], null>({
             query: () => ({
                 url: `dog-parks`
+            })
+        }),
+        createCheckIns: builder.mutation<CheckInState[], CreateCheckInState>({
+            query: ({ dog_park_id, pet_ids }) => ({
+                url: `dog-parks/${dog_park_id}/check_ins`,
+                method: 'POST',
+                body: {
+                    pet_ids
+                }
             })
         })
     })
 });
 
-export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useUpdatePetDetailsMutation, useDeletePetMutation, useGetAllDogParksQuery } = protectedApiSlice;
+export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useUpdatePetDetailsMutation, useDeletePetMutation, useGetUncheckedInPetsQuery, useGetAllDogParksQuery, useCreateCheckInsMutation } = protectedApiSlice;
