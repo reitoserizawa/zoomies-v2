@@ -7,7 +7,7 @@ export type WhereInput<MN extends Prisma.ModelName> = MN extends keyof ModelDele
 
 export type ValidateInput<P> = Partial<Omit<P, 'id'>>;
 export type ExtractKeys<P, K extends keyof P> = {
-    [P in K]: P;
+    [Key in K]: P[Key];
 };
 
 export interface BaseInterface {

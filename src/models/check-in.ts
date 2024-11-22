@@ -36,10 +36,15 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
 
     static async fromUser(user: User): Promise<CheckIn[]> {
         const user_id = user.id;
-        return await CheckIn.manyFromQuery<CheckInInterface, 'user_id', CheckIn>({ user_id } as unknown as ExtractKeys<CheckInInterface, 'user_id'>, 'checkIn');
+        return await CheckIn.manyFromQuery<CheckInInterface, 'user_id', CheckIn>({ user_id }, 'checkIn');
     }
 
-    static async create(user: User, pets: Pet[], dog_park: DogPark): Promise<number> {
+    static async fromPet(pet: Pet): Promise<CheckIn[]> {
+        const pet_id = pet.id;
+        return await CheckIn.manyFromQuery<CheckInInterface, 'pet_id', CheckIn>({ pet_id }, 'checkIn');
+    }
+
+    static async create(user: User, pets: Pet[], dog_park: DogPark): Promise<CheckIn[]> {
         const user_datails = Prisma.validator<Prisma.UserWhereInput>()({
             id: user.id
         });
@@ -55,14 +60,14 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
             })
         );
 
-        const validated_payload = pets_details.map(pet_details =>
+        const validated_payload = pets_details.map(pet_item =>
             Prisma.validator<Prisma.CheckInCreateInput>()({
                 active: true,
                 user: {
                     connect: user_datails
                 },
                 pet: {
-                    connect: pet_details
+                    connect: pet_item
                 },
                 dog_park: {
                     connect: dog_park_details
@@ -70,19 +75,10 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
             })
         );
 
-        const bacth_payload = await PrismaClientModel.prisma.checkIn.createMany({
-            data: validated_payload.map(data => {
-                return {
-                    ...data,
-                    user_id: data.user.connect.id,
-                    pet_id: data.pet.connect.id,
-                    dog_park_id: data.dog_park.connect.id
-                };
-            }),
-            skipDuplicates: true
-        });
+        const new_check_ins = await Promise.all(validated_payload.map(async payload => PrismaClientModel.prisma.checkIn.create({ data: { ...payload } })));
+        const check_ins = new_check_ins.map(check_in => CheckIn.fromProperties(check_in));
 
-        return bacth_payload.count;
+        return check_ins;
     }
 
     constructor(id: number) {

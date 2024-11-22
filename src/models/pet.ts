@@ -5,6 +5,7 @@ import BaseModel from './base';
 import { PetInterface, PetModelInterface } from '../interfaces/pet';
 import PrismaClientModel from './prisma-client';
 import User from './user';
+import CheckIn from './check-in';
 
 class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
     public_properties = ['name', 'owner', 'type', 'breed', 'birthday', 'owner_id', 'created_at', 'introduction'];
@@ -55,6 +56,16 @@ class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
         const pet = Pet.fromProperties(new_pet);
 
         return pet;
+    }
+
+    async hasActiveCheckIn(): Promise<boolean> {
+        const check_ins = await CheckIn.fromPet(this);
+
+        if (check_ins.some(check_in => check_in.properties.active)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     constructor(id: number) {
