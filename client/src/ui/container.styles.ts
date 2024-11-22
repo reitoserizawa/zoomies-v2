@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+interface FullScreenContainerProps {
+    $top?: number;
+    $backgroundColor?: string;
+}
+
 interface FlexContainerProps {
     $flexDirection?: string;
     $alignItems?: string;
@@ -34,12 +39,12 @@ export const Container = styled.div`
     margin: auto;
 `;
 
-export const FullScreenContainer = styled.div<{ $backgroundColor?: string }>`
+export const FullScreenContainer = styled.div<FullScreenContainerProps>`
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 0;
+    top: ${({ $top }) => ($top ? $top : 0)}px;
     left: 0;
     right: 0;
     bottom: 0;
