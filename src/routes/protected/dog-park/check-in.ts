@@ -8,11 +8,13 @@ import { BadRequestError, NoAccessError } from '../../../models/errors';
 
 export const createCheckIn = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const { id: dog_park_id } = req.params;
+        const { id } = req.params;
+        const dog_park_id = parseInt(id);
+
         const { pet_ids } = req.body;
 
         if (!dog_park_id || typeof dog_park_id !== 'number') throw new BadRequestError('Invalid dog park ID');
-        if (!pet_ids || pet_ids.length === 0 || Array.isArray(pet_ids)) throw new BadRequestError('Invalid pet ID');
+        if (!pet_ids || pet_ids.length === 0) throw new BadRequestError('Invalid pet ID');
 
         const dog_park = await DogPark.fromId(dog_park_id);
         const pets = await Pet.fromIds(pet_ids);
