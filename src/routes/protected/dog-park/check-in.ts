@@ -6,7 +6,7 @@ import User from '../../../models/user';
 import CheckIn from '../../../models/check-in';
 import { BadRequestError, NoAccessError } from '../../../models/errors';
 
-export const createCheckIn = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const createCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
         const dog_park_id = parseInt(id);
@@ -34,23 +34,22 @@ export const createCheckIn = async (req: CustomRequest, res: Response, next: Nex
 
 export const getCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const { id: dog_park_id } = req.params;
+        const { id } = req.params;
+        const dog_park_id = parseInt(id);
 
         if (!dog_park_id || typeof dog_park_id !== 'number') throw new BadRequestError('Invalid dog park ID');
 
         const dog_park = await DogPark.fromId(dog_park_id);
-        const user = await User.fromJwtPayload(req);
 
-        const user_check_ins = await CheckIn.fromUser(user);
-        const user_check_ins_from_dog_park = user_check_ins.filter(check_in => check_in.properties.dog_park_id === dog_park.id);
+        const dog_park_check_ins = await CheckIn.fromDogPark(dog_park);
 
-        res.json(Promise.all(user_check_ins_from_dog_park.map(async check_in => await check_in.prepareForCollection())));
+        res.json(await Promise.all(dog_park_check_ins.map(async check_in => await check_in.prepareForCollection())));
     } catch (err) {
         next(err);
     }
 };
 
-export const deleteCheckIn = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const deleteCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const { check_in_ids } = req.body;
 

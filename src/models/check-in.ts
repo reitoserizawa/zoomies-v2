@@ -11,6 +11,7 @@ import { ExtractKeys } from '../interfaces/base';
 
 class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInModelInterface {
     public_properties = ['active', 'checked_in_at', 'checked_out_at', 'dog_park', 'dog_park_id', 'pet', 'pet_id', 'user', 'user_id'];
+    include_properties = ['dog_park', 'pet', 'user'];
     updatable_properties = ['pet', 'dog_park', 'active', 'checked_in_at', 'checked_out_at'];
 
     static override async fromId(id: number): Promise<CheckIn> {
@@ -42,6 +43,11 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
     static async fromPet(pet: Pet): Promise<CheckIn[]> {
         const pet_id = pet.id;
         return await CheckIn.manyFromQuery<CheckInInterface, 'pet_id', CheckIn>({ pet_id }, 'checkIn');
+    }
+
+    static async fromDogPark(dog_park: DogPark): Promise<CheckIn[]> {
+        const dog_park_id = dog_park.id;
+        return await CheckIn.manyFromQuery<CheckInInterface, 'dog_park_id', CheckIn>({ dog_park_id }, 'checkIn', ['pet', 'user']);
     }
 
     static async create(user: User, pets: Pet[], dog_park: DogPark): Promise<CheckIn[]> {
