@@ -10,7 +10,7 @@ import { dogParkExample } from '../../../images';
 import DogIcon from '../../../images/icons/DogIconx';
 import HistoryIcon from '../../../images/icons/HistoryIcon';
 
-import { useAppDispatch } from '../../../redux/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 import { setDogParkModalId } from '../../../redux/reducers/appSlice';
 
 import useClickOutside from '../../../hooks/useClickOutisde';
@@ -52,16 +52,27 @@ const ReactSelectStyles = createGlobalStyle`
     }
 `;
 
-const Modal: React.FC<{ dogParkModalId: number }> = ({ dogParkModalId: dogParkId }) => {
+const Modal: React.FC = () => {
     const [checkInPets, setCheckInPets] = useState<MultiValue<{ value: number; label: string }>>([]);
 
+    const dogParkId = useAppSelector(state => state.app.dogParkModalId);
     const dispatch = useAppDispatch();
+
+    const ref = useRef<HTMLDivElement>(null);
 
     // TODO: add a loader
     const { data: uncheckedInPets } = useGetUncheckedInPetsQuery(null);
     // TODO: add a loader
-    const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkId });
+    const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkId as number }, { skip: !dogParkId });
     const [createCheckIns] = useCreateCheckInsMutation();
+
+    const closeDogParkModal = useCallback(() => {
+        dispatch(setDogParkModalId(undefined));
+    }, [dispatch]);
+
+    useClickOutside(closeDogParkModal, ref);
+
+    if (!dogParkId) return null;
 
     // TODO: handle error
     const options = (uncheckedInPets || []).map(pet => {
@@ -73,28 +84,17 @@ const Modal: React.FC<{ dogParkModalId: number }> = ({ dogParkModalId: dogParkId
         };
     });
 
-    const ref = useRef<HTMLDivElement>(null);
+    const handleCheckIn = (e: React.FormEvent) => {
+        e.preventDefault();
 
-    const closeDogParkModal = useCallback(() => {
-        dispatch(setDogParkModalId(undefined));
-    }, [dispatch]);
+        const petIds = checkInPets.map(pet => pet.value);
 
-    useClickOutside(closeDogParkModal, ref);
+        if (!petIds || petIds.length === 0) {
+            return;
+        }
 
-    const handleCheckIn = useCallback(
-        (e: React.FormEvent) => {
-            e.preventDefault();
-
-            const petIds = checkInPets.map(pet => pet.value);
-
-            if (!petIds || petIds.length === 0) {
-                return;
-            }
-
-            createCheckIns({ dogParkId, petIds });
-        },
-        [checkInPets, dogParkId, createCheckIns]
-    );
+        createCheckIns({ dogParkId, petIds });
+    };
 
     return (
         <FullScreenContainer $top={60} $backgroundColor='rgba(0, 0, 0, 0.4)'>

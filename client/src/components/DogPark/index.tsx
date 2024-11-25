@@ -53,7 +53,7 @@ const DogPark: React.FC = () => {
                     </GridContainer>
                 </div>
             </FlexContainer>
-            {dogParkModalId && <DogParkModal dogParkModalId={dogParkModalId} />}
+            {dogParkModalId && <DogParkModal />}
         </Container>
     );
 };
