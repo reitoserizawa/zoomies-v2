@@ -17,6 +17,7 @@ export interface CheckInState extends BaseState {
 
     checked_in_at?: Date;
     checked_out_at?: Date | null;
+    user_owns_check_in?: boolean;
 }
 
 export interface CreateCheckInState {

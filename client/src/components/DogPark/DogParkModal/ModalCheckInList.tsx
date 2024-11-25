@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { P } from '../../../ui/text-tags.styles';
 import { BorderlineContainer, FlexContainer, RoundImgContainer } from '../../../ui/container.styles';
 
 import { blankProfileImg, dogProfileImg } from '../../../images';
 import { useAppSelector } from '../../../redux/hooks/hooks';
+import DeleteIcon from '../../../images/icons/DeleteIcon';
+import { Button } from '../../../ui/form.styles';
+import { useDeleteCheckInMutation } from '../../../redux/reducers/protected-api-slice';
 
 const ModalCheckInList: React.FC = () => {
+    const dogParkDetails = useAppSelector(state => state.dogPark);
     const activeCheckInsFromDogPark = useAppSelector(state => state.dogPark?.active_check_ins);
+
+    const [deleteCheckIn] = useDeleteCheckInMutation();
+
+    // TODO: error handling
+    const handleDeleteCheckIn = useCallback(
+        (checkInId?: number) => {
+            if (window.confirm(`Are you sure you want to delete the check in at ${dogParkDetails?.name}?`) && checkInId) {
+                deleteCheckIn({ checkInId });
+            }
+        },
+        [dogParkDetails, deleteCheckIn]
+    );
 
     if (!activeCheckInsFromDogPark || activeCheckInsFromDogPark.length === 0) {
         return null;
@@ -29,10 +45,21 @@ const ModalCheckInList: React.FC = () => {
 
                         {/* user */}
                         <FlexContainer $flexDirection='row' $justifyContent='flex-end'>
-                            <P>Checked-in by {checkIn?.user?.username || 'Unknown User'}</P>
+                            <P
+                                style={{
+                                    textWrap: 'nowrap'
+                                }}
+                            >
+                                Checked-in by {checkIn?.user?.username || 'Unknown User'}
+                            </P>
                             <RoundImgContainer>
                                 <img src={blankProfileImg?.src || ''} alt={blankProfileImg?.alt || 'User profile'} />
                             </RoundImgContainer>
+                            {checkIn?.user_owns_check_in && (
+                                <Button onClick={() => handleDeleteCheckIn(checkIn?.id)} $width='fit-content' $backgroundColor='white' $margin='0px' style={{ paddingLeft: '15px' }}>
+                                    <DeleteIcon color='red' />
+                                </Button>
+                            )}
                         </FlexContainer>
                     </FlexContainer>
                 </BorderlineContainer>

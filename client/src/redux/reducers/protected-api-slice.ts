@@ -92,8 +92,29 @@ export const protectedApiSlice = createApi({
                     pet_ids: petIds
                 }
             })
+        }),
+        deleteCheckIn: builder.mutation<{ success: boolean }, { checkInId: number }>({
+            query: ({ checkInId }) => ({
+                url: `users/check-ins`,
+                method: 'DELETE',
+                body: {
+                    check_in_id: checkInId
+                }
+            })
         })
     })
 });
 
-export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useUpdatePetDetailsMutation, useDeletePetMutation, useGetUncheckedInPetsQuery, useGetAllDogParksQuery, useGetDogParkDetailsQuery, useGetActiveCheckInsFromDogParkQuery, useCreateCheckInsMutation } = protectedApiSlice;
+export const {
+    useLogInUserMutation,
+    useGetUserDetailsQuery,
+    useCreatePetMutation,
+    useUpdatePetDetailsMutation,
+    useDeletePetMutation,
+    useGetUncheckedInPetsQuery,
+    useGetAllDogParksQuery,
+    useGetDogParkDetailsQuery,
+    useGetActiveCheckInsFromDogParkQuery,
+    useCreateCheckInsMutation,
+    useDeleteCheckInMutation
+} = protectedApiSlice;

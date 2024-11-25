@@ -12,6 +12,7 @@ interface ButtonProps {
     $borderRadius?: string;
     $delete?: boolean;
     $edit?: boolean;
+    $backgroundColor?: string;
 }
 
 export const Input = styled.input<InputProps>`
@@ -54,13 +55,13 @@ export const Button = styled.button<ButtonProps>`
     align-items: center;
     justify-content: center;
 
-    background-color: gray;
+    background-color: ${({ $backgroundColor }) => ($backgroundColor ? $backgroundColor : 'gray')};
     color: white;
 
     ${({ $delete }) =>
         $delete &&
         `
-        background-color: #bb2124;
+        background-color: red;
     `}
 
     ${({ $edit }) =>
