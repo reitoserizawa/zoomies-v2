@@ -11,4 +11,6 @@ export interface DogParkState extends BaseState {
     geo: number[] | null;
 
     check_ins?: CheckInState[];
+
+    active_check_ins?: CheckInState[];
 }
