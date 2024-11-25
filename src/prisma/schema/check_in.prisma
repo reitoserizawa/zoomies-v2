@@ -4,7 +4,7 @@ model CheckIn {
   user User @relation(fields: [user_id], references: [id])
   user_id Int
 
-  pet Pet @relation(fields: [pet_id], references: [id])
+  pet Pet @relation(fields: [pet_id], references: [id], onDelete: Cascade)
   pet_id Int
 
   dog_park DogPark @relation(fields: [dog_park_id], references: [id])
