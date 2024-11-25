@@ -7,11 +7,15 @@ import { blankProfileImg, dogProfileImg } from '../../../images';
 import { useAppSelector } from '../../../redux/hooks/hooks';
 import DeleteIcon from '../../../images/icons/DeleteIcon';
 import { Button } from '../../../ui/form.styles';
-import { useDeleteCheckInMutation } from '../../../redux/reducers/protected-api-slice';
+import { useDeleteCheckInMutation, useGetActiveCheckInsFromDogParkQuery, useGetDogParkDetailsQuery } from '../../../redux/reducers/protected-api-slice';
 
 const ModalCheckInList: React.FC = () => {
-    const dogParkDetails = useAppSelector(state => state.dogPark);
-    const activeCheckInsFromDogPark = useAppSelector(state => state.dogPark?.active_check_ins);
+    const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
+
+    // TODO: add a loader
+    const { data: dogParkDetails } = useGetDogParkDetailsQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
+    // TODO: add a loader
+    const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
 
     const [deleteCheckIn] = useDeleteCheckInMutation();
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 import { BorderlineContainer, FlexContainer, FullScreenContainer, ImgContainer, ModalContainer } from '../../../ui/container.styles';
@@ -12,7 +12,6 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 import { setDogParkModalId } from '../../../redux/reducers/appSlice';
 
 import { useGetActiveCheckInsFromDogParkQuery, useGetDogParkDetailsQuery } from '../../../redux/reducers/protected-api-slice';
-import { setActiveCheckIns, setDogParkDetails } from '../../../redux/reducers/dogParkSlice';
 
 import useClickOutside from '../../../hooks/useClickOutisde';
 
@@ -41,27 +40,21 @@ const TagList = styled.li`
 
 const Modal: React.FC = () => {
     const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
-    const dogParkDetails = useAppSelector(state => state.dogPark);
+
+    // TODO: add a loader
+    const { data: dogParkDetails } = useGetDogParkDetailsQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
+    // TODO: add a loader
+    const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
 
     const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLDivElement>(null);
-
-    // TODO: add a loader
-    const { data: dogParkData } = useGetDogParkDetailsQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
-    // TODO: add a loader
-    const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
 
     const closeDogParkModal = useCallback(() => {
         dispatch(setDogParkModalId(undefined));
     }, [dispatch]);
 
     useClickOutside(closeDogParkModal, ref);
-
-    useEffect(() => {
-        dispatch(setDogParkDetails(dogParkData));
-        dispatch(setActiveCheckIns(activeCheckInsFromDogPark));
-    }, [dispatch, dogParkData, activeCheckInsFromDogPark]);
 
     if (!dogParkModalId) return null;
 
@@ -86,7 +79,7 @@ const Modal: React.FC = () => {
                             <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='flex-start' $gap='20px' style={{ flexBasis: '50%' }}>
                                 <FlexContainer $gap='10px' $alignItems='flex-end' style={{ flexBasis: '50%' }}>
                                     <H2 $noMargin size='2em' style={{ display: 'flex', alignItems: 'center' }}>
-                                        {dogParkDetails?.active_check_ins?.length}
+                                        {activeCheckInsFromDogPark?.length}
                                         <DogIcon size='32px'></DogIcon>
                                     </H2>
                                     <P $noMargin>Now</P>

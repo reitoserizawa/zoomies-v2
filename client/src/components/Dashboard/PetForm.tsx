@@ -4,9 +4,8 @@ import DatePicker from 'react-datepicker';
 
 import { PetState } from '../../states/pet';
 
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
+import { useAppDispatch } from '../../redux/hooks/hooks';
 import { togglePetCreateFormModal, togglePetUpdateFormModal } from '../../redux/reducers/appSlice';
-import { setPetError } from '../../redux/reducers/petSlice';
 import { useCreatePetMutation, useUpdatePetDetailsMutation } from '../../redux/reducers/protected-api-slice';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,8 +14,6 @@ import { P } from '../../ui/text-tags.styles';
 import { FlexContainer } from '../../ui/container.styles';
 
 import useClickOutside from '../../hooks/useClickOutisde';
-
-import Error from '../Error';
 
 const ModalContentContainer = styled.div`
     width: 500px;
@@ -77,8 +74,6 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
 
     const ref = useRef<HTMLDivElement>(null);
 
-    const error = useAppSelector(state => state?.pet?.error);
-
     const [createPet] = useCreatePetMutation();
     const [updatePetDetails] = useUpdatePetDetailsMutation();
 
@@ -93,9 +88,9 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
     const handleCreateOrUpdatePet = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!name) return dispatch(setPetError({ message: 'Name is required' }));
-        if (!breed) return dispatch(setPetError({ message: 'Password is required' }));
-        if (!introduction) return dispatch(setPetError({ message: 'Introduction is required' }));
+        // if (!name) return dispatch(setPetError({ message: 'Name is required' }));
+        // if (!breed) return dispatch(setPetError({ message: 'Password is required' }));
+        // if (!introduction) return dispatch(setPetError({ message: 'Introduction is required' }));
 
         toUpdate ? handleUpdatePet() : handleCreatePet();
     };
@@ -107,12 +102,11 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
                 closeModal();
             })
             .catch(error => {
-                const statusCode = error?.status;
-                const message = error?.data?.error?.message;
-
-                dispatch(setPetError({ message, statusCode }));
+                // const statusCode = error?.status;
+                // const message = error?.data?.error?.message;
+                // dispatch(setPetError({ message, statusCode }));
             });
-    }, [id, name, breed, introduction, birthday, updatePetDetails, dispatch, closeModal]);
+    }, [id, name, breed, introduction, birthday, updatePetDetails, closeModal]);
 
     const handleCreatePet = useCallback(() => {
         createPet({ name, breed, introduction, birthday })
@@ -121,12 +115,11 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
                 closeModal();
             })
             .catch(error => {
-                const statusCode = error?.status;
-                const message = error?.data?.error?.message;
-
-                dispatch(setPetError({ message, statusCode }));
+                // const statusCode = error?.status;
+                // const message = error?.data?.error?.message;
+                // dispatch(setPetError({ message, statusCode }));
             });
-    }, [name, breed, introduction, birthday, createPet, dispatch, closeModal]);
+    }, [name, breed, introduction, birthday, createPet, closeModal]);
 
     return (
         <ModalContainer>
@@ -147,7 +140,7 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
                             {toUpdate ? 'Update Pet' : 'Add Pet'}
                         </Button>
                     </form>
-                    {error && <Error message={error.message} />}
+                    {/* TODO: error handlingt */}
                 </ModalContentContainer>
             </FlexContainer>
         </ModalContainer>

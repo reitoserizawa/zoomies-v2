@@ -22,7 +22,7 @@ const ReactSelectStyles = createGlobalStyle`
 const ModalCheckInForm: React.FC = () => {
     const [checkInPets, setCheckInPets] = useState<MultiValue<{ value: number; label: string }>>([]);
 
-    const dogParkId = useAppSelector(state => state.dogPark.id);
+    const dogParkId = useAppSelector(state => state.app.dogParkModalId);
 
     // TODO: add a loader
     const { data: uncheckedInPets } = useGetUncheckedInPetsQuery(null);
@@ -49,12 +49,13 @@ const ModalCheckInForm: React.FC = () => {
         }
 
         createCheckIns({ dogParkId, petIds });
+        setCheckInPets([]);
     };
 
     return (
         <form onSubmit={handleCheckIn}>
             <div style={{ padding: '10px' }}>
-                <Select maxMenuHeight={300} closeMenuOnSelect={true} defaultValue={checkInPets} isMulti options={options} onChange={setCheckInPets} />
+                <Select maxMenuHeight={300} closeMenuOnSelect={true} defaultValue={checkInPets} isMulti options={options} value={checkInPets} onChange={setCheckInPets} />
                 <ReactSelectStyles />
             </div>
             <Button type='submit' $width='200px' $margin='10px auto'>

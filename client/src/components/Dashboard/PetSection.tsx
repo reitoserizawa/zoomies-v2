@@ -11,11 +11,12 @@ import AddIcon from '../../images/icons/AddIcon';
 
 import PetCard from './PetCard';
 import PetForm from './PetForm';
+import { useGetPetsFromUserQuery } from '../../redux/reducers/protected-api-slice';
 
 const PetSection: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const pets = useAppSelector(state => state.user.pets);
+    const { data: pets } = useGetPetsFromUserQuery(null);
     const isPetFormModalOpen = useAppSelector(state => state.app.isPetCreateFormModalOpen);
 
     return (

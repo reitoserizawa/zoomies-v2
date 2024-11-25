@@ -18,6 +18,7 @@ export const protectedApiSlice = createApi({
             return headers;
         }
     }),
+    tagTypes: ['User', 'Pet', 'DogPark', 'CheckIn'],
     endpoints: builder => ({
         logInUser: builder.mutation<UserState, UserLogInRequest>({
             query: ({ username, password }) => ({
@@ -27,12 +28,20 @@ export const protectedApiSlice = createApi({
                     username,
                     password
                 }
-            })
+            }),
+            invalidatesTags: ['User']
         }),
         getUserDetails: builder.query<UserState, null>({
             query: () => ({
                 url: `users`
-            })
+            }),
+            providesTags: ['User']
+        }),
+        getPetsFromUser: builder.query<PetState[], null>({
+            query: () => ({
+                url: `users/pets`
+            }),
+            providesTags: ['Pet']
         }),
         createPet: builder.mutation<PetState, PetCreateState>({
             query: ({ name, breed, birthday, introduction }) => ({
@@ -44,7 +53,8 @@ export const protectedApiSlice = createApi({
                     birthday,
                     introduction
                 }
-            })
+            }),
+            invalidatesTags: ['Pet']
         }),
         updatePetDetails: builder.mutation<PetState, Partial<PetState>>({
             query: ({ id, name, breed, birthday, introduction }) => ({
@@ -56,33 +66,39 @@ export const protectedApiSlice = createApi({
                     birthday,
                     introduction
                 }
-            })
+            }),
+            invalidatesTags: ['Pet']
         }),
         deletePet: builder.mutation<{ success: boolean }, { id: number }>({
             query: ({ id }) => ({
                 url: `pets/${id}`,
                 method: 'DELETE'
-            })
+            }),
+            invalidatesTags: ['Pet']
         }),
         getUncheckedInPets: builder.query<PetState[], null>({
             query: () => ({
                 url: `pets/unchecked-in`
-            })
+            }),
+            providesTags: ['CheckIn']
         }),
         getAllDogParks: builder.query<DogParkState[], null>({
             query: () => ({
                 url: `dog-parks`
-            })
+            }),
+            providesTags: ['DogPark']
         }),
         getDogParkDetails: builder.query<DogParkState, { id: number }>({
             query: ({ id: dogParkId }) => ({
                 url: `dog-parks/${dogParkId}`
-            })
+            }),
+            providesTags: ['DogPark']
         }),
         getActiveCheckInsFromDogPark: builder.query<CheckInState[], { id: number }>({
             query: ({ id: dogParkId }) => ({
                 url: `dog-parks/${dogParkId}/active-check-ins`
-            })
+            }),
+            providesTags: ['CheckIn']
         }),
         createCheckIns: builder.mutation<CheckInState[], CreateCheckInState>({
             query: ({ dogParkId, petIds }) => ({
@@ -91,7 +107,8 @@ export const protectedApiSlice = createApi({
                 body: {
                     pet_ids: petIds
                 }
-            })
+            }),
+            invalidatesTags: ['CheckIn']
         }),
         deleteCheckIn: builder.mutation<{ success: boolean }, { checkInId: number }>({
             query: ({ checkInId }) => ({
@@ -100,7 +117,8 @@ export const protectedApiSlice = createApi({
                 body: {
                     check_in_id: checkInId
                 }
-            })
+            }),
+            invalidatesTags: ['CheckIn']
         })
     })
 });
@@ -116,5 +134,6 @@ export const {
     useGetDogParkDetailsQuery,
     useGetActiveCheckInsFromDogParkQuery,
     useCreateCheckInsMutation,
-    useDeleteCheckInMutation
+    useDeleteCheckInMutation,
+    useGetPetsFromUserQuery
 } = protectedApiSlice;
