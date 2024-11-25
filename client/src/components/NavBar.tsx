@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { FlexContainer, ImgContainer, RoundImgContainer } from '../ui/container.styles';
-import { NavBarContainer, NavBarIconContainer, NavBarLink } from '../ui/navbar.styles';
-import { H1 } from '../ui/text-tags.styles';
+import { NavBarContainer, NavBarLink } from '../ui/navbar.styles';
+import { H1, P } from '../ui/text-tags.styles';
 
 import { blankProfileImg, dogPawWithWhiteImg } from '../images';
 import HomeIcon from '../images/icons/HomeIcon';
 import DogParkIcon from '../images/icons/DogParkicon';
-import { NavLink } from 'react-router-dom';
+
+import { useAppDispatch } from '../redux/hooks/hooks';
+import { resetUserState } from '../redux/reducers/userSlice';
 
 const NavBar: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const handleLogout = useCallback(() => {
+        window.localStorage.removeItem('token');
+        dispatch(resetUserState());
+
+        navigate('/login');
+    }, [dispatch, navigate]);
+
     return (
         <NavBarContainer>
             <FlexContainer $flexDirection='row' $justifyContent='space-between' $alignItems='center'>
@@ -31,6 +44,9 @@ const NavBar: React.FC = () => {
                     <RoundImgContainer>
                         <img src={blankProfileImg.src} alt={blankProfileImg.alt} />
                     </RoundImgContainer>
+                    <P style={{ cursor: 'pointer' }} onClick={handleLogout}>
+                        Logout
+                    </P>
                 </FlexContainer>
             </FlexContainer>
         </NavBarContainer>
