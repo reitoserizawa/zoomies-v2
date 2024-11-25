@@ -25,7 +25,7 @@ const dogParkSlice = createSlice({
         setActiveCheckIns: (state, action) => {
             return {
                 ...state,
-                active_check_ins: { ...action.payload }
+                active_check_ins: action.payload
             };
         }
     }
