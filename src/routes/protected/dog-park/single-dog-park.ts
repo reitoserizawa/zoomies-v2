@@ -5,7 +5,8 @@ import { BadRequestError } from '../../../models/errors';
 
 export const getDogParkDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id: dog_park_id } = req.params;
+        const { id } = req.params;
+        const dog_park_id = parseInt(id);
 
         if (!dog_park_id || typeof dog_park_id !== 'number') throw new BadRequestError('Invalida dog park ID');
 
