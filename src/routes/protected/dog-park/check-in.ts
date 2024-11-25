@@ -40,33 +40,41 @@ export const getActiveCheckIns = async (req: CustomRequest, res: Response, next:
         if (!dog_park_id || typeof dog_park_id !== 'number') throw new BadRequestError('Invalid dog park ID');
 
         const dog_park = await DogPark.fromId(dog_park_id);
+        const user = await User.fromJwtPayload(req);
 
         const dog_park_check_ins = await CheckIn.fromDogPark(dog_park);
         const active_dog_park_check_ins = dog_park_check_ins.filter(check_in => check_in.isActive());
 
-        res.json(await Promise.all(active_dog_park_check_ins.map(async check_in => await check_in.prepareForCollection())));
+        res.json(
+            ...(await Promise.all(
+                active_dog_park_check_ins.map(async check_in => {
+                    check_in.setUser();
+                    return { ...(await check_in.prepareForCollection()), user_owns_check_in: check_in.userOwnsCheckIn(user) };
+                })
+            ))
+        );
     } catch (err) {
         next(err);
     }
 };
 
-export const deleteCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
-    try {
-        const { check_in_ids } = req.body;
+// export const deleteCheckIn = async (req: CustomRequest, res: Response, next: NextFunction) => {
+//     try {
+//         const { check_in_id } = req.body;
 
-        if (!check_in_ids || check_in_ids.length === 0 || Array.isArray(check_in_ids)) throw new BadRequestError('Invalid pet ID');
+//         if (!check_in_id || typeof check_in_id !== 'number') throw new BadRequestError('Invalid pet ID');
 
-        const check_ins = await CheckIn.fromIds(check_in_ids);
-        const user = await User.fromJwtPayload(req);
+//         const check_in = await CheckIn.fromId(check_in_id);
+//         const user = await User.fromJwtPayload(req);
 
-        const has_check_ins = check_ins.map((check_in: CheckIn) => user.hasCheckIn(check_in));
+//         const has_check_ins = user.hasCheckIn(check_in);
 
-        if (has_check_ins.includes(false)) throw new NoAccessError("User doesn't have the check in or check ins");
+//         if (!has_check_ins) throw new NoAccessError("User doesn't have the check in or check ins");
 
-        await Promise.all(check_ins.map(check_in => check_in.update({ active: false })));
+//         await check_in.update({ active: false });
 
-        res.json({ success: true });
-    } catch (err) {
-        next(err);
-    }
-};
+//         res.json({ success: true });
+//     } catch (err) {
+//         next(err);
+//     }
+// };

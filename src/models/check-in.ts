@@ -14,6 +14,8 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
     include_properties = ['dog_park', 'pet', 'user'];
     updatable_properties = ['pet', 'dog_park', 'active', 'checked_in_at', 'checked_out_at'];
 
+    user?: User;
+
     static override async fromId(id: number): Promise<CheckIn> {
         const check_in = new CheckIn(id);
         await check_in.fetch();
@@ -85,6 +87,17 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
         const check_ins = new_check_ins.map(check_in => CheckIn.fromProperties(check_in));
 
         return check_ins;
+    }
+
+    async userOwnsCheckIn(user: User): Promise<boolean> {
+        return user.id === this.user?.id;
+    }
+
+    setUser(): void {
+        if (this.user) return;
+        if (!this.properties.user) throw new Error("Check-in doesn't have a user property");
+
+        this.user = User.fromProperties(this.properties.user);
     }
 
     isActive(): boolean {
