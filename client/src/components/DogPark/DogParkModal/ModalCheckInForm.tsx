@@ -19,7 +19,7 @@ const ReactSelectStyles = createGlobalStyle`
     }
 `;
 
-const ModalCheckIn: React.FC = () => {
+const ModalCheckInForm: React.FC = () => {
     const [checkInPets, setCheckInPets] = useState<MultiValue<{ value: number; label: string }>>([]);
 
     const dogParkId = useAppSelector(state => state.dogPark.id);
@@ -64,4 +64,4 @@ const ModalCheckIn: React.FC = () => {
     );
 };
 
-export default ModalCheckIn;
+export default ModalCheckInForm;

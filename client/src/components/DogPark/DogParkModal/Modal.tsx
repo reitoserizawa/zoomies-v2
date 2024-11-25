@@ -19,7 +19,7 @@ import useClickOutside from '../../../hooks/useClickOutisde';
 import ModalHeader from './ModalHeader';
 import ModalMap from './ModalMap';
 import ModalCheckInList from './ModalCheckInList';
-import ModalCheckIn from './ModalCheckIn';
+import ModalCheckInForm from './ModalCheckInForm';
 
 const TagContainer = styled.ul`
     display: block;
@@ -118,7 +118,7 @@ const Modal: React.FC = () => {
                     {/* sub content */}
                     <FlexContainer $gap='30px' $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
                         <BorderlineContainer>
-                            <ModalCheckIn />
+                            <ModalCheckInForm />
                         </BorderlineContainer>
                         <BorderlineContainer>
                             <ModalMap />
