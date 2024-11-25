@@ -18,7 +18,7 @@ import useClickOutside from '../../../hooks/useClickOutisde';
 import DogParkModalHeader from './ModalHeader';
 import DogParkModalMap from './ModalMap';
 import DogParkModalCheckInList from './ModalCheckInList';
-import { useCreateCheckInsMutation, useGetCheckInsFromDogParkQuery, useGetUncheckedInPetsQuery } from '../../../redux/reducers/protected-api-slice';
+import { useCreateCheckInsMutation, useGetActiveCheckInsFromDogParkQuery, useGetUncheckedInPetsQuery } from '../../../redux/reducers/protected-api-slice';
 
 const TagContainer = styled.ul`
     display: block;
@@ -60,7 +60,7 @@ const Modal: React.FC<{ dogParkModalId: number }> = ({ dogParkModalId: dogParkId
     // TODO: add a loader
     const { data: uncheckedInPets } = useGetUncheckedInPetsQuery(null);
     // TODO: add a loader
-    const { data: checkInsFromDogPark } = useGetCheckInsFromDogParkQuery({ id: dogParkId });
+    const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkId });
     const [createCheckIns] = useCreateCheckInsMutation();
 
     // TODO: handle error
@@ -142,7 +142,7 @@ const Modal: React.FC<{ dogParkModalId: number }> = ({ dogParkModalId: dogParkId
                         </FlexContainer>
                         <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap='15px'>
                             <H3 $margin='16px 0px'>Current checked-in puppies</H3>
-                            {checkInsFromDogPark && <DogParkModalCheckInList checkInsFromDogPark={checkInsFromDogPark} />}
+                            {activeCheckInsFromDogPark && <DogParkModalCheckInList activeCheckInsFromDogPark={activeCheckInsFromDogPark} />}
                         </FlexContainer>
                     </FlexContainer>
                     {/* sub content */}

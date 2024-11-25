@@ -87,6 +87,10 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
         return check_ins;
     }
 
+    isActive(): boolean {
+        return this.properties.active;
+    }
+
     constructor(id: number) {
         super(id);
         this.model_name = 'CheckIn';

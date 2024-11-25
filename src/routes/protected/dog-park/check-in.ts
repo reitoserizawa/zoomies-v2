@@ -32,7 +32,7 @@ export const createCheckIns = async (req: CustomRequest, res: Response, next: Ne
     }
 };
 
-export const getCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const getActiveCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
         const dog_park_id = parseInt(id);
@@ -42,8 +42,9 @@ export const getCheckIns = async (req: CustomRequest, res: Response, next: NextF
         const dog_park = await DogPark.fromId(dog_park_id);
 
         const dog_park_check_ins = await CheckIn.fromDogPark(dog_park);
+        const active_dog_park_check_ins = dog_park_check_ins.filter(check_in => check_in.isActive());
 
-        res.json(await Promise.all(dog_park_check_ins.map(async check_in => await check_in.prepareForCollection())));
+        res.json(await Promise.all(active_dog_park_check_ins.map(async check_in => await check_in.prepareForCollection())));
     } catch (err) {
         next(err);
     }

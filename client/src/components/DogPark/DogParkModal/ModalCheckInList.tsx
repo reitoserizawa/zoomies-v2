@@ -6,10 +6,10 @@ import { BorderlineContainer, FlexContainer, RoundImgContainer } from '../../../
 import { blankProfileImg, dogProfileImg } from '../../../images';
 import { CheckInState } from '../../../states/check-in';
 
-const ModalCheckInList: React.FC<{ checkInsFromDogPark: CheckInState[] }> = ({ checkInsFromDogPark }) => {
+const ModalCheckInList: React.FC<{ activeCheckInsFromDogPark: CheckInState[] }> = ({ activeCheckInsFromDogPark }) => {
     return (
         <>
-            {checkInsFromDogPark?.map((checkIn, index) => (
+            {activeCheckInsFromDogPark?.map((checkIn, index) => (
                 <BorderlineContainer key={index}>
                     <FlexContainer $flexDirection='row' $justifyContent='space-between' style={{ padding: '5px 15px' }}>
                         {/* pet */}
