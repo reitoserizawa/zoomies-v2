@@ -13,4 +13,5 @@ export interface DogParkState extends BaseState {
     check_ins?: CheckInState[];
 
     active_check_ins?: CheckInState[];
+    active_check_ins_count?: number;
 }

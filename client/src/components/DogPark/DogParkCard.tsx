@@ -22,7 +22,7 @@ const DogParkCardImageContainer = styled.div`
     }
 `;
 
-const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, check_ins }) => {
+const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, active_check_ins_count }) => {
     return (
         <>
             <DogParkCardImageContainer>
@@ -36,7 +36,7 @@ const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, check
 
                 <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap='10px' style={{ marginBottom: '10px', marginLeft: '16px', flexBasis: '20%' }}>
                     <DogIcon size='16px' />
-                    <P $noMargin>0</P>
+                    <P $noMargin>{active_check_ins_count}</P>
                     <P $noMargin>|</P>
                     <HistoryIcon size='16px' />
                     <P $noMargin>Last visit: 3min</P>

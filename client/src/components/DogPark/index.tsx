@@ -45,9 +45,9 @@ const DogPark: React.FC = () => {
                 </div>
                 <div style={{ flexBasis: '40%', overflowY: 'scroll', height: 'calc(100vh - 138px)', padding: '5px', overflowX: 'hidden' }}>
                     <GridContainer>
-                        {data.map(({ id, name, address, check_ins }, idx) => (
+                        {data.map(({ id, name, address, check_ins, active_check_ins_count }, idx) => (
                             <DogParkCardListContainer key={idx} onClick={() => dispatch(setDogParkModalId(id))}>
-                                <DogParkCard id={id} name={name} address={address} check_ins={check_ins} />
+                                <DogParkCard id={id} name={name} address={address} check_ins={check_ins} active_check_ins_count={active_check_ins_count} />
                             </DogParkCardListContainer>
                         ))}
                     </GridContainer>
