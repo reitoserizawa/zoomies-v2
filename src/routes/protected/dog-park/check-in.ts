@@ -45,14 +45,17 @@ export const getActiveCheckIns = async (req: CustomRequest, res: Response, next:
         const dog_park_check_ins = await CheckIn.fromDogPark(dog_park);
         const active_dog_park_check_ins = dog_park_check_ins.filter(check_in => check_in.isActive());
 
-        res.json(
-            ...(await Promise.all(
-                active_dog_park_check_ins.map(async check_in => {
-                    check_in.setUser();
-                    return { ...(await check_in.prepareForCollection()), user_owns_check_in: check_in.userOwnsCheckIn(user) };
-                })
-            ))
+        const response = await Promise.all(
+            active_dog_park_check_ins.map(async check_in => {
+                check_in.setUser();
+                return {
+                    ...(await check_in.prepareForCollection()),
+                    user_owns_check_in: check_in.userOwnsCheckIn(user)
+                };
+            })
         );
+
+        res.json(response);
     } catch (err) {
         next(err);
     }
