@@ -48,6 +48,7 @@ export const getActiveCheckIns = async (req: CustomRequest, res: Response, next:
         const response = await Promise.all(
             active_dog_park_check_ins.map(async check_in => {
                 check_in.setUser();
+
                 return {
                     ...(await check_in.prepareForCollection()),
                     user_owns_check_in: check_in.userOwnsCheckIn(user)

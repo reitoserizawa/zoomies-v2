@@ -89,7 +89,7 @@ class CheckIn extends BaseModel<CheckInInterface, 'CheckIn'> implements CheckInM
         return check_ins;
     }
 
-    async userOwnsCheckIn(user: User): Promise<boolean> {
+    userOwnsCheckIn(user: User): boolean {
         return user.id === this.user?.id;
     }
 
