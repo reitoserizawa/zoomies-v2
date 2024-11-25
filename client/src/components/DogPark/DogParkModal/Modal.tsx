@@ -1,10 +1,8 @@
-import React, { useCallback, useRef, useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import Select, { MultiValue } from 'react-select';
+import React, { useCallback, useEffect, useRef } from 'react';
+import styled from 'styled-components';
 
 import { BorderlineContainer, FlexContainer, FullScreenContainer, ImgContainer, ModalContainer } from '../../../ui/container.styles';
 import { H2, H3, P } from '../../../ui/text-tags.styles';
-import { Button } from '../../../ui/form.styles';
 
 import { dogParkExample } from '../../../images';
 import DogIcon from '../../../images/icons/DogIconx';
@@ -13,12 +11,15 @@ import HistoryIcon from '../../../images/icons/HistoryIcon';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 import { setDogParkModalId } from '../../../redux/reducers/appSlice';
 
+import { useGetActiveCheckInsFromDogParkQuery, useGetDogParkDetailsQuery } from '../../../redux/reducers/protected-api-slice';
+import { setActiveCheckIns, setDogParkDetails } from '../../../redux/reducers/dogParkSlice';
+
 import useClickOutside from '../../../hooks/useClickOutisde';
 
-import DogParkModalHeader from './ModalHeader';
-import DogParkModalMap from './ModalMap';
-import DogParkModalCheckInList from './ModalCheckInList';
-import { useCreateCheckInsMutation, useGetActiveCheckInsFromDogParkQuery, useGetUncheckedInPetsQuery } from '../../../redux/reducers/protected-api-slice';
+import ModalHeader from './ModalHeader';
+import ModalMap from './ModalMap';
+import ModalCheckInList from './ModalCheckInList';
+import ModalCheckIn from './ModalCheckIn';
 
 const TagContainer = styled.ul`
     display: block;
@@ -38,33 +39,18 @@ const TagList = styled.li`
     margin-right: 10px;
 `;
 
-const ReactSelectStyles = createGlobalStyle`
-    :nth-child(1 of div.css-1xc3v61-indicatorContainer) {
-        display: none;
-    }
-
-    :nth-child(1 of div.css-15lsz6c-indicatorContainer) {
-        display: none;
-    }
-
-    .css-1u9des2-indicatorSeparator {
-        display: none;
-    }
-`;
-
 const Modal: React.FC = () => {
-    const [checkInPets, setCheckInPets] = useState<MultiValue<{ value: number; label: string }>>([]);
+    const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
+    const dogParkDetails = useAppSelector(state => state.dogPark);
 
-    const dogParkId = useAppSelector(state => state.app.dogParkModalId);
     const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLDivElement>(null);
 
     // TODO: add a loader
-    const { data: uncheckedInPets } = useGetUncheckedInPetsQuery(null);
+    const { data: dogParkData } = useGetDogParkDetailsQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
     // TODO: add a loader
-    const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkId as number }, { skip: !dogParkId });
-    const [createCheckIns] = useCreateCheckInsMutation();
+    const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
 
     const closeDogParkModal = useCallback(() => {
         dispatch(setDogParkModalId(undefined));
@@ -72,35 +58,18 @@ const Modal: React.FC = () => {
 
     useClickOutside(closeDogParkModal, ref);
 
-    if (!dogParkId) return null;
+    useEffect(() => {
+        dispatch(setDogParkDetails(dogParkData));
+        dispatch(setActiveCheckIns(activeCheckInsFromDogPark));
+    }, [dispatch, dogParkData, activeCheckInsFromDogPark]);
 
-    // TODO: handle error
-    const options = (uncheckedInPets || []).map(pet => {
-        if (!pet.id) throw new Error(`No pet id found from ${pet.name}`);
-
-        return {
-            value: pet.id,
-            label: pet.name
-        };
-    });
-
-    const handleCheckIn = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const petIds = checkInPets.map(pet => pet.value);
-
-        if (!petIds || petIds.length === 0) {
-            return;
-        }
-
-        createCheckIns({ dogParkId, petIds });
-    };
+    if (!dogParkModalId) return null;
 
     return (
         <FullScreenContainer $top={60} $backgroundColor='rgba(0, 0, 0, 0.4)'>
             <ModalContainer ref={ref}>
                 {/* header */}
-                <DogParkModalHeader closeDogParkModal={closeDogParkModal} />
+                <ModalHeader closeDogParkModal={closeDogParkModal} />
                 <ImgContainer height='500px' width='100%' $borderRadius='0px'>
                     <img src={dogParkExample.src} alt={dogParkExample.alt}></img>
                 </ImgContainer>
@@ -110,14 +79,15 @@ const Modal: React.FC = () => {
                         <FlexContainer $flexDirection='row' $justifyContent='space-between' $alignItems='flex-start'>
                             <FlexContainer $alignItems='flex-start' $gap='10px' style={{ flexBasis: '50%' }}>
                                 <H2 $noMargin size='2em'>
-                                    Dog park name
+                                    {dogParkDetails?.name}
                                 </H2>
-                                <P $noMargin>Dog park address</P>
+                                <P $noMargin>{dogParkDetails?.address}</P>
                             </FlexContainer>
                             <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='flex-start' $gap='20px' style={{ flexBasis: '50%' }}>
                                 <FlexContainer $gap='10px' $alignItems='flex-end' style={{ flexBasis: '50%' }}>
                                     <H2 $noMargin size='2em' style={{ display: 'flex', alignItems: 'center' }}>
-                                        10<DogIcon size='32px'></DogIcon>
+                                        {dogParkDetails?.active_check_ins?.length}
+                                        <DogIcon size='32px'></DogIcon>
                                     </H2>
                                     <P $noMargin>Now</P>
                                 </FlexContainer>
@@ -142,24 +112,16 @@ const Modal: React.FC = () => {
                         </FlexContainer>
                         <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap='15px'>
                             <H3 $margin='16px 0px'>Current checked-in puppies</H3>
-                            {activeCheckInsFromDogPark && <DogParkModalCheckInList activeCheckInsFromDogPark={activeCheckInsFromDogPark} />}
+                            <ModalCheckInList />
                         </FlexContainer>
                     </FlexContainer>
                     {/* sub content */}
                     <FlexContainer $gap='30px' $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
                         <BorderlineContainer>
-                            <form onSubmit={handleCheckIn}>
-                                <div style={{ padding: '10px' }}>
-                                    <Select maxMenuHeight={300} closeMenuOnSelect={true} defaultValue={checkInPets} isMulti options={options} onChange={setCheckInPets} />
-                                    <ReactSelectStyles />
-                                </div>
-                                <Button type='submit' $width='200px' $margin='10px auto'>
-                                    Check in here
-                                </Button>
-                            </form>
+                            <ModalCheckIn />
                         </BorderlineContainer>
                         <BorderlineContainer>
-                            <DogParkModalMap />
+                            <ModalMap />
                         </BorderlineContainer>
                     </FlexContainer>
                 </FlexContainer>
