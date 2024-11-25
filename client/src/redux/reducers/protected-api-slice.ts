@@ -74,16 +74,21 @@ export const protectedApiSlice = createApi({
                 url: `dog-parks`
             })
         }),
+        getCheckInsFromDogPark: builder.query<CheckInState[], { id: number }>({
+            query: ({ id: dogParkId }) => ({
+                url: `dog-parks/${dogParkId}/check-ins`
+            })
+        }),
         createCheckIns: builder.mutation<CheckInState[], CreateCheckInState>({
-            query: ({ dog_park_id, pet_ids }) => ({
-                url: `dog-parks/${dog_park_id}/check_ins`,
+            query: ({ dogParkId, petIds }) => ({
+                url: `dog-parks/${dogParkId}/check-ins`,
                 method: 'POST',
                 body: {
-                    pet_ids
+                    pet_ids: petIds
                 }
             })
         })
     })
 });
 
-export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useUpdatePetDetailsMutation, useDeletePetMutation, useGetUncheckedInPetsQuery, useGetAllDogParksQuery, useCreateCheckInsMutation } = protectedApiSlice;
+export const { useLogInUserMutation, useGetUserDetailsQuery, useCreatePetMutation, useUpdatePetDetailsMutation, useDeletePetMutation, useGetUncheckedInPetsQuery, useGetAllDogParksQuery, useGetCheckInsFromDogParkQuery, useCreateCheckInsMutation } = protectedApiSlice;

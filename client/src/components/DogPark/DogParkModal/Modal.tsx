@@ -18,7 +18,7 @@ import useClickOutside from '../../../hooks/useClickOutisde';
 import DogParkModalHeader from './ModalHeader';
 import DogParkModalMap from './ModalMap';
 import DogParkModalCheckInList from './ModalCheckInList';
-import { useCreateCheckInsMutation, useGetUncheckedInPetsQuery } from '../../../redux/reducers/protected-api-slice';
+import { useCreateCheckInsMutation, useGetCheckInsFromDogParkQuery, useGetUncheckedInPetsQuery } from '../../../redux/reducers/protected-api-slice';
 
 const TagContainer = styled.ul`
     display: block;
@@ -52,16 +52,19 @@ const ReactSelectStyles = createGlobalStyle`
     }
 `;
 
-const Modal: React.FC<{ dogParkModalId: number }> = ({ dogParkModalId: dog_park_id }) => {
+const Modal: React.FC<{ dogParkModalId: number }> = ({ dogParkModalId: dogParkId }) => {
     const [checkInPets, setCheckInPets] = useState<MultiValue<{ value: number; label: string }>>([]);
+
     const dispatch = useAppDispatch();
 
     // TODO: add a loader
-    const { data } = useGetUncheckedInPetsQuery(null);
+    const { data: uncheckedInPets } = useGetUncheckedInPetsQuery(null);
+    // TODO: add a loader
+    const { data: checkInsFromDogPark } = useGetCheckInsFromDogParkQuery({ id: dogParkId });
     const [createCheckIns] = useCreateCheckInsMutation();
 
     // TODO: handle error
-    const options = (data || []).map(pet => {
+    const options = (uncheckedInPets || []).map(pet => {
         if (!pet.id) throw new Error(`No pet id found from ${pet.name}`);
 
         return {
@@ -82,15 +85,15 @@ const Modal: React.FC<{ dogParkModalId: number }> = ({ dogParkModalId: dog_park_
         (e: React.FormEvent) => {
             e.preventDefault();
 
-            const pet_ids = checkInPets.map(pet => pet.value);
+            const petIds = checkInPets.map(pet => pet.value);
 
-            if (!pet_ids || pet_ids.length === 0) {
+            if (!petIds || petIds.length === 0) {
                 return;
             }
 
-            createCheckIns({ dog_park_id, pet_ids });
+            createCheckIns({ dogParkId, petIds });
         },
-        [checkInPets, dog_park_id, createCheckIns]
+        [checkInPets, dogParkId, createCheckIns]
     );
 
     return (
@@ -139,7 +142,7 @@ const Modal: React.FC<{ dogParkModalId: number }> = ({ dogParkModalId: dog_park_
                         </FlexContainer>
                         <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap='15px'>
                             <H3 $margin='16px 0px'>Current checked-in puppies</H3>
-                            <DogParkModalCheckInList />
+                            {checkInsFromDogPark && <DogParkModalCheckInList checkInsFromDogPark={checkInsFromDogPark} />}
                         </FlexContainer>
                     </FlexContainer>
                     {/* sub content */}
