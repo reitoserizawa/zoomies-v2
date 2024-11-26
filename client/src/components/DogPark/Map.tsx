@@ -4,6 +4,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { createGlobalStyle } from 'styled-components';
 
 import { useGetAllDogParksQuery } from '../../redux/reducers/protected-api-slice';
+import { useAppDispatch } from '../../redux/hooks/hooks';
+import { setDogParkModalId } from '../../redux/reducers/appSlice';
 
 import DogParkCard from './DogParkCard';
 import PointerIcon from '../../images/icons/PointerIcon';
@@ -32,10 +34,13 @@ const Map: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [popupOpen, setPopupOpen] = useState<{ [key: number]: boolean }>({});
     const [viewport, setViewport] = useState({
-        latitude: 37.7577,
-        longitude: -122.4376,
+        latitude: 33.4675,
+        longitude: -112.05,
         zoom: 10
     });
+
+    const dispatch = useAppDispatch();
+
     const { data } = useGetAllDogParksQuery(null);
 
     if (!data) return null;
@@ -71,8 +76,8 @@ const Map: React.FC = () => {
 
                                 {popupOpen[id] && (
                                     <Popup longitude={geoArray[0]} latitude={geoArray[1]} anchor='bottom' onClose={() => handleMarkerClick(id)} closeOnClick={false} offset={15}>
-                                        <div style={{ margin: '-10px' }}>
-                                            <DogParkCard name={dogPark.name} address={dogPark.address}></DogParkCard>
+                                        <div style={{ margin: '-10px', cursor: 'pointer' }} onClick={() => dispatch(setDogParkModalId(id))}>
+                                            <DogParkCard name={dogPark.name} address={dogPark.address} active_check_ins_count={dogPark.active_check_ins_count}></DogParkCard>
                                         </div>
                                     </Popup>
                                 )}

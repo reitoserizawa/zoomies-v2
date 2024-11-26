@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Select, { MultiValue } from 'react-select';
 import { createGlobalStyle } from 'styled-components';
+
 import { useCreateCheckInsMutation, useGetUncheckedInPetsQuery } from '../../../redux/reducers/protected-api-slice';
-import { Button } from '../../../ui/form.styles';
 import { useAppSelector } from '../../../redux/hooks/hooks';
+
+import { Button } from '../../../ui/form.styles';
+
 import Loader from '../../Loader';
-import { FlexContainer } from '../../../ui/container.styles';
 
 const ReactSelectStyles = createGlobalStyle`
     :nth-child(1 of div.css-1xc3v61-indicatorContainer) {

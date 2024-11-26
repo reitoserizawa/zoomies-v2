@@ -54,7 +54,7 @@ export const protectedApiSlice = createApi({
                     introduction
                 }
             }),
-            invalidatesTags: ['Pet']
+            invalidatesTags: ['Pet', 'CheckIn']
         }),
         updatePetDetails: builder.mutation<PetState, Partial<PetState>>({
             query: ({ id, name, breed, birthday, introduction }) => ({
@@ -67,14 +67,14 @@ export const protectedApiSlice = createApi({
                     introduction
                 }
             }),
-            invalidatesTags: ['Pet']
+            invalidatesTags: ['Pet', 'CheckIn']
         }),
         deletePet: builder.mutation<{ success: boolean }, { id: number }>({
             query: ({ id }) => ({
                 url: `pets/${id}`,
                 method: 'DELETE'
             }),
-            invalidatesTags: ['Pet']
+            invalidatesTags: ['Pet', 'CheckIn']
         }),
         getUncheckedInPets: builder.query<PetState[], null>({
             query: () => ({
@@ -86,7 +86,7 @@ export const protectedApiSlice = createApi({
             query: () => ({
                 url: `dog-parks`
             }),
-            providesTags: ['DogPark']
+            providesTags: ['DogPark', 'CheckIn']
         }),
         getDogParkDetails: builder.query<DogParkState, { id: number }>({
             query: ({ id: dogParkId }) => ({
