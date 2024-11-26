@@ -11,6 +11,7 @@ import { setDogParkModalId } from '../../redux/reducers/appSlice';
 import DogParkCard from './DogParkCard';
 import Map from './Map';
 import DogParkModal from './DogParkModal/Modal';
+import FullScreenLoader from '../FullScreenLoader';
 
 const DogParkCardListContainer = styled.div`
     min-height: 300px;
@@ -27,9 +28,9 @@ const DogParkCardListContainer = styled.div`
 const DogPark: React.FC = () => {
     const dispatch = useAppDispatch();
     const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
-    const { data } = useGetAllDogParksQuery(null);
+    const { data, isFetching: fetchingAllDogParks } = useGetAllDogParksQuery(null);
 
-    if (!data) return null;
+    if (fetchingAllDogParks) return <FullScreenLoader text='Loading Dog Parks' />;
 
     return (
         <Container>
@@ -45,7 +46,7 @@ const DogPark: React.FC = () => {
                 </div>
                 <div style={{ flexBasis: '40%', overflowY: 'scroll', height: 'calc(100vh - 138px)', padding: '5px', overflowX: 'hidden' }}>
                     <GridContainer>
-                        {data.map(({ id, name, address, check_ins, active_check_ins_count }, idx) => (
+                        {data?.map(({ id, name, address, check_ins, active_check_ins_count }, idx) => (
                             <DogParkCardListContainer key={idx} onClick={() => dispatch(setDogParkModalId(id))}>
                                 <DogParkCard id={id} name={name} address={address} check_ins={check_ins} active_check_ins_count={active_check_ins_count} />
                             </DogParkCardListContainer>

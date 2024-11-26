@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
+import { useAppDispatch } from '../../redux/hooks/hooks';
 import { togglePetCreateFormModal } from '../../redux/reducers/appSlice';
 
 import { FlexContainer } from '../../ui/container.styles';
@@ -9,15 +9,10 @@ import { Button } from '../../ui/form.styles';
 
 import AddIcon from '../../images/icons/AddIcon';
 
-import PetCard from './PetCard';
-import PetForm from './PetForm';
-import { useGetPetsFromUserQuery } from '../../redux/reducers/protected-api-slice';
+import PetSectionContent from './PetSectionContent';
 
 const PetSection: React.FC = () => {
     const dispatch = useAppDispatch();
-
-    const { data: pets } = useGetPetsFromUserQuery(null);
-    const isPetFormModalOpen = useAppSelector(state => state.app.isPetCreateFormModalOpen);
 
     return (
         <>
@@ -28,8 +23,7 @@ const PetSection: React.FC = () => {
                 </Button>
             </FlexContainer>
             <hr />
-            {isPetFormModalOpen && <PetForm />}
-            {pets && pets.map((pet, idx) => <PetCard key={idx} id={pet.id} name={pet.name} breed={pet.breed} birthday={pet?.birthday} introduction={pet.introduction} />)}
+            <PetSectionContent />
         </>
     );
 };

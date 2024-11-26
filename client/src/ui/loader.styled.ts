@@ -1,37 +1,40 @@
 import styled, { keyframes } from 'styled-components';
 
-export const bouncingAnimationm = keyframes`
-0%, 100% {
-transform: translateY(30px);
+interface LoaderProps {
+    $small?: boolean;
 }
-50% {
-transform: translateY(-30px);
-}
+
+const bouncingAnimationm = keyframes`
+    0%, 100% {
+    transform: translateY(30px);
+    }
+    50% {
+    transform: translateY(-30px);
+    }
 `;
 
-export const LoaderContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    margin: 0;
+const smallBouncingAnimationm = keyframes`
+    0%, 100% {
+        transform: translateY(10px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 `;
 
-export const LoaderDotsContainer = styled.div`
+export const LoaderDotsContainer = styled.div<LoaderProps>`
     display: grid;
-    grid-template-columns: repeat(5, 50px);
+    grid-template-columns: ${({ $small }) => ($small ? 'repeat(5, 15px)' : 'repeat(5, 50px);')};
     gap: 10px;
     justify-content: center;
     align-items: center;
 `;
 
-export const LoaderDot = styled.div`
-    width: 50px;
-    height: 50px;
+export const LoaderDot = styled.div<LoaderProps>`
+    width: ${({ $small }) => ($small ? '20px' : '50px')};
+    height: ${({ $small }) => ($small ? '20px' : '50px')};
     border-radius: 50%;
-    animation: ${bouncingAnimationm} 1.5s ease-in-out infinite;
+    animation: ${({ $small }) => ($small ? smallBouncingAnimationm : bouncingAnimationm)} 1.5s ease-in-out infinite;
     background-color: #000000;
 
     &:nth-child(2) {

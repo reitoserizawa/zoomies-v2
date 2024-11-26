@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ReactMapGl, { Marker } from 'react-map-gl';
 
 import PointerIcon from '../../../images/icons/PointerIcon';
+import Loader from '../../Loader';
 
 const ModalMapContainer = styled.div`
     width: 200px;
@@ -16,6 +17,7 @@ const ModalMapContainer = styled.div`
 `;
 
 const ModalMap: React.FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [viewport, setViewport] = useState({
         latitude: 37.7577,
         longitude: -122.4376,
@@ -26,7 +28,8 @@ const ModalMap: React.FC = () => {
 
     return (
         <ModalMapContainer>
-            <ReactMapGl {...viewport} mapStyle='mapbox://styles/mapbox/streets-v12' mapboxAccessToken={token}>
+            {isLoading && <Loader text='Loading map' $small />}
+            <ReactMapGl {...viewport} onLoad={() => setIsLoading(false)} mapStyle='mapbox://styles/mapbox/streets-v12' mapboxAccessToken={token}>
                 <Marker longitude={viewport.longitude} latitude={viewport.latitude}>
                     <PointerIcon />
                 </Marker>

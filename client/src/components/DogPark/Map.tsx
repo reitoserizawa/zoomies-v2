@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import ReactMapGl, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-
 import { createGlobalStyle } from 'styled-components';
 
 import { useGetAllDogParksQuery } from '../../redux/reducers/protected-api-slice';
+
 import DogParkCard from './DogParkCard';
 import PointerIcon from '../../images/icons/PointerIcon';
+import Loader from '../Loader';
 
 const MapStyles = createGlobalStyle`
 .map {
@@ -28,6 +29,7 @@ const MapStyles = createGlobalStyle`
 `;
 
 const Map: React.FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [popupOpen, setPopupOpen] = useState<{ [key: number]: boolean }>({});
     const [viewport, setViewport] = useState({
         latitude: 37.7577,
@@ -49,7 +51,8 @@ const Map: React.FC = () => {
     return (
         <>
             <div className='map'>
-                <ReactMapGl {...viewport} mapStyle='mapbox://styles/mapbox/streets-v12' onMove={evt => setViewport(evt.viewState)} mapboxAccessToken={token}>
+                {isLoading && <Loader text='Loading map' />}
+                <ReactMapGl {...viewport} onLoad={() => setIsLoading(false)} mapStyle='mapbox://styles/mapbox/streets-v12' onMove={evt => setViewport(evt.viewState)} mapboxAccessToken={token}>
                     {data.map(dogPark => {
                         if (!dogPark) return null;
 

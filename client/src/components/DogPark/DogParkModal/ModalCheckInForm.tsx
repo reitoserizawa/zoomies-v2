@@ -4,6 +4,8 @@ import { createGlobalStyle } from 'styled-components';
 import { useCreateCheckInsMutation, useGetUncheckedInPetsQuery } from '../../../redux/reducers/protected-api-slice';
 import { Button } from '../../../ui/form.styles';
 import { useAppSelector } from '../../../redux/hooks/hooks';
+import Loader from '../../Loader';
+import { FlexContainer } from '../../../ui/container.styles';
 
 const ReactSelectStyles = createGlobalStyle`
     :nth-child(1 of div.css-1xc3v61-indicatorContainer) {
@@ -24,8 +26,7 @@ const ModalCheckInForm: React.FC = () => {
 
     const dogParkId = useAppSelector(state => state.app.dogParkModalId);
 
-    // TODO: add a loader
-    const { data: uncheckedInPets } = useGetUncheckedInPetsQuery(null);
+    const { data: uncheckedInPets, isFetching: fetchingUncheckedInPets } = useGetUncheckedInPetsQuery(null);
     const [createCheckIns] = useCreateCheckInsMutation();
 
     // TODO: handle error
@@ -52,8 +53,10 @@ const ModalCheckInForm: React.FC = () => {
         setCheckInPets([]);
     };
 
+    if (fetchingUncheckedInPets) return <Loader $small />;
+
     return (
-        <form onSubmit={handleCheckIn}>
+        <form onSubmit={handleCheckIn} style={{ height: 'fit-content', width: '100%' }}>
             <div style={{ padding: '10px' }}>
                 <Select maxMenuHeight={300} closeMenuOnSelect={true} defaultValue={checkInPets} isMulti options={options} value={checkInPets} onChange={setCheckInPets} />
                 <ReactSelectStyles />

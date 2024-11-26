@@ -12,9 +12,7 @@ import { useDeleteCheckInMutation, useGetActiveCheckInsFromDogParkQuery, useGetD
 const ModalCheckInList: React.FC = () => {
     const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
 
-    // TODO: add a loader
     const { data: dogParkDetails } = useGetDogParkDetailsQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
-    // TODO: add a loader
     const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
 
     const [deleteCheckIn] = useDeleteCheckInMutation();

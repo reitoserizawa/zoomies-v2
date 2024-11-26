@@ -19,6 +19,7 @@ import ModalHeader from './ModalHeader';
 import ModalMap from './ModalMap';
 import ModalCheckInList from './ModalCheckInList';
 import ModalCheckInForm from './ModalCheckInForm';
+import Loader from '../../Loader';
 
 const TagContainer = styled.ul`
     display: block;
@@ -41,10 +42,8 @@ const TagList = styled.li`
 const Modal: React.FC = () => {
     const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
 
-    // TODO: add a loader
-    const { data: dogParkDetails } = useGetDogParkDetailsQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
-    // TODO: add a loader
-    const { data: activeCheckInsFromDogPark } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
+    const { data: dogParkDetails, isFetching: fetchingDogParkDetails } = useGetDogParkDetailsQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
+    const { data: activeCheckInsFromDogPark, isFetching: fetchingActiveCheckIns } = useGetActiveCheckInsFromDogParkQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
 
     const dispatch = useAppDispatch();
 
@@ -57,6 +56,16 @@ const Modal: React.FC = () => {
     useClickOutside(closeDogParkModal, ref);
 
     if (!dogParkModalId) return null;
+
+    if (fetchingDogParkDetails || fetchingActiveCheckIns) {
+        return (
+            <FullScreenContainer $top={60} $backgroundColor='rgba(0, 0, 0, 0.4)'>
+                <ModalContainer ref={ref}>
+                    <Loader />
+                </ModalContainer>
+            </FullScreenContainer>
+        );
+    }
 
     return (
         <FullScreenContainer $top={60} $backgroundColor='rgba(0, 0, 0, 0.4)'>
@@ -110,8 +119,10 @@ const Modal: React.FC = () => {
                     </FlexContainer>
                     {/* sub content */}
                     <FlexContainer $gap='30px' $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
-                        <BorderlineContainer>
-                            <ModalCheckInForm />
+                        <BorderlineContainer style={{ height: '150px' }}>
+                            <FlexContainer>
+                                <ModalCheckInForm />
+                            </FlexContainer>
                         </BorderlineContainer>
                         <BorderlineContainer>
                             <ModalMap />

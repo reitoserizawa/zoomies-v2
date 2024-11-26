@@ -47,7 +47,7 @@ const AuthRequired: React.FC<ChildrenProps> = ({ children }) => {
     return (
         <>
             {loading || isLoading ? (
-                <FullScreenLoader />
+                <FullScreenLoader text='Logging in' />
             ) : (
                 <>
                     <NavBar />

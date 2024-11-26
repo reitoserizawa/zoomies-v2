@@ -1,21 +1,13 @@
 import React from 'react';
-import { LoaderContainer, LoaderDotsContainer } from '../ui/loader.styled';
-import { LoaderDot } from '../ui/loader.styled';
-import { H1 } from '../ui/text-tags.styles';
 
-const FullScreenLoader: React.FC<{ text?: string }> = ({ text }) => {
-    return (
-        <LoaderContainer>
-            <LoaderDotsContainer>
-                <LoaderDot />
-                <LoaderDot />
-                <LoaderDot />
-                <LoaderDot />
-                <LoaderDot />
-            </LoaderDotsContainer>
-            <H1 style={{ fontWeight: '500', padding: '48px 0px' }}>{text ? text : 'Loading'}</H1>
-        </LoaderContainer>
-    );
-};
+import { FullScreenContainer } from '../ui/container.styles';
+
+import Loader from './Loader';
+
+const FullScreenLoader: React.FC<{ text?: string }> = ({ text }) => (
+    <FullScreenContainer $backgroundColor='none'>
+        <Loader text={text} />
+    </FullScreenContainer>
+);
 
 export default FullScreenLoader;
