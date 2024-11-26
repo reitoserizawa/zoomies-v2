@@ -12,9 +12,9 @@ model User {
 
   check_ins CheckIn[]
 
-  created_at DateTime @default(now())
-
   deleted Boolean @default(false)
+
+  created_at DateTime @default(now())
 }
 
 // TODO: add UserFavoritePark table

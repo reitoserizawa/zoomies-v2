@@ -10,4 +10,6 @@ model DogPark {
   geo Float[] @default([])
 
   check_ins CheckIn[]
+
+  created_at DateTime @default(now())
 }

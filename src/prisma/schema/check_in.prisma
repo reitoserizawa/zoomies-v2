@@ -14,4 +14,6 @@ model CheckIn {
 
   checked_in_at DateTime @default(now())
   checked_out_at DateTime?
+
+  created_at DateTime @default(now())
 }
