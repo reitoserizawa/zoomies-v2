@@ -12,7 +12,7 @@ export interface FormContextProps<State> {
     errors: FormState<State>['errors'];
     data: FormState<State>['data'];
     setFieldValue: <K extends StateKeys<State>>(name: K, value: any) => void;
-    registerInput: (input: { name: StateKeys<State>; validators: ((value: any, data: Partial<State>) => string[])[] }) => void;
+    registerInput: (input: { name: StateKeys<State>; validators?: ((value: any, data: Partial<State>) => string[])[] }) => void;
 }
 
 const FormContext = <State,>(initial: FormContextProps<State>) => {

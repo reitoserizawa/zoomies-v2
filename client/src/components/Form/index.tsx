@@ -81,7 +81,7 @@ const Form = <State,>(props: FormProps<State>) => {
         }));
     };
 
-    const registerInput = useCallback(({ name, validators }: { name: StateKeys<State>; validators: ((value: any, data: Partial<State>) => string[])[] }) => {
+    const registerInput = useCallback(({ name, validators }: { name: StateKeys<State>; validators?: ((value: any, data: Partial<State>) => string[])[] }) => {
         setFormState(prevState => {
             if (prevState.validators && prevState.validators[name] === validators) {
                 return prevState; // avoid unnecessary state change if validators haven't changed

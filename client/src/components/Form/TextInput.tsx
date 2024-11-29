@@ -10,7 +10,7 @@ interface InputProps {
     label?: string;
     type?: string;
     errors?: string[];
-    onChange: (value: string) => void;
+    onChange?: (value: string) => void;
     validators?: ((value: any, data: any) => string[])[]; // Added validators prop
 }
 
@@ -29,7 +29,7 @@ const TextInput = ({ placeholder = '', name = '', value = '', label, type = 'tex
     };
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(e.target.value);
+        onChange && onChange(e.target.value);
     };
 
     const klass = classNames('form-group', {

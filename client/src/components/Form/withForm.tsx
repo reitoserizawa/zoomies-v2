@@ -5,7 +5,7 @@ import { FormContextProps } from './FormContext'; // Import the correct FormCont
 
 interface WithFormProps<State> {
     name: keyof State;
-    validators: ((value: any, data: Partial<State>) => string[])[];
+    validators?: ((value: any, data: Partial<State>) => string[])[];
     onChange?: (value: any) => void;
 }
 
