@@ -1,45 +1,87 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import FormContext from './FormContext'; // Import the provided FormContext
+import React, { useState, ReactNode, useCallback, useContext } from 'react';
+import { once } from 'lodash';
 
-export type StateKeys<State> = keyof State;
-
-export interface FormState<State> {
+interface FormState<State> {
     data: Partial<State>;
-    validators?: { [key in StateKeys<State>]?: ((value: any, data: Partial<State>) => string[])[] };
-    errors?: { [key in StateKeys<State>]?: string[] };
+    validators: { [key in keyof State]?: ((value: any, data: Partial<State>) => string[])[] };
+    errors: { [key in keyof State]?: string[] };
 }
 
-export interface FormProps<State> {
+interface FormContextType<State> {
+    formState: FormState<State>;
+    registerInput: ({ name, validators }: { name: keyof State; validators?: ((value: any, data: Partial<State>) => string[])[] }) => () => void;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleDateChange: (name: keyof State, date: Date | null) => void;
+}
+
+interface FormProviderProps<State> {
+    children: ReactNode;
     initialValues?: Partial<State>;
     onSubmit: (data: Partial<State>) => void;
-    onReset?: () => void;
     className?: string;
-    id?: string;
-    children?: React.ReactNode;
 }
 
-let FormProvider: any;
+const createStateContext = once(<State,>() => React.createContext({} as FormContextType<State>));
+export const useStateContext = <State,>() => useContext(createStateContext<State>());
 
-const Form = <State,>(props: FormProps<State>) => {
+const FormProvider = <State,>({ children, initialValues, onSubmit, className }: FormProviderProps<State>) => {
+    const FormContext = createStateContext<State>();
+
     const [formState, setFormState] = useState<FormState<State>>({
-        data: { ...props.initialValues },
+        data: initialValues || {},
         validators: {},
         errors: {}
     });
 
-    // update formState when `initialValues` change
-    useEffect(() => {
-        setFormState({
-            data: { ...props.initialValues },
-            validators: {},
-            errors: {}
-        });
-    }, [props.initialValues]);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
 
-    const onSubmitHandler = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (validate()) props.onSubmit(formState.data);
+        setFormState(prevValues => ({
+            ...prevValues,
+            data: {
+                ...prevValues.data,
+                [name as keyof State]: value
+            }
+        }));
     };
+
+    const handleDateChange = (name: keyof State, date: Date | null) => {
+        setFormState(prevValues => ({
+            ...prevValues,
+            data: {
+                ...prevValues.data,
+                [name as keyof State]: date
+            }
+        }));
+    };
+
+    const registerInput = useCallback(({ name, validators }: { name: keyof State; validators?: ((value: any, data: Partial<State>) => string[])[] }) => {
+        setFormState(state => ({
+            ...state,
+            validators: {
+                ...state.validators,
+                [name]: validators || []
+            },
+            errors: {
+                ...state.errors,
+                [name]: []
+            }
+        }));
+
+        return () => {
+            setFormState(state => {
+                const { data, errors, validators: currentValidators } = { ...state };
+                delete data[name];
+                delete errors[name];
+                delete currentValidators[name];
+                return {
+                    data,
+                    errors,
+                    validators: currentValidators
+                };
+            });
+        };
+    }, []);
 
     const validate = (): boolean => {
         const { validators, data } = formState;
@@ -47,7 +89,9 @@ const Form = <State,>(props: FormProps<State>) => {
         if (!validators || Object.keys(validators).length === 0) return true;
 
         const formErrors = Object.entries(validators).reduce((errors, [name, fieldValidators]) => {
-            const messages = (fieldValidators as ((value: any, data: Partial<State>) => string[])[]).reduce<string[]>((result, validator) => {
+            if (!Array.isArray(fieldValidators)) return errors;
+
+            const messages = fieldValidators.reduce<string[]>((result, validator) => {
                 const value = data[name as keyof typeof data];
                 const err = validator(value, data);
                 return [...result, ...err];
@@ -62,71 +106,22 @@ const Form = <State,>(props: FormProps<State>) => {
         return false;
     };
 
-    const onResetHandler = (e: React.FormEvent) => {
+    const onSubmitHandler = (e: React.FormEvent) => {
         e.preventDefault();
-        setFormState({
-            data: { ...props.initialValues },
-            validators: {},
-            errors: {}
-        });
-        props.onReset?.();
+
+        if (validate()) {
+            console.log(formState);
+            onSubmit(formState.data);
+        }
     };
-
-    // Set form field value
-    const setFieldValue = <K extends StateKeys<State>>(name: K, value: State[K]) => {
-        setFormState(state => ({
-            ...state,
-            data: { ...state.data, [name]: value },
-            errors: { ...state.errors, [name]: [] } // clear errors for the field
-        }));
-    };
-
-    const registerInput = useCallback(({ name, validators }: { name: StateKeys<State>; validators?: ((value: any, data: Partial<State>) => string[])[] }) => {
-        setFormState(prevState => {
-            if (prevState.validators && prevState.validators[name] === validators) {
-                return prevState; // avoid unnecessary state change if validators haven't changed
-            }
-            return {
-                ...prevState,
-                validators: {
-                    ...prevState.validators,
-                    [name]: validators || []
-                },
-                errors: {
-                    ...prevState.errors,
-                    [name]: [] // clear errors for the field
-                }
-            };
-        });
-
-        return () => {
-            setFormState(prevState => {
-                const { data, errors, validators: currentValidators } = prevState;
-                delete data[name];
-                errors && delete errors[name];
-                currentValidators && delete currentValidators[name];
-                return { data, errors, validators: currentValidators };
-            });
-        };
-    }, []);
-
-    const contextValue = {
-        errors: formState.errors,
-        data: formState.data,
-        setFieldValue,
-        registerInput
-    };
-
-    FormProvider = FormContext<State>(contextValue);
 
     return (
-        <FormProvider.Provider value={contextValue}>
-            <form onSubmit={onSubmitHandler} onReset={onResetHandler} className={props.className} id={props.id}>
-                {props.children}
+        <FormContext.Provider value={{ formState, registerInput, handleChange, handleDateChange }}>
+            <form onSubmit={onSubmitHandler} className={className}>
+                {children}
             </form>
-        </FormProvider.Provider>
+        </FormContext.Provider>
     );
 };
 
-export default Form;
-export { FormProvider };
+export default FormProvider;
