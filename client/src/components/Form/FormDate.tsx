@@ -1,8 +1,11 @@
-import React, { ReactNode, useEffect } from 'react';
-import { useStateContext } from '.';
-import { Input, InputProps } from '../../ui/form.styles';
-import { P } from '../../ui/text-tags.styles';
+import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
+
+import { InputProps } from '../../ui/form.styles';
+import { P } from '../../ui/text-tags.styles';
+
+import { useStateContext } from '.';
+
 import DatePicker from 'react-datepicker';
 
 const DatePickerStyles = createGlobalStyle<InputProps>`

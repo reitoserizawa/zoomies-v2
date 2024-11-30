@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useStateContext } from '.';
 import { Input } from '../../ui/form.styles';
 import { P } from '../../ui/text-tags.styles';

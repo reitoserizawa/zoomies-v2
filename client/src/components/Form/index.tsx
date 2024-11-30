@@ -24,7 +24,7 @@ interface FormProviderProps<State> {
 const createStateContext = once(<State,>() => React.createContext({} as FormContextType<State>));
 export const useStateContext = <State,>() => useContext(createStateContext<State>());
 
-const FormProvider = <State,>({ children, initialValues, onSubmit, className }: FormProviderProps<State>) => {
+const Form = <State,>({ children, initialValues, onSubmit, className }: FormProviderProps<State>) => {
     const FormContext = createStateContext<State>();
 
     const [formState, setFormState] = useState<FormState<State>>({
@@ -124,4 +124,4 @@ const FormProvider = <State,>({ children, initialValues, onSubmit, className }: 
     );
 };
 
-export default FormProvider;
+export default Form;
