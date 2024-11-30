@@ -27,7 +27,7 @@ export const Input = styled.input<InputProps>`
     }
 `;
 
-export const LogInForm = styled.form`
+export const LogInForm = styled.div`
     min-width: 320px;
     max-width: 1200px;
 

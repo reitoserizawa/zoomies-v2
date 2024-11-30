@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { dogPawImg } from '../images';
 import { H2, P } from '../ui/text-tags.styles';
-import { Button, Input, LogInForm } from '../ui/form.styles';
+import { Button, LogInForm } from '../ui/form.styles';
 import { FlexContainer, FullScreenContainer, ImgContainer } from '../ui/container.styles';
 
 import { useCreateUserMutation } from '../redux/reducers/public-api-slice';
@@ -11,12 +11,11 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { setUserDetails, resetUserState, setLoading, setUserError } from '../redux/reducers/userSlice';
 
 import Error from './Error';
+import Form from './Form';
+import { UserCreateRequest } from '../states/user';
+import FormInput from './Form/FormInput';
 
 const Register: React.FC = () => {
-    const [email, setEmail] = useState<string>('');
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-
     const [createUser] = useCreateUserMutation();
 
     const dispatch = useAppDispatch();
@@ -33,19 +32,12 @@ const Register: React.FC = () => {
         }
     }, [token, signedIn, navigate]);
 
-    const register = useCallback(
-        (e: React.FormEvent) => {
-            e.preventDefault();
-
+    const handleCreateUser = useCallback(
+        (data: UserCreateRequest) => {
             dispatch(resetUserState());
-
-            if (!username) return dispatch(setUserError({ message: 'Username is required' }));
-            if (!password) return dispatch(setUserError({ message: 'Password is required' }));
-            if (!email) return dispatch(setUserError({ message: 'Email is required' }));
-
             dispatch(setLoading());
 
-            createUser({ email, username, password })
+            createUser(data)
                 .unwrap()
                 .then(data => {
                     const token = data?.token;
@@ -63,7 +55,7 @@ const Register: React.FC = () => {
                     dispatch(setUserError({ message, statusCode }));
                 });
         },
-        [email, username, password, createUser, dispatch]
+        [createUser, dispatch]
     );
 
     return (
@@ -73,17 +65,14 @@ const Register: React.FC = () => {
                     <img src={dogPawImg.src} alt={dogPawImg.alt} />
                 </ImgContainer>
                 <H2>Register your Zoomies account</H2>
-                <LogInForm onSubmit={register}>
-                    <P>Email*</P>
-                    <Input type='text' value={email} onChange={e => setEmail(e.target.value)} $outlineRed={!email}></Input>
-                    <P>Username*</P>
-                    <Input type='text' value={username} onChange={e => setUsername(e.target.value)} $outlineRed={!username}></Input>
-                    <P>Password*</P>
-                    <Input type='password' value={password} onChange={e => setPassword(e.target.value)} $outlineRed={!password}></Input>
-                    <Button type='submit' $disabled={!username || !password || !email}>
-                        Register
-                    </Button>
-                </LogInForm>
+                <Form<UserCreateRequest> onSubmit={handleCreateUser}>
+                    <LogInForm>
+                        <FormInput<UserCreateRequest> name='email' label='Email*' />
+                        <FormInput<UserCreateRequest> name='username' label='Username*' />
+                        <FormInput<UserCreateRequest> type='password' name='password' label='Password*' />
+                        <Button type='submit'>Register</Button>
+                    </LogInForm>
+                </Form>
                 {error && <Error message={error.message} />}
                 <P>
                     Already a member? <a href='/login'>Login here</a>

@@ -2,7 +2,7 @@ import React, { useState, ReactNode, useCallback, useContext } from 'react';
 import { once } from 'lodash';
 
 interface FormState<State> {
-    data: Partial<State>;
+    data: State;
     validators: { [key in keyof State]?: ((value: any, data: Partial<State>) => string[])[] };
     errors: { [key in keyof State]?: string[] };
 }
@@ -16,8 +16,8 @@ interface FormContextType<State> {
 
 interface FormProviderProps<State> {
     children: ReactNode;
-    initialValues?: Partial<State>;
-    onSubmit: (data: Partial<State>) => void;
+    initialValues?: State;
+    onSubmit: (data: State) => void;
     className?: string;
 }
 
@@ -28,7 +28,7 @@ const Form = <State,>({ children, initialValues, onSubmit, className }: FormProv
     const FormContext = createStateContext<State>();
 
     const [formState, setFormState] = useState<FormState<State>>({
-        data: initialValues || {},
+        data: initialValues || ({} as State),
         validators: {},
         errors: {}
     });
@@ -110,7 +110,6 @@ const Form = <State,>({ children, initialValues, onSubmit, className }: FormProv
         e.preventDefault();
 
         if (validate()) {
-            console.log(formState);
             onSubmit(formState.data);
         }
     };

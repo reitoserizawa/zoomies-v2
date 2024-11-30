@@ -117,11 +117,11 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
         <ModalContainer>
             <FlexContainer>
                 <ModalContentContainer ref={ref}>
-                    <Form<PetState> initialValues={initialValues} onSubmit={handleCreateOrUpdatePet}>
-                        <FormInput<PetState> name='name' label='Name*' validators={[requiredValidator]} />
-                        <FormDate<PetState> name='birthday' label='Birthday' validators={[requiredValidator]} />
-                        <FormInput<PetState> name='breed' label='Breed*' validators={[requiredValidator]} />
-                        <FormInput<PetState> name='introduction' label='Introduction*' validators={[requiredValidator]} />
+                    <Form<Partial<PetState>> initialValues={initialValues} onSubmit={handleCreateOrUpdatePet}>
+                        <FormInput<Partial<PetState>> name='name' label='Name*' validators={[requiredValidator]} />
+                        <FormDate<Partial<PetState>> name='birthday' label='Birthday' validators={[requiredValidator]} />
+                        <FormInput<Partial<PetState>> name='breed' label='Breed*' validators={[requiredValidator]} />
+                        <FormInput<Partial<PetState>> name='introduction' label='Introduction*' validators={[requiredValidator]} />
                         <Button type='submit' $margin='18px 0px 0px 0px'>
                             {toUpdate ? 'Update Pet' : 'Add Pet'}
                         </Button>

@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { dogPawImg } from '../images';
 import { H2, P } from '../ui/text-tags.styles';
-import { Button, Input, LogInForm } from '../ui/form.styles';
+import { Button, LogInForm } from '../ui/form.styles';
 import { FlexContainer, FullScreenContainer, ImgContainer } from '../ui/container.styles';
 
 import { useLogInUserMutation } from '../redux/reducers/public-api-slice';
@@ -11,11 +11,11 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { setUserDetails, resetUserState, setLoading, setUserError } from '../redux/reducers/userSlice';
 
 import Error from './Error';
+import Form from './Form';
+import { UserLogInRequest } from '../states/user';
+import FormInput from './Form/FormInput';
 
 const LogIn: React.FC = () => {
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-
     const [logInUser] = useLogInUserMutation();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -32,17 +32,11 @@ const LogIn: React.FC = () => {
     }, [token, signedIn, navigate]);
 
     const login = useCallback(
-        (e: React.FormEvent) => {
-            e.preventDefault();
-
+        (data: UserLogInRequest) => {
             dispatch(resetUserState());
-
-            if (!username) return dispatch(setUserError({ message: 'Username is required' }));
-            if (!password) return dispatch(setUserError({ message: 'Password is required' }));
-
             dispatch(setLoading());
 
-            logInUser({ username, password })
+            logInUser(data)
                 .unwrap()
                 .then(({ token, user }) => {
                     localStorage.setItem('token', token);
@@ -57,7 +51,7 @@ const LogIn: React.FC = () => {
                     dispatch(setUserError({ message, statusCode }));
                 });
         },
-        [username, password, logInUser, dispatch, navigate]
+        [logInUser, dispatch, navigate]
     );
 
     return (
@@ -67,14 +61,12 @@ const LogIn: React.FC = () => {
                     <img src={dogPawImg.src} alt={dogPawImg.alt} />
                 </ImgContainer>
                 <H2>Sign in to your Zoomies account</H2>
-                <LogInForm onSubmit={login}>
-                    <P>Username</P>
-                    <Input type='text' value={username} onChange={e => setUsername(e.target.value)} $outlineRed={!username}></Input>
-                    <P>Password</P>
-                    <Input type='password' value={password} onChange={e => setPassword(e.target.value)} $outlineRed={!password}></Input>
-                    <Button type='submit' $disabled={!username || !password}>
-                        Sign in
-                    </Button>
+                <LogInForm>
+                    <Form<UserLogInRequest> onSubmit={login}>
+                        <FormInput<UserLogInRequest> name='username' label='Username'></FormInput>
+                        <FormInput<UserLogInRequest> type='password' name='password' label='Password'></FormInput>
+                        <Button type='submit'>Sign in</Button>
+                    </Form>
                 </LogInForm>
                 <P>
                     Not a member? <a href='/register'>Register here</a>
