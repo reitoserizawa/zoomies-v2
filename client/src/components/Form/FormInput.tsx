@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useStateContext } from '.';
 import { Input } from '../../ui/form.styles';
 import { P } from '../../ui/text-tags.styles';
+import Error from '../Error';
 
 interface FormInputProps<State> {
     name: keyof State;
@@ -25,12 +26,7 @@ const FormInput = <State,>({ name, validators, placeholder, label, type = 'text'
         <>
             {label ? <P>{label}</P> : null}
             <Input name={name as string} value={data[name] ? (data[name] as string) : ''} onChange={e => handleChange(e)} placeholder={placeholder} type={type} />
-            {errors[name] &&
-                errors[name]?.map((error, index) => (
-                    <div key={index} style={{ color: 'red' }}>
-                        {error}
-                    </div>
-                ))}
+            {errors[name] && errors[name]?.map((error, i) => <Error key={i} message={error} />)}
         </>
     );
 };

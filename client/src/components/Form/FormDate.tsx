@@ -7,6 +7,7 @@ import { P } from '../../ui/text-tags.styles';
 import { useStateContext } from '.';
 
 import DatePicker from 'react-datepicker';
+import Error from '../Error';
 
 const DatePickerStyles = createGlobalStyle<InputProps>`
     .react-datepicker-wrapper {
@@ -51,12 +52,7 @@ const FormDate = <State,>({ name, validators, placeholder, label, type = 'text' 
             {label ? <P>{label}</P> : null}
             <DatePicker selected={data[name] ? (data[name] as unknown as Date) : null} onChange={date => handleDateChange(name, date)} />
             <DatePickerStyles $outlineRed={!data[name]} />
-            {errors[name] &&
-                errors[name]?.map((error, index) => (
-                    <div key={index} style={{ color: 'red' }}>
-                        {error}
-                    </div>
-                ))}
+            {errors[name] && errors[name]?.map((error, i) => <Error key={i} message={error} />)}
         </>
     );
 };
