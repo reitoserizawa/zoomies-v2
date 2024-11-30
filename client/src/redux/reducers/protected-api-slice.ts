@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { UserLogInRequest, UserState } from '../../states/user';
-import { PetCreateState, PetState } from '../../states/pet';
+import { PetState } from '../../states/pet';
 import { DogParkState } from '../../states/dog-park';
 import { CheckInState, CreateCheckInState } from '../../states/check-in';
 
@@ -43,7 +43,7 @@ export const protectedApiSlice = createApi({
             }),
             providesTags: ['Pet']
         }),
-        createPet: builder.mutation<PetState, PetCreateState>({
+        createPet: builder.mutation<PetState, Partial<PetState>>({
             query: ({ name, breed, birthday, introduction }) => ({
                 url: `pets`,
                 method: 'POST',
