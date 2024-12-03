@@ -12,17 +12,12 @@ import { Button } from '../../ui/form.styles';
 import { FlexContainer } from '../../ui/container.styles';
 
 import useClickOutside from '../../hooks/useClickOutisde';
+
+import requiredValidator from '../../utils/validators/requiredValidator';
+
 import Form from '../Form';
 import FormInput from '../Form/FormInput';
 import FormDate from '../Form/FormDate';
-
-const requiredValidator = (val: string) => {
-    if (!val) {
-        return ['This field is required'];
-    }
-
-    return [];
-};
 
 const ModalContentContainer = styled.div`
     width: 500px;
