@@ -2,19 +2,30 @@ model User {
   id    Int      @id @default(autoincrement())
 
   email String   @unique
-
-  // TODO: add name and profile img
   
   username  String @unique
+
+  first_name String
+  last_name String
+  phone       String?   
+  avatar_url   String? 
+
+  role        String    @default("user")
+
+  allergies    String[]  @default([])
+
   password String 
 
   pets Pet[]
 
-  check_ins CheckIn[]
+  dog_park_check_ins DogParkCheckIn[]
+  dog_friendly_dining_check_ins DogFriendlyDiningCheckIn[]
 
-  favorites UserFavoritePark[]
+  favorite_dog_parks UserFavoriteDogPark[]
+  favorite_dog_friendly_dining UserFavoriteDogFriendlyDining[]
 
   deleted Boolean @default(false)
 
   created_at DateTime @default(now())
+  updated_at   DateTime  @updatedAt
 }

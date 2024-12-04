@@ -7,13 +7,19 @@ model Pet {
   owner_id Int
 
   type String
-  breed String
+  breed String?
 
   birthday DateTime?
+  introduction String?
 
-  introduction String
+  characteristics String[] @default([])
 
-  check_ins CheckIn[]
+  dog_park_check_ins DogParkCheckIn[]
+  dog_friendly_dining_check_ins DogFriendlyDiningCheckIn[]
 
   created_at DateTime @default(now())
+
+  user_deleted Boolean @default(false)
+
+  // characteristics in array
 }

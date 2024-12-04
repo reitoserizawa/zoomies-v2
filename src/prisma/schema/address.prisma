@@ -1,0 +1,15 @@
+model Address {
+  id         Int    @id @default(autoincrement())
+  full_address String
+  street     String?
+  city       String?
+  state      String?
+  postal_code String?
+  country    String?
+  
+  latitude Float?
+  altitude Float?
+
+  dog_parks DogPark[]
+  dog_friendly_dining DogFriendlyDining[]
+}

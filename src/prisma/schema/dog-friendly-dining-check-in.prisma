@@ -1,4 +1,4 @@
-model CheckIn {
+model DogFriendlyDiningCheckIn {
   id    Int      @id @default(autoincrement())
   
   user User @relation(fields: [user_id], references: [id])
@@ -7,8 +7,8 @@ model CheckIn {
   pet Pet @relation(fields: [pet_id], references: [id], onDelete: Cascade)
   pet_id Int
 
-  dog_park DogPark @relation(fields: [dog_park_id], references: [id])
-  dog_park_id Int
+  dog_friendly_dining DogFriendlyDining @relation(fields: [dog_friendly_dining_id], references: [id])
+  dog_friendly_dining_id Int
 
   active Boolean @default(true)
 
