@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import moment from 'moment';
 
 import { PetState } from '../../states/pet';
 
@@ -35,8 +36,6 @@ const PetCard: React.FC<Partial<PetState>> = ({ id, name, breed, birthday, intro
         }
     }, [id, name, deletePet]);
 
-    // TODO: update date formatting
-
     return (
         <>
             <FlexContainer style={{ marginTop: '30px', marginBottom: '30px' }}>
@@ -50,7 +49,7 @@ const PetCard: React.FC<Partial<PetState>> = ({ id, name, breed, birthday, intro
                 {birthday && (
                     <FlexContainer $flexDirection='row' $gap='10px' style={{ marginBottom: '16px' }}>
                         <BirthdayCakeIcon size='1em' />
-                        <H4 $noMargin>{birthday.toString()}</H4>
+                        <H4 $noMargin>{moment(new Date(birthday)).format('LL')}</H4>
                     </FlexContainer>
                 )}
                 <P $noMargin style={{ marginBottom: '16px' }}>
