@@ -8,4 +8,6 @@ model UserFavoritePark {
   dog_park_id Int
   
   created_at DateTime @default(now())
+
+  @@unique([user_id, dog_park_id])
 }
