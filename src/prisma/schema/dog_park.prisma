@@ -11,5 +11,7 @@ model DogPark {
 
   check_ins CheckIn[]
 
+  favorites UserFavoritePark[]
+
   created_at DateTime @default(now())
 }
