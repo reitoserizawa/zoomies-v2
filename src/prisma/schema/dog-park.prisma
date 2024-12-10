@@ -7,6 +7,7 @@ model DogPark {
   address_id Int
 
   type String?
+  notes String?
 
   check_ins DogParkCheckIn[]
 
