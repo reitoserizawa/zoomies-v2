@@ -4,7 +4,16 @@ import { PetInterface } from './pet';
 
 export interface UserInterface extends BaseInterface {
     email: string;
+
     username: string;
+
+    first_name: string;
+    last_name: string;
+    phone: string | null;
+    avatar_url: string | null;
+
+    allergies: string[];
+
     password: string;
 
     pets?: PetInterface[];

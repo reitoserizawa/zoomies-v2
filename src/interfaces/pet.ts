@@ -12,8 +12,9 @@ export interface PetInterface extends BaseInterface {
     breed: string | null;
 
     birthday: Date | null;
-
     introduction: string | null;
+
+    characteristics: string[];
 
     dog_park_check_ins?: DogParkCheckInInterface[];
 
