@@ -1,4 +1,13 @@
-const dog_park_data = [
+interface DogParkDataInterface {
+    Prop_ID: string;
+    Name: string;
+    Address: string | null;
+    DogRuns_Type: string | null;
+    Accessible: string;
+    Notes: string | null;
+}
+
+const nyc_dog_park_data: DogParkDataInterface[] = [
     {
         Prop_ID: 'X004',
         Name: 'Bronx River Park Off-Leash Area',
@@ -524,4 +533,4 @@ const dog_park_data = [
     { Prop_ID: 'Q044', Name: 'L/CPL Thomas P. Noonan Jr. Playground', Address: 'Greenpoint Ave. bet. 42 St. and 43 St.', DogRuns_Type: 'Run', Accessible: 'N', Notes: null }
 ];
 
-export default dog_park_data;
+export default nyc_dog_park_data;
