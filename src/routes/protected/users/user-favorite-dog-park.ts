@@ -2,11 +2,11 @@ import { CustomRequest, NextFunction, Response } from 'express';
 
 import User from '../../../models/user';
 import DogPark from '../../../models/dog-park';
-import UserFavoritePark from '../../../models/user-favorite-park';
+import UserFavoriteDogPark from '../../../models/user-favorite-dog-park';
 
 import { BadRequestError } from '../../../models/errors';
 
-export const addFavoritePark = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const addFavoriteDogPark = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const { dog_park_id } = req.body;
 
@@ -15,7 +15,7 @@ export const addFavoritePark = async (req: CustomRequest, res: Response, next: N
         const user = await User.fromJwtPayload(req);
         const dog_park = await DogPark.fromId(dog_park_id);
 
-        const user_favroite_park = await UserFavoritePark.create(user, dog_park);
+        const user_favroite_park = await UserFavoriteDogPark.create(user, dog_park);
 
         res.json(await user_favroite_park.prepareForCollection());
     } catch (err) {
@@ -23,7 +23,7 @@ export const addFavoritePark = async (req: CustomRequest, res: Response, next: N
     }
 };
 
-export const deleteFavoritePark = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const deleteFavoriteDogPark = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const { favorite_id, dog_park_id } = req.body;
 
@@ -32,7 +32,7 @@ export const deleteFavoritePark = async (req: CustomRequest, res: Response, next
         const user = await User.fromJwtPayload(req);
         const dog_park = await DogPark.fromId(dog_park_id);
 
-        const user_favroite_park = await UserFavoritePark.fromId(favorite_id);
+        const user_favroite_park = await UserFavoriteDogPark.fromId(favorite_id);
         const user_owns_favorite_park = user_favroite_park.userOwnsFavoriteDogPark(user, dog_park);
 
         if (user_owns_favorite_park) {

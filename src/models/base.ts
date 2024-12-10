@@ -1,11 +1,10 @@
 import { Prisma } from '@prisma/client';
 
-import { BaseModelInterface, ExtractKeys, ValidateInput, WhereInput } from '../interfaces/base';
+import { BaseModelInterface, ValidateInput, WhereInput } from '../interfaces/base';
 
 import PrismaClientModel from './prisma-client';
 import { BadRequestError, NotFoundError } from './errors';
 import capitalizeFirstLetter from '../utils/capitalize-first-letter';
-import User from './user';
 
 class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P> {
     prisma: PrismaClientModel;
@@ -14,9 +13,9 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
     model_name: MN;
     uncap_model_name: Uncapitalize<MN>;
 
-    public_properties: string[];
-    include_properties?: string[];
-    updatable_properties: string[];
+    public_properties: (keyof P)[];
+    include_properties?: (keyof P)[];
+    updatable_properties: (keyof P)[];
 
     // override in subclass
     static async fromId(id: number): Promise<any> {
@@ -170,7 +169,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         const filteredProperties: ValidateInput<P> = {};
 
         for (const key in data) {
-            if (this.updatable_properties.includes(key)) {
+            if (this.updatable_properties.includes(key as keyof P)) {
                 filteredProperties[key as keyof ValidateInput<P>] = data[key as keyof ValidateInput<P>];
             }
         }
@@ -237,13 +236,16 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return _properties as P;
     }
 
-    prepareIncludeQuery(): { [key: string]: boolean } | void {
+    prepareIncludeQuery<P extends { [key: string]: any }>(this: P): { [key in keyof P]?: boolean } | void {
         if (!this.include_properties) return;
 
-        const include: Record<string, boolean> = {};
+        const include: { [key in keyof P]?: boolean } = {}; // Using keyof P for the keys
 
         for (const prop of this.include_properties) {
-            include[prop] = true;
+            if (prop in this) {
+                // Check if the property exists on the current object
+                include[prop as keyof P] = true; // Type assertion to `keyof P`
+            }
         }
 
         return include;

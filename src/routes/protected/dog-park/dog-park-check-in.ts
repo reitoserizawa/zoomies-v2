@@ -3,10 +3,10 @@ import { CustomRequest, NextFunction, Response } from 'express';
 import DogPark from '../../../models/dog-park';
 import Pet from '../../../models/pet';
 import User from '../../../models/user';
-import CheckIn from '../../../models/check-in';
+import DogParkCheckIn from '../../../models/dog-park-check-in';
 import { BadRequestError, NoAccessError } from '../../../models/errors';
 
-export const createCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const createDogParkCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
         const dog_park_id = parseInt(id);
@@ -24,7 +24,7 @@ export const createCheckIns = async (req: CustomRequest, res: Response, next: Ne
 
         if (owns_pets.includes(false)) throw new NoAccessError("User doesn't own the pet or pets");
 
-        await CheckIn.create(user, pets, dog_park);
+        await DogParkCheckIn.create(user, pets, dog_park);
 
         res.json({ success: true });
     } catch (err) {
@@ -32,7 +32,7 @@ export const createCheckIns = async (req: CustomRequest, res: Response, next: Ne
     }
 };
 
-export const getActiveCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const getActiveDogParkCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
         const dog_park_id = parseInt(id);
@@ -42,7 +42,7 @@ export const getActiveCheckIns = async (req: CustomRequest, res: Response, next:
         const dog_park = await DogPark.fromId(dog_park_id);
         const user = await User.fromJwtPayload(req);
 
-        const dog_park_check_ins = await CheckIn.fromDogPark(dog_park);
+        const dog_park_check_ins = await DogParkCheckIn.fromDogPark(dog_park);
         const active_dog_park_check_ins = dog_park_check_ins.filter(check_in => check_in.isActive());
 
         const response = await Promise.all(

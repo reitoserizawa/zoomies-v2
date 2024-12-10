@@ -1,5 +1,5 @@
 import { BaseInterface, BaseModelInterface } from './base';
-import { CheckInInterface } from './check-in';
+import { DogParkCheckInInterface } from './dog-park-check-in';
 import { UserInterface } from './user';
 
 export interface PetInterface extends BaseInterface {
@@ -9,13 +9,13 @@ export interface PetInterface extends BaseInterface {
     owner_id: number;
 
     type: string;
-    breed: string;
+    breed: string | null;
 
     birthday: Date | null;
 
-    introduction: string;
+    introduction: string | null;
 
-    check_ins?: CheckInInterface[];
+    dog_park_check_ins?: DogParkCheckInInterface[];
 
     created_at: Date;
 }

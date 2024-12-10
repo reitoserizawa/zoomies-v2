@@ -5,7 +5,7 @@ import BaseModel from './base';
 import { DogParkInterface, DogParkModelInterface } from '../interfaces/dog-park';
 
 class DogPark extends BaseModel<DogParkInterface, 'DogPark'> implements DogParkModelInterface {
-    public_properties = ['name', 'address', 'type', 'geo'];
+    public_properties: (keyof DogParkInterface)[] = ['name', 'address', 'type', 'geo'];
     updatable_properties = [];
 
     static model_name: Prisma.ModelName = 'DogPark';

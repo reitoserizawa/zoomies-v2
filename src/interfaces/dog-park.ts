@@ -1,5 +1,5 @@
 import { BaseInterface, BaseModelInterface } from './base';
-import { CheckInInterface } from './check-in';
+import { DogParkCheckInInterface } from './dog-park-check-in';
 
 export interface DogParkInterface extends BaseInterface {
     name: string;
@@ -10,7 +10,7 @@ export interface DogParkInterface extends BaseInterface {
 
     geo: BigInteger[];
 
-    check_ins?: CheckInInterface[];
+    check_ins?: DogParkCheckInInterface[];
 }
 
 export interface DogParkModelInterface extends BaseModelInterface<DogParkInterface> {}

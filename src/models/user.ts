@@ -4,21 +4,21 @@ import { CustomRequest } from 'express';
 import { UserInterface, UserModelInterface } from '../interfaces/user';
 import { ExtractKeys } from '../interfaces/base';
 import { PetInterface } from '../interfaces/pet';
-import { CheckInInterface } from '../interfaces/check-in';
+import { DogParkCheckInInterface } from '../interfaces/dog-park-check-in';
 
 import BaseModel from './base';
 import PrismaClientModel from './prisma-client';
 import Pet from './pet';
-import CheckIn from './check-in';
+import DogParkCheckIn from './dog-park-check-in';
 
 import PasswordUtil from '../utils/password';
 import JWTUtil from '../utils/jwt';
 import { AuthError, BadRequestError } from './errors';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
-    public_properties = ['email', 'username', 'pets'];
-    include_properties = ['pets', 'check_ins'];
-    updatable_properties = ['email', 'username'];
+    public_properties: (keyof UserInterface)[] = ['email', 'username', 'pets'];
+    include_properties: (keyof UserInterface)[] = ['pets', 'dog_park_check_ins'];
+    updatable_properties: (keyof UserInterface)[] = ['email', 'username'];
 
     pets?: Pet[];
 
@@ -61,8 +61,13 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
     static async create(properties: Prisma.UserCreateInput): Promise<User> {
         const validated_payload = Prisma.validator<Prisma.UserCreateInput>()({
-            username: properties.username,
             email: properties.email,
+
+            username: properties.username,
+
+            first_name: properties.first_name,
+            last_name: properties.last_name,
+
             password: properties.password
         });
 
@@ -129,17 +134,17 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         return pet.properties.owner_id === this.id;
     }
 
-    hasCheckIn(check_in: CheckIn): boolean {
-        return check_in.properties.user_id === this.id;
+    hasDogParkCheckIn(dog_park_check_in: DogParkCheckIn): boolean {
+        return dog_park_check_in.properties.user_id === this.id;
     }
 
     generateToken(): string {
         return JWTUtil.generate({ id: this.id });
     }
 
-    override subObjectsForCollection(): { check_ins: BaseModel<CheckInInterface, 'CheckIn'>[]; pets: BaseModel<PetInterface, 'Pet'>[] } {
+    override subObjectsForCollection(): { dog_park_check_ins: BaseModel<DogParkCheckInInterface, 'DogParkCheckIn'>[]; pets: BaseModel<PetInterface, 'Pet'>[] } {
         return {
-            check_ins: this.properties.check_ins ? this.properties.check_ins.map(check_in => CheckIn.fromProperties(check_in)) : [],
+            dog_park_check_ins: this.properties.dog_park_check_ins ? this.properties.dog_park_check_ins.map(dog_park_check_in => DogParkCheckIn.fromProperties(dog_park_check_in)) : [],
             pets: this.properties.pets ? this.properties.pets.map(pet => Pet.fromProperties(pet)) : []
         };
     }

@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
 import { deleteUser, getUserDetails, updateUserProfile } from './single-user';
-import { deleteCheckIn } from './user-check-in';
+import { deleteDogParkCheckIn } from './user-dog-park-check-in';
 import { getPetsFromUser } from './user-pets';
-import { addFavoritePark, deleteFavoritePark } from './user-favorite-park';
+import { addFavoriteDogPark, deleteFavoriteDogPark } from './user-favorite-dog-park';
 
 const userRoutes = Router();
 
@@ -13,9 +13,9 @@ userRoutes.delete('/', deleteUser);
 
 userRoutes.get('/pets', getPetsFromUser);
 
-userRoutes.delete('/check-ins', deleteCheckIn);
+userRoutes.delete('/check-ins', deleteDogParkCheckIn);
 
-userRoutes.post('/favorite-parks', addFavoritePark);
-userRoutes.delete('/favorite-parks', deleteFavoritePark);
+userRoutes.post('/favorite-parks', addFavoriteDogPark);
+userRoutes.delete('/favorite-parks', deleteFavoriteDogPark);
 
 export default userRoutes;

@@ -3,7 +3,7 @@ import { DogParkInterface } from './dog-park';
 import { PetInterface } from './pet';
 import { UserInterface } from './user';
 
-export interface CheckInInterface extends BaseInterface {
+export interface DogParkCheckInInterface extends BaseInterface {
     user?: UserInterface;
     user_id: number;
 
@@ -19,4 +19,4 @@ export interface CheckInInterface extends BaseInterface {
     checked_out_at: Date | null;
 }
 
-export interface CheckInModelInterface extends BaseModelInterface<CheckInInterface> {}
+export interface DogParkCheckInModelInterface extends BaseModelInterface<DogParkCheckInInterface> {}

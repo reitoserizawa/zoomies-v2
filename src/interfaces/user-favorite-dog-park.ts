@@ -2,7 +2,7 @@ import { BaseInterface, BaseModelInterface } from './base';
 import { DogParkInterface } from './dog-park';
 import { UserInterface } from './user';
 
-export interface UserFavoriteParkInterface extends BaseInterface {
+export interface UserFavoriteDogParkInterface extends BaseInterface {
     user?: UserInterface;
     user_id: number;
 
@@ -12,4 +12,4 @@ export interface UserFavoriteParkInterface extends BaseInterface {
     created_at: Date;
 }
 
-export interface UserFavoriteParkModelInterface extends BaseModelInterface<UserFavoriteParkInterface> {}
+export interface UserFavoriteDogParkModelInterface extends BaseModelInterface<UserFavoriteDogParkInterface> {}
