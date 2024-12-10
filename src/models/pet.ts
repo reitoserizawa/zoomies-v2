@@ -5,7 +5,7 @@ import BaseModel from './base';
 import { PetInterface, PetModelInterface } from '../interfaces/pet';
 import PrismaClientModel from './prisma-client';
 import User from './user';
-import CheckIn from './dog-park-check-in';
+import DogParkCheckIn from './dog-park-check-in';
 
 class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
     public_properties: (keyof PetInterface)[] = ['name', 'owner', 'type', 'breed', 'birthday', 'owner_id', 'created_at', 'introduction'];
@@ -59,10 +59,10 @@ class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
         return pet;
     }
 
-    async hasActiveCheckIn(): Promise<boolean> {
-        const check_ins = await CheckIn.fromPet(this);
+    async hasActiveDogParkCheckIn(): Promise<boolean> {
+        const dog_park_check_ins = await DogParkCheckIn.fromPet(this);
 
-        if (check_ins.some(check_in => check_in.properties.active)) {
+        if (dog_park_check_ins.some(check_in => check_in.properties.active)) {
             return true;
         } else {
             return false;

@@ -11,7 +11,7 @@ export const getUncheckedInPets = async (req: CustomRequest, res: Response, next
         const pets: Pet[] = user?.pets || [];
         const pets_without_active_check_ins = await Promise.all(
             pets.map(async pet => {
-                const has_active_check_in = await pet.hasActiveCheckIn();
+                const has_active_check_in = await pet.hasActiveDogParkCheckIn();
                 return { pet, has_active_check_in };
             })
         );

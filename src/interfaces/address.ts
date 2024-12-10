@@ -10,10 +10,10 @@ export interface AddressInterface extends BaseInterface {
     postal_code: string;
     country: string;
 
-    latitude: BigInteger | null;
-    altitude: BigInteger | null;
+    latitude: number | null;
+    altitude: number | null;
 
-    dog_parks: DogParkInterface[];
+    dog_parks?: DogParkInterface[];
     //   dog_friendly_dining: DogFriendlyDining[]
 }
 
