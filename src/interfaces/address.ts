@@ -5,13 +5,13 @@ export interface AddressInterface extends BaseInterface {
     full_address: string;
     address: string;
     address2: string | null;
-    district: string; // state, province, prefecture etc...
     city: string;
+    district: string; // state, province, prefecture etc...
     postal_code: string;
     country: string;
 
     latitude: number | null;
-    altitude: number | null;
+    longtitude: number | null;
 
     dog_parks?: DogParkInterface[];
     //   dog_friendly_dining: DogFriendlyDining[]

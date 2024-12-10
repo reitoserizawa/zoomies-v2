@@ -9,7 +9,7 @@ model Address {
   country    String
   
   latitude Float?
-  altitude Float?
+  longtitude Float?
 
   dog_parks DogPark[]
   dog_friendly_dining DogFriendlyDining[]
