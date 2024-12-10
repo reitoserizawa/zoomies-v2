@@ -6,7 +6,7 @@ import { AddressInterface, AddressModelInterface } from '../interfaces/address';
 import PrismaClientModel from './prisma-client';
 
 class Address extends BaseModel<AddressInterface, 'Address'> implements AddressModelInterface {
-    public_properties: (keyof AddressInterface)[] = ['full_address', 'latitude', 'altitude'];
+    public_properties: (keyof AddressInterface)[] = ['full_address', 'latitude', 'longtitude'];
     updatable_properties = [];
 
     static model_name: Prisma.ModelName = 'Address';
@@ -38,7 +38,7 @@ class Address extends BaseModel<AddressInterface, 'Address'> implements AddressM
             postal_code: properties.postal_code,
             country: properties.country,
             latitude: properties.latitude,
-            altitude: properties.altitude
+            longtitude: properties.longtitude
         });
 
         const new_address = await PrismaClientModel.prisma.address.create({ data: { ...validated_payload } });
