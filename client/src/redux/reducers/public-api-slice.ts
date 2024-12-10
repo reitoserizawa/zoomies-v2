@@ -18,10 +18,12 @@ export const publicApiSlice = createApi({
             })
         }),
         createUser: builder.mutation<UserLogInPayload, UserCreateRequest>({
-            query: ({ email, username, password }) => ({
+            query: ({ first_name, last_name, email, username, password }) => ({
                 url: `create-user`,
                 method: 'POST',
                 body: {
+                    first_name,
+                    last_name,
                     email,
                     username,
                     password

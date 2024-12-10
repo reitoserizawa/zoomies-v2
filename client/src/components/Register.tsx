@@ -68,6 +68,8 @@ const Register: React.FC = () => {
                 <Form<UserCreateRequest> onSubmit={handleCreateUser}>
                     <LogInForm>
                         <FormInput<UserCreateRequest> name='email' label='Email*' />
+                        <FormInput<UserCreateRequest> name='first_name' label='First name*' />
+                        <FormInput<UserCreateRequest> name='last_name' label='Last name*' />
                         <FormInput<UserCreateRequest> name='username' label='Username*' />
                         <FormInput<UserCreateRequest> type='password' name='password' label='Password*' />
                         <Button type='submit'>Register</Button>

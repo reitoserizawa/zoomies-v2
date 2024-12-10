@@ -1,6 +1,7 @@
 import { BaseInterface, BaseModelInterface } from './base';
 import { DogParkCheckInInterface } from './dog-park-check-in';
 import { PetInterface } from './pet';
+import { UserFavoriteDogParkInterface } from './user-favorite-dog-park';
 
 export interface UserInterface extends BaseInterface {
     email: string;
@@ -18,6 +19,7 @@ export interface UserInterface extends BaseInterface {
 
     pets?: PetInterface[];
     dog_park_check_ins?: DogParkCheckInInterface[];
+    favorite_dog_parks?: UserFavoriteDogParkInterface[];
 
     created_at: Date;
 

@@ -16,9 +16,9 @@ import JWTUtil from '../utils/jwt';
 import { AuthError, BadRequestError } from './errors';
 
 class User extends BaseModel<UserInterface, 'User'> implements UserModelInterface {
-    public_properties: (keyof UserInterface)[] = ['email', 'username', 'pets'];
-    include_properties: (keyof UserInterface)[] = ['pets', 'dog_park_check_ins'];
-    updatable_properties: (keyof UserInterface)[] = ['email', 'username'];
+    public_properties: (keyof UserInterface)[] = ['email', 'username', 'pets', 'first_name', 'last_name', 'phone', 'avatar_url', 'allergies', 'dog_park_check_ins', 'favorite_dog_parks'];
+    include_properties: (keyof UserInterface)[] = ['pets', 'dog_park_check_ins', 'favorite_dog_parks'];
+    updatable_properties: (keyof UserInterface)[] = ['email', 'username', 'first_name', 'last_name', 'phone', 'avatar_url', 'allergies'];
 
     pets?: Pet[];
 
@@ -67,6 +67,8 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
             first_name: properties.first_name,
             last_name: properties.last_name,
+            phone: properties.phone,
+            avatar_url: properties.avatar_url,
 
             password: properties.password
         });
