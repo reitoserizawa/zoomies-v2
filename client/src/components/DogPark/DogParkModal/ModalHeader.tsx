@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { useAddFavoriteDogParkMutation, useCheckFavoriteDogParkStatusQuery } from '../../../redux/reducers/protected-api-slice';
+
 import { FlexContainer } from '../../../ui/container.styles';
 
 import FavoriteIcon from '../../../images/icons/FavoriteIcon';
 import CloseIcon from '../../../images/icons/CloseIco';
+import FilledFavoriteIcon from '../../../images/icons/FilledFavoriteIcon';
 
 const ModalHeaderContainer = styled.div`
     position: fixed;
@@ -60,7 +63,16 @@ const ModalFavoriteButton = styled.button`
     font-size: 1em;
 `;
 
-const ModalHeader: React.FC<{ closeDogParkModal: () => void }> = ({ closeDogParkModal }) => {
+const ModalHeader: React.FC<{ dogParkId?: number; closeDogParkModal: () => void }> = ({ dogParkId, closeDogParkModal }) => {
+    const { data } = useCheckFavoriteDogParkStatusQuery({ dogParkId });
+    const [addFavoriteDogPark] = useAddFavoriteDogParkMutation();
+
+    const handleAddOrDeleteFavoriteDogPark = () => {
+        dogParkId && addFavoriteDogPark({ dogParkId });
+    };
+
+    if (data) console.log(data);
+
     return (
         <ModalHeaderContainer>
             <FlexContainer $flexDirection='row' $gap='30px'>
@@ -70,8 +82,8 @@ const ModalHeader: React.FC<{ closeDogParkModal: () => void }> = ({ closeDogPark
                     <ModalHeaderAnchor style={{ flexBasis: '50%' }}>Check-ins</ModalHeaderAnchor>
                 </FlexContainer>
                 <FlexContainer $flexDirection='row' $gap='30px' style={{ flexBasis: '33.33%' }}>
-                    <ModalFavoriteButton style={{ marginLeft: 'auto' }}>
-                        <FavoriteIcon color='white' size='1.75em' />
+                    <ModalFavoriteButton style={{ marginLeft: 'auto' }} onClick={handleAddOrDeleteFavoriteDogPark}>
+                        {data?.favoritedDogPark ? <FilledFavoriteIcon color='pink' size='1.75em' /> : <FavoriteIcon color='white' size='1.75em' />}
                     </ModalFavoriteButton>
                     <ModalFavoriteButton onClick={() => closeDogParkModal()}>
                         <CloseIcon color='white' size='1.75em' />

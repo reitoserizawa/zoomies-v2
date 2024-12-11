@@ -67,11 +67,13 @@ const Modal: React.FC = () => {
         );
     }
 
+    // TODO: adde not found in case if no dog park details
+
     return (
         <FullScreenContainer $top={60} $backgroundColor='rgba(0, 0, 0, 0.4)'>
             <ModalContainer ref={ref}>
                 {/* header */}
-                <ModalHeader closeDogParkModal={closeDogParkModal} />
+                <ModalHeader dogParkId={dogParkDetails?.id} closeDogParkModal={closeDogParkModal} />
                 <ImgContainer height='500px' width='100%' $borderRadius='0px'>
                     <img src={dogParkExample.src} alt={dogParkExample.alt}></img>
                 </ImgContainer>
