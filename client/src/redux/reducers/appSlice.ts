@@ -4,13 +4,20 @@ import { AppState } from '../../states/app';
 const initialState: AppState = {
     isPetCreateFormModalOpen: false,
     isPetUpdateFormModalOpen: false,
-    dogParkModalId: undefined
+    dogParkModalId: undefined,
+    dashboardContent: 'pet'
 };
 
 const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
+        switchDashboardContent: (state, action) => {
+            return {
+                ...state,
+                dashboardContent: action.payload
+            };
+        },
         togglePetCreateFormModal: (state, action) => {
             return {
                 ...state,
@@ -32,6 +39,6 @@ const appSlice = createSlice({
     }
 });
 
-export const { togglePetCreateFormModal, togglePetUpdateFormModal, setDogParkModalId } = appSlice.actions;
+export const { togglePetCreateFormModal, togglePetUpdateFormModal, setDogParkModalId, switchDashboardContent } = appSlice.actions;
 
 export default appSlice.reducer;
