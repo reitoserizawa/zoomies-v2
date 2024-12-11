@@ -85,7 +85,11 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         const model = PrismaClientModel.prisma[uncap_model_name];
 
         // @ts-expect-error
-        const items = await model.findMany();
+        const items = await model.findMany({
+            include: {
+                address: true
+            }
+        });
 
         if (!items || items.length === 0) {
             throw new NotFoundError(`${capitalizeFirstLetter(uncap_model_name)}s not found`);
@@ -239,13 +243,10 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
     prepareIncludeQuery<P extends { [key: string]: any }>(this: P): { [key in keyof P]?: boolean } | void {
         if (!this.include_properties) return;
 
-        const include: { [key in keyof P]?: boolean } = {}; // Using keyof P for the keys
+        const include: { [key in keyof P]?: boolean } = {};
 
         for (const prop of this.include_properties) {
-            if (prop in this) {
-                // Check if the property exists on the current object
-                include[prop as keyof P] = true; // Type assertion to `keyof P`
-            }
+            include[prop as keyof P] = true;
         }
 
         return include;
