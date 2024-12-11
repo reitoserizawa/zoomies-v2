@@ -14,6 +14,8 @@ model Address {
   dog_parks DogPark[]
   dog_friendly_dining DogFriendlyDining[]
 
-    @@index([city]) // Example index for optimizing queries by city
-  @@index([postal_code]) // Example index for postal code queries
+  @@unique([address, address2, district, city, postal_code, country])
+
+  @@index([city])
+  @@index([postal_code])
 }
