@@ -9,5 +9,5 @@ model UserFavoriteDogPark {
   
   created_at DateTime @default(now())
 
-  @@unique([user_id, dog_park_id])
+  @@unique(fields: [user_id, dog_park_id], name: "user_id_dog_park_id")
 }
