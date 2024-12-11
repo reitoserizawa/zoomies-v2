@@ -15,6 +15,8 @@ import FullScreenLoader from '../FullScreenLoader';
 
 const DogParkCardListContainer = styled.div`
     min-height: 300px;
+    height: 100%;
+    width: 100%;
 
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 
@@ -48,7 +50,9 @@ const DogPark: React.FC = () => {
                     <GridContainer>
                         {data?.map(({ id, name, address, check_ins, active_check_ins_count }, idx) => (
                             <DogParkCardListContainer key={idx} onClick={() => dispatch(setDogParkModalId(id))}>
-                                <DogParkCard id={id} name={name} address={address} check_ins={check_ins} active_check_ins_count={active_check_ins_count} />
+                                <FlexContainer $flexDirection='column'>
+                                    <DogParkCard id={id} name={name} address={address} check_ins={check_ins} active_check_ins_count={active_check_ins_count} />
+                                </FlexContainer>
                             </DogParkCardListContainer>
                         ))}
                     </GridContainer>
