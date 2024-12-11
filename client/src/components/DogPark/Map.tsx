@@ -34,8 +34,8 @@ const Map: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [popupOpen, setPopupOpen] = useState<{ [key: number]: boolean }>({});
     const [viewport, setViewport] = useState({
-        latitude: 33.4675,
-        longitude: -112.05,
+        latitude: 40.7127281,
+        longitude: -74.0060152,
         zoom: 10
     });
 
