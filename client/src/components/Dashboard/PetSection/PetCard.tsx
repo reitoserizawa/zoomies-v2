@@ -1,21 +1,21 @@
 import React, { useCallback } from 'react';
 import moment from 'moment';
 
-import { PetState } from '../../states/pet';
+import { PetState } from '../../../states/pet';
 
-import { useDeletePetMutation } from '../../redux/reducers/protected-api-slice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
-import { togglePetUpdateFormModal } from '../../redux/reducers/appSlice';
+import { useDeletePetMutation } from '../../../redux/reducers/protected-api-slice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
+import { togglePetUpdateFormModal } from '../../../redux/reducers/appSlice';
 
-import { FlexContainer, RoundImgContainer } from '../../ui/container.styles';
-import { H3, H4, P } from '../../ui/text-tags.styles';
-import { Button } from '../../ui/form.styles';
+import { FlexContainer, RoundImgContainer } from '../../../ui/container.styles';
+import { H3, H4, P } from '../../../ui/text-tags.styles';
+import { Button } from '../../../ui/form.styles';
 
-import { dogProfileImg } from '../../images';
-import BirthdayCakeIcon from '../../images/icons/BirthdayCakeIcon';
+import { dogProfileImg } from '../../../images';
+import BirthdayCakeIcon from '../../../images/icons/BirthdayCakeIcon';
 
-import EditIcon from '../../images/icons/EditIcon';
-import DeleteIcon from '../../images/icons/DeleteIcon';
+import EditIcon from '../../../images/icons/EditIcon';
+import DeleteIcon from '../../../images/icons/DeleteIcon';
 
 import PetForm from './PetForm';
 

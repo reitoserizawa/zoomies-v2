@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { useAppSelector } from '../../redux/hooks/hooks';
-import { useGetPetsFromUserQuery } from '../../redux/reducers/protected-api-slice';
+import { useAppSelector } from '../../../redux/hooks/hooks';
+import { useGetPetsFromUserQuery } from '../../../redux/reducers/protected-api-slice';
 
 import PetCard from './PetCard';
 import PetForm from './PetForm';
-import Loader from '../Loader';
+import Loader from '../../Loader';
 
 const PetSectionContent: React.FC = () => {
     const { data: pets, isFetching: fetchingPets } = useGetPetsFromUserQuery(null);

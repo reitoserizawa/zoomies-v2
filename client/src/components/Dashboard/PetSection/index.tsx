@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { useAppDispatch } from '../../redux/hooks/hooks';
-import { togglePetCreateFormModal } from '../../redux/reducers/appSlice';
+import { useAppDispatch } from '../../../redux/hooks/hooks';
+import { togglePetCreateFormModal } from '../../../redux/reducers/appSlice';
 
-import { FlexContainer } from '../../ui/container.styles';
-import { H2 } from '../../ui/text-tags.styles';
-import { Button } from '../../ui/form.styles';
+import { FlexContainer } from '../../../ui/container.styles';
+import { H2 } from '../../../ui/text-tags.styles';
+import { Button } from '../../../ui/form.styles';
 
-import AddIcon from '../../images/icons/AddIcon';
+import AddIcon from '../../../images/icons/AddIcon';
 
 import PetSectionContent from './PetSectionContent';
 

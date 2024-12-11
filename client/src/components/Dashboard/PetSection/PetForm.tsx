@@ -1,23 +1,23 @@
 import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
-import { PetState } from '../../states/pet';
+import { PetState } from '../../../states/pet';
 
-import { useAppDispatch } from '../../redux/hooks/hooks';
-import { togglePetCreateFormModal, togglePetUpdateFormModal } from '../../redux/reducers/appSlice';
-import { useCreatePetMutation, useUpdatePetDetailsMutation } from '../../redux/reducers/protected-api-slice';
+import { useAppDispatch } from '../../../redux/hooks/hooks';
+import { togglePetCreateFormModal, togglePetUpdateFormModal } from '../../../redux/reducers/appSlice';
+import { useCreatePetMutation, useUpdatePetDetailsMutation } from '../../../redux/reducers/protected-api-slice';
 
 import 'react-datepicker/dist/react-datepicker.css';
-import { Button } from '../../ui/form.styles';
-import { FlexContainer } from '../../ui/container.styles';
+import { Button } from '../../../ui/form.styles';
+import { FlexContainer } from '../../../ui/container.styles';
 
-import useClickOutside from '../../hooks/useClickOutisde';
+import useClickOutside from '../../../hooks/useClickOutisde';
 
-import requiredValidator from '../../utils/validators/requiredValidator';
+import requiredValidator from '../../../utils/validators/requiredValidator';
 
-import Form from '../Form';
-import FormInput from '../Form/FormInput';
-import FormDate from '../Form/FormDate';
+import Form from '../../Form';
+import FormInput from '../../Form/FormInput';
+import FormDate from '../../Form/FormDate';
 
 const ModalContentContainer = styled.div`
     width: 500px;
