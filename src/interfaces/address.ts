@@ -11,7 +11,7 @@ export interface AddressInterface extends BaseInterface {
     country: string;
 
     latitude: number | null;
-    longtitude: number | null;
+    longitude: number | null;
 
     dog_parks?: DogParkInterface[];
     //   dog_friendly_dining: DogFriendlyDining[]
