@@ -10,6 +10,11 @@ export interface UserFavoriteDogParkInterface extends BaseInterface {
     dog_park_id: number;
 
     created_at: Date;
+
+    user_id_dog_park_id?: {
+        user_id: number;
+        dog_park_id: number;
+    };
 }
 
 export interface UserFavoriteDogParkModelInterface extends BaseModelInterface<UserFavoriteDogParkInterface> {}

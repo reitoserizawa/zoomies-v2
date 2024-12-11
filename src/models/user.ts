@@ -37,7 +37,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
     }
 
     static async fromUsername(username: string): Promise<User> {
-        return this.fromQuery<UserInterface, 'username', User>({ username } as ExtractKeys<UserInterface, 'username'>, 'user', ['pets']);
+        return this.fromQuery<UserInterface, User>({ username }, 'user', ['pets']);
     }
 
     static async fromJwtPayload(req: CustomRequest): Promise<User> {

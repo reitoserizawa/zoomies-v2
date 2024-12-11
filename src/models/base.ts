@@ -32,7 +32,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return obj;
     }
 
-    static async fromQuery<P, K extends keyof P, M>(query: Record<K, any>, uncap_model_name?: Uncapitalize<Prisma.ModelName>, include_properties?: string[]): Promise<M> {
+    static async fromQuery<P, M>(query: Partial<P>, uncap_model_name?: Uncapitalize<Prisma.ModelName>, include_properties?: string[]): Promise<M> {
         if (!uncap_model_name) {
             throw new BadRequestError('Model name is required');
         }
@@ -57,7 +57,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return this.fromProperties(item);
     }
 
-    static async manyFromQuery<P, K extends keyof P, M>(query: Record<K, any>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_properties?: string[]): Promise<M[]> {
+    static async manyFromQuery<P, M>(query: Partial<P>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_properties?: string[]): Promise<M[]> {
         if (!uncap_model_name) {
             throw new BadRequestError('Model name is required');
         }

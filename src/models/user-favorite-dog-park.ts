@@ -8,7 +8,7 @@ import User from './user';
 import PrismaClientModel from './prisma-client';
 
 class UserFavoriteDogPark extends BaseModel<UserFavoriteDogParkInterface, 'UserFavoriteDogPark'> implements UserFavoriteDogParkModelInterface {
-    public_properties: (keyof UserFavoriteDogParkInterface)[] = ['user', 'user_id', 'dog_park', 'dog_park_id'];
+    public_properties: (keyof UserFavoriteDogParkInterface)[] = ['id', 'user', 'user_id', 'dog_park', 'dog_park_id'];
     updatable_properties: (keyof UserFavoriteDogParkInterface)[] = [];
 
     static model_name: Prisma.ModelName = 'UserFavoriteDogPark';
@@ -26,6 +26,19 @@ class UserFavoriteDogPark extends BaseModel<UserFavoriteDogParkInterface, 'UserF
         user_favorite_park.setProperties(properties);
 
         return user_favorite_park;
+    }
+
+    static async fromUserAndDogPark(user: User, dog_park: DogPark): Promise<UserFavoriteDogPark> {
+        const user_id = user.id;
+        const dog_park_id = dog_park.id;
+
+        return await UserFavoriteDogPark.fromQuery<UserFavoriteDogParkInterface, UserFavoriteDogPark>({ user_id_dog_park_id: { user_id, dog_park_id } }, 'userFavoriteDogPark');
+    }
+
+    static async fromUser(user: User): Promise<UserFavoriteDogPark[]> {
+        const user_id = user.id;
+
+        return await UserFavoriteDogPark.manyFromQuery<UserFavoriteDogParkInterface, UserFavoriteDogPark>({ user_id }, 'userFavoriteDogPark');
     }
 
     static async create(user: User, dog_park: DogPark): Promise<UserFavoriteDogPark> {
