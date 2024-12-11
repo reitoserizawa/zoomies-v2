@@ -23,6 +23,8 @@ const DogParkCardImageContainer = styled.div`
 `;
 
 const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, active_check_ins_count }) => {
+    const full_address = address?.full_address;
+
     return (
         <>
             <DogParkCardImageContainer>
@@ -31,7 +33,7 @@ const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, activ
             <FlexContainer $justifyContent='flex-start' $alignItems='flex-start' style={{ height: '150px' }}>
                 <div style={{ flexBasis: '80%' }}>
                     <H2 size='1.2em'>{name}</H2>
-                    <P>{address}</P>
+                    <P>{full_address}</P>
                 </div>
 
                 <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap='10px' style={{ marginBottom: '10px', marginLeft: '16px', flexBasis: '20%' }}>

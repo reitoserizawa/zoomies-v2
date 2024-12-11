@@ -22,7 +22,8 @@ const ModalMap: React.FC = () => {
     const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
     const { data: dogParkDetails } = useGetDogParkDetailsQuery({ id: dogParkModalId as number }, { skip: !dogParkModalId });
 
-    const [longitude, latitude] = dogParkDetails?.geo ? dogParkDetails?.geo : [];
+    const longitude = dogParkDetails?.address?.longitude;
+    const latitude = dogParkDetails?.address?.latitude;
 
     const token = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 

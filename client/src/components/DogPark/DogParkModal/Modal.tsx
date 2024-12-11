@@ -83,7 +83,7 @@ const Modal: React.FC = () => {
                                 <H2 $noMargin size='2em'>
                                     {dogParkDetails?.name}
                                 </H2>
-                                <P $noMargin>{dogParkDetails?.address}</P>
+                                <P $noMargin>{dogParkDetails?.address?.full_address}</P>
                             </FlexContainer>
                             <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='flex-start' $gap='20px' style={{ flexBasis: '50%' }}>
                                 <FlexContainer $gap='10px' $alignItems='flex-end' style={{ flexBasis: '50%' }}>

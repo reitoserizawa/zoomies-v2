@@ -62,20 +62,21 @@ const Map: React.FC = () => {
                         if (!dogPark) return null;
 
                         const id = dogPark.id;
-                        const geoArray = dogPark.geo;
+                        const latitude = dogPark?.address?.latitude;
+                        const longitude = dogPark?.address?.longitude;
 
-                        if (!id || !geoArray) return null;
+                        if (!id || !latitude || !longitude) return null;
 
                         return (
                             <div key={id}>
-                                <Marker longitude={geoArray[0]} latitude={geoArray[1]} onClick={() => handleMarkerClick(id)}>
+                                <Marker longitude={longitude} latitude={latitude} onClick={() => handleMarkerClick(id)}>
                                     <div style={{ height: '24px', width: '24px' }}>
                                         <PointerIcon />
                                     </div>
                                 </Marker>
 
                                 {popupOpen[id] && (
-                                    <Popup longitude={geoArray[0]} latitude={geoArray[1]} anchor='bottom' onClose={() => handleMarkerClick(id)} closeOnClick={false} offset={15}>
+                                    <Popup longitude={longitude} latitude={latitude} anchor='bottom' onClose={() => handleMarkerClick(id)} closeOnClick={false} offset={15}>
                                         <div style={{ margin: '-10px', cursor: 'pointer' }} onClick={() => dispatch(setDogParkModalId(id))}>
                                             <DogParkCard name={dogPark.name} address={dogPark.address} active_check_ins_count={dogPark.active_check_ins_count}></DogParkCard>
                                         </div>
