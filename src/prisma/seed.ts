@@ -8,18 +8,18 @@ const main = async () => {
     const prisma_client = PrismaClientModel.prisma;
 
     const dog_park_items = nyc_dog_park_data
-        .filter(park => park.Name && park.Notes && park.DogRuns_Type)
+        .filter(park => park.Name)
         .map(park => {
             return {
                 name: park.Name,
-                notes: park.Notes,
-                type: park.DogRuns_Type
+                notes: park?.Notes,
+                type: park?.DogRuns_Type
             };
         });
 
     const options = {
         provider: 'google' as const,
-        apiKey: 'AIzaSyD2UFZE6Ks2ajO8keOYXbfhARqRgI37C54',
+        apiKey: process.env.GOOGLE_API_KEY,
         formatter: null
     };
     const geocoder = NodeGeocoder(options);
@@ -27,21 +27,25 @@ const main = async () => {
     for (let dog_park_item of dog_park_items) {
         const result = await geocoder.geocode(dog_park_item.name);
 
-        const full_address = result[0].formattedAddress;
-        const address = result[0].formattedAddress?.split(',')[0];
-        const city = result[0].formattedAddress?.split(',')[1];
-        const district = result[0].administrativeLevels?.level1short;
-        const postal_code = result[0].zipcode;
-        const country = result[0].countryCode;
-        const latitude = result[0].latitude;
-        const longitude = result[0].longitude;
+        const full_address = result[0]?.formattedAddress;
+        const address = result[0]?.formattedAddress?.split(',')[0];
+        const city = result[0]?.formattedAddress?.split(',')[1];
+        const district = result[0]?.administrativeLevels?.level1short;
+        const postal_code = result[0]?.zipcode;
+        const country = result[0]?.countryCode;
+        const latitude = result[0]?.latitude;
+        const longitude = result[0]?.longitude;
 
         if (!full_address || !city || !district || !address || !postal_code || !country || !latitude || !longitude) {
             continue;
         }
 
-        const address_item = await prisma_client.address.create({
-            data: {
+        const address_item = await prisma_client.address.upsert({
+            where: {
+                full_address: full_address
+            },
+            update: {},
+            create: {
                 full_address,
                 address,
                 city,
@@ -57,8 +61,12 @@ const main = async () => {
             id: address_item.id
         });
 
-        await prisma_client.dogPark.create({
-            data: {
+        await prisma_client.dogPark.upsert({
+            where: {
+                name: dog_park_item.name
+            },
+            update: {},
+            create: {
                 name: dog_park_item.name,
                 address: {
                     connect: address_where_input

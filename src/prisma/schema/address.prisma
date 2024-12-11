@@ -1,6 +1,6 @@
 model Address {
   id         Int    @id @default(autoincrement())
-  full_address String
+  full_address String @unique
   address String
   address2     String?
   district String // state, province, prefecture etc...
@@ -13,4 +13,7 @@ model Address {
 
   dog_parks DogPark[]
   dog_friendly_dining DogFriendlyDining[]
+
+    @@index([city]) // Example index for optimizing queries by city
+  @@index([postal_code]) // Example index for postal code queries
 }
