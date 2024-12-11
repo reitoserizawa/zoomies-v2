@@ -73,7 +73,12 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
     useClickOutside(closeModal, ref);
 
     const handleCreateOrUpdatePet = (data: Partial<PetState>) => {
-        toUpdate ? handleUpdatePet(data) : handleCreatePet(data);
+        if (toUpdate) {
+            data.id = id;
+            handleUpdatePet(data);
+        } else {
+            handleCreatePet(data);
+        }
     };
 
     const handleUpdatePet = useCallback(
