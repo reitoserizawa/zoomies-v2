@@ -3,6 +3,7 @@ import { UserLogInRequest, UserState } from '../../states/user';
 import { PetState } from '../../states/pet';
 import { DogParkState } from '../../states/dog-park';
 import { CheckInState, CreateCheckInState } from '../../states/check-in';
+import { UserFavoriteDogParkState } from '../../states/user-favorite-dog-park';
 
 export const protectedApiSlice = createApi({
     reducerPath: 'protectedApiSlice',
@@ -18,7 +19,7 @@ export const protectedApiSlice = createApi({
             return headers;
         }
     }),
-    tagTypes: ['User', 'Pet', 'DogPark', 'CheckIn'],
+    tagTypes: ['User', 'Pet', 'DogPark', 'CheckIn', 'UserFavoriteDogPark'],
     endpoints: builder => ({
         logInUser: builder.mutation<UserState, UserLogInRequest>({
             query: ({ username, password }) => ({
@@ -119,6 +120,28 @@ export const protectedApiSlice = createApi({
                 }
             }),
             invalidatesTags: ['CheckIn']
+        }),
+        getFavoriteDogParks: builder.query<UserFavoriteDogParkState[], null>({
+            query: () => ({
+                url: `users/favorite-dog-parks`
+            }),
+            providesTags: ['UserFavoriteDogPark']
+        }),
+        checkFavoriteDogParkStatus: builder.query<{ favoritedDogPark: boolean }, { dogParkId?: number }>({
+            query: ({ dogParkId }) => ({
+                url: `users/favorite-dog-parks/dog-parks/${dogParkId}`
+            }),
+            providesTags: ['UserFavoriteDogPark']
+        }),
+        addFavoriteDogPark: builder.mutation<{ success: boolean }, { dogParkId: number }>({
+            query: ({ dogParkId }) => ({
+                url: `users/favorite-dog-parks`,
+                method: 'POST',
+                body: {
+                    dog_park_id: dogParkId
+                }
+            }),
+            invalidatesTags: ['UserFavoriteDogPark']
         })
     })
 });
@@ -135,5 +158,8 @@ export const {
     useGetActiveCheckInsFromDogParkQuery,
     useCreateCheckInsMutation,
     useDeleteCheckInMutation,
-    useGetPetsFromUserQuery
+    useGetPetsFromUserQuery,
+    useGetFavoriteDogParksQuery,
+    useCheckFavoriteDogParkStatusQuery,
+    useAddFavoriteDogParkMutation
 } = protectedApiSlice;
