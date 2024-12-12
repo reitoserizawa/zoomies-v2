@@ -85,12 +85,12 @@ const ModalFavoriteButton = styled.button<{ $isSpinning?: boolean; disabled?: bo
 `;
 
 const ModalHeader: React.FC<{ dogParkId?: number; closeDogParkModal: () => void }> = ({ dogParkId, closeDogParkModal }) => {
-    const { data, isFetching, error } = useCheckFavoriteDogParkStatusQuery({ dogParkId });
-    const [addFavoriteDogPark] = useAddFavoriteDogParkMutation();
-    const [deleteFavoriteDogPark] = useDeleteFavoriteDogParkMutation();
+    const { data, isFetching: fetchingFavoriteStatus, error } = useCheckFavoriteDogParkStatusQuery({ dogParkId });
+    const [addFavoriteDogPark, { isLoading: loadingAddFavoriteDogPark }] = useAddFavoriteDogParkMutation();
+    const [deleteFavoriteDogPark, { isLoading: loadingDeleteFavoriteDogPark }] = useDeleteFavoriteDogParkMutation();
 
-    const isSpinning = isFetching && !data;
-    const showFilledFavoriteIcon = !isFetching && data?.favoritedDogPark;
+    const isSpinning = (fetchingFavoriteStatus || loadingAddFavoriteDogPark || loadingDeleteFavoriteDogPark) && !data;
+    const showFilledFavoriteIcon = !fetchingFavoriteStatus && !loadingAddFavoriteDogPark && !loadingDeleteFavoriteDogPark && data?.favoritedDogPark;
 
     const handleAddOrDeleteFavoriteDogPark = () => {
         if (dogParkId && !data?.favoritedDogPark) {
