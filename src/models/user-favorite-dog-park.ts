@@ -71,8 +71,8 @@ class UserFavoriteDogPark extends BaseModel<UserFavoriteDogParkInterface, 'UserF
         this.uncap_model_name = 'userFavoriteDogPark';
     }
 
-    userOwnsFavoriteDogPark(user: User, dog_park: DogPark): boolean {
-        return this.properties.user_id === user.id && this.properties.dog_park_id === dog_park.id;
+    userOwnsFavoriteDogPark(user: User): boolean {
+        return this.properties.user_id === user.id;
     }
 }
 

@@ -127,7 +127,7 @@ export const protectedApiSlice = createApi({
             }),
             providesTags: ['UserFavoriteDogPark']
         }),
-        checkFavoriteDogParkStatus: builder.query<{ favoritedDogPark: boolean }, { dogParkId?: number }>({
+        checkFavoriteDogParkStatus: builder.query<{ favoritedDogPark: UserFavoriteDogParkState | null }, { dogParkId?: number }>({
             query: ({ dogParkId }) => ({
                 url: `users/favorite-dog-parks/dog-parks/${dogParkId}`
             }),
@@ -140,6 +140,13 @@ export const protectedApiSlice = createApi({
                 body: {
                     dog_park_id: dogParkId
                 }
+            }),
+            invalidatesTags: ['UserFavoriteDogPark']
+        }),
+        deleteFavoriteDogPark: builder.mutation<{ success: boolean }, { userFavoriteDogParkId: number }>({
+            query: ({ userFavoriteDogParkId }) => ({
+                url: `users/favorite-dog-parks/${userFavoriteDogParkId}`,
+                method: 'DELETE'
             }),
             invalidatesTags: ['UserFavoriteDogPark']
         })
@@ -161,5 +168,6 @@ export const {
     useGetPetsFromUserQuery,
     useGetFavoriteDogParksQuery,
     useCheckFavoriteDogParkStatusQuery,
-    useAddFavoriteDogParkMutation
+    useAddFavoriteDogParkMutation,
+    useDeleteFavoriteDogParkMutation
 } = protectedApiSlice;

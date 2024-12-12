@@ -17,7 +17,8 @@ userRoutes.delete('/check-ins', deleteDogParkCheckIn);
 
 userRoutes.get('/favorite-dog-parks', getFavoriteDogParks);
 userRoutes.post('/favorite-dog-parks', addFavoriteDogPark);
-userRoutes.delete('/favorite-dog-parks', deleteFavoriteDogPark);
+
+userRoutes.delete('/favorite-dog-parks/:id', deleteFavoriteDogPark);
 
 userRoutes.get('/favorite-dog-parks/dog-parks/:id', checkFavoriteDogParkStatus);
 
