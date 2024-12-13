@@ -3,7 +3,7 @@ import React from 'react';
 import { FlexContainer } from '../../../ui/container.styles';
 import { H2 } from '../../../ui/text-tags.styles';
 
-import FavoriteDogParkCard from './FavoriteDogParkCard';
+import FavoriteDogParkSectionContent from './FavoriteDogParkSectionContent';
 
 const FavoriteDogParkSection: React.FC = () => {
     return (
@@ -12,7 +12,7 @@ const FavoriteDogParkSection: React.FC = () => {
                 <H2>Favorite Park</H2>
             </FlexContainer>
             <hr />
-            <FavoriteDogParkCard />
+            <FavoriteDogParkSectionContent />
         </>
     );
 };

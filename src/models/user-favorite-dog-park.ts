@@ -9,10 +9,13 @@ import PrismaClientModel from './prisma-client';
 
 class UserFavoriteDogPark extends BaseModel<UserFavoriteDogParkInterface, 'UserFavoriteDogPark'> implements UserFavoriteDogParkModelInterface {
     public_properties: (keyof UserFavoriteDogParkInterface)[] = ['id', 'user', 'user_id', 'dog_park', 'dog_park_id'];
+    include_properties: (keyof UserFavoriteDogParkInterface)[] = ['dog_park'];
     updatable_properties: (keyof UserFavoriteDogParkInterface)[] = [];
 
     static model_name: Prisma.ModelName = 'UserFavoriteDogPark';
     static uncap_model_name: Uncapitalize<Prisma.ModelName> = 'userFavoriteDogPark';
+
+    dog_park: DogPark;
 
     static override async fromId(id: number): Promise<UserFavoriteDogPark> {
         const user_favorite_park = new UserFavoriteDogPark(id);
@@ -38,7 +41,7 @@ class UserFavoriteDogPark extends BaseModel<UserFavoriteDogParkInterface, 'UserF
     static async fromUser(user: User): Promise<UserFavoriteDogPark[]> {
         const user_id = user.id;
 
-        return await UserFavoriteDogPark.manyFromQuery<UserFavoriteDogParkInterface, UserFavoriteDogPark>({ user_id }, 'userFavoriteDogPark');
+        return await UserFavoriteDogPark.manyFromQuery<UserFavoriteDogParkInterface, UserFavoriteDogPark>({ user_id }, 'userFavoriteDogPark', [['dog_park', 'address']]);
     }
 
     static async create(user: User, dog_park: DogPark): Promise<UserFavoriteDogPark> {
@@ -69,6 +72,12 @@ class UserFavoriteDogPark extends BaseModel<UserFavoriteDogParkInterface, 'UserF
         super(id);
         this.model_name = 'UserFavoriteDogPark';
         this.uncap_model_name = 'userFavoriteDogPark';
+    }
+
+    setDogPark(): void {
+        if (this.dog_park || !this.properties?.dog_park) return;
+
+        this.dog_park = this.properties?.dog_park && DogPark.fromProperties(this.properties?.dog_park);
     }
 
     userOwnsFavoriteDogPark(user: User): boolean {

@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { Container, FlexContainer, GridContainer } from '../../ui/container.styles';
 import { Input } from '../../ui/form.styles';
+
 import SearchIcon from '../../images/icons/SearchIcon';
 
 import { useGetAllDogParksQuery } from '../../redux/reducers/protected-api-slice';
@@ -10,7 +12,7 @@ import { setDogParkModalId } from '../../redux/reducers/appSlice';
 
 import DogParkCard from './DogParkCard';
 import Map from './Map';
-import DogParkModal from './DogParkModal/Modal';
+import DogParkModal from './DogParkModal';
 import FullScreenLoader from '../FullScreenLoader';
 
 const DogParkCardListContainer = styled.div`

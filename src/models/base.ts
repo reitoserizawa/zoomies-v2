@@ -1,9 +1,11 @@
 import { Prisma } from '@prisma/client';
 
-import { BaseModelInterface, ValidateInput, WhereInput } from '../interfaces/base';
+import { BaseModelInterface, IncludeInput, IncludeRelations, ValidateInput, WhereInput } from '../interfaces/base';
 
 import PrismaClientModel from './prisma-client';
+
 import { BadRequestError, NotFoundError } from './errors';
+
 import capitalizeFirstLetter from '../utils/capitalize-first-letter';
 
 class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P> {
@@ -32,7 +34,33 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return obj;
     }
 
-    static async fromQuery<P, M>(query: Partial<P>, uncap_model_name?: Uncapitalize<Prisma.ModelName>, include_properties?: string[]): Promise<M> {
+    static buildIncludeObject(inputs: IncludeInput): IncludeRelations {
+        const include: any = {};
+
+        inputs.forEach((input: string | string[]) => {
+            if (typeof input === 'string') {
+                include[input] = true;
+            } else if (Array.isArray(input)) {
+                let current = include;
+
+                input.forEach((key, index) => {
+                    if (!current[key]) {
+                        current[key] = { include: {} };
+                    }
+
+                    if (index === input.length - 1) {
+                        current[key] = true;
+                    } else {
+                        current = current[key].include;
+                    }
+                });
+            }
+        });
+
+        return { include };
+    }
+
+    static async fromQuery<P, M>(query: Partial<P>, uncap_model_name?: Uncapitalize<Prisma.ModelName>, include_input?: IncludeInput): Promise<M> {
         if (!uncap_model_name) {
             throw new BadRequestError('Model name is required');
         }
@@ -42,13 +70,10 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
             throw new BadRequestError(`Invalid model name: ${uncap_model_name}`);
         }
 
-        const include = include_properties?.reduce((acc, property) => {
-            acc[property] = true;
-            return acc;
-        }, {} as Record<string, boolean>);
+        const include_properties = include_input && BaseModel.buildIncludeObject(include_input);
 
         // @ts-expect-error
-        const item = await model.findUnique({ where: query, include });
+        const item = await model.findUnique({ where: query, ...include_properties });
 
         if (!item) {
             throw new NotFoundError(`${capitalizeFirstLetter(uncap_model_name)} not found`);
@@ -57,7 +82,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return this.fromProperties(item);
     }
 
-    static async manyFromQuery<P, M>(query: Partial<P>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_properties?: string[]): Promise<M[]> {
+    static async manyFromQuery<P, M>(query: Partial<P>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_input?: IncludeInput): Promise<M[]> {
         if (!uncap_model_name) {
             throw new BadRequestError('Model name is required');
         }
@@ -67,15 +92,12 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
             throw new BadRequestError(`Invalid model name: ${uncap_model_name}`);
         }
 
-        const include = include_properties?.reduce((acc, property) => {
-            acc[property] = true;
-            return acc;
-        }, {} as Record<string, boolean>);
+        const include_properties = include_input && BaseModel.buildIncludeObject(include_input);
 
         //@ts-expect-error
         const items = await model.findMany({
             where: query,
-            include
+            ...include_properties
         });
 
         return items.map((item: P) => this.fromProperties(item));

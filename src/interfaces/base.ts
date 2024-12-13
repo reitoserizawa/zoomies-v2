@@ -21,3 +21,31 @@ export interface BaseModelInterface<T> {
     model_name: Prisma.ModelName;
     uncap_model_name: Uncapitalize<Prisma.ModelName>;
 }
+
+export type IncludeInput = (string | string[])[];
+
+export type IncludeRelations = {
+    include: {
+        [key: string]: IncludeRelations | boolean;
+    };
+};
+
+// function buildIncludeObject(inputs: IncludeInput): { include: IncludeObject } {
+//     const include: IncludeObject = {};
+
+//     inputs.forEach(input => {
+//         if (typeof input === 'string') {
+//             include[input] = true;
+//         } else if (Array.isArray(input)) {
+//             let current = include;
+//             input.forEach((key, index) => {
+//                 if (!current[key]) {
+//                     current[key] = index === input.length - 1 ? true : {};
+//                 }
+//                 current = current[key] as IncludeObject;
+//             });
+//         }
+//     });
+
+//     return { include };
+// }

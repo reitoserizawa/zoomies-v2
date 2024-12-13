@@ -1,10 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { DogParkState } from '../../../states/dog-park';
 import { FlexContainer } from '../../../ui/container.styles';
 import { dogParkExample } from '../../../images';
 import { H2, P } from '../../../ui/text-tags.styles';
+import { Button } from '../../../ui/form.styles';
+
+import DeleteIcon from '../../../images/icons/DeleteIcon';
+
+import { useDeleteFavoriteDogParkMutation } from '../../../redux/reducers/protected-api-slice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
+import { setDogParkModalId } from '../../../redux/reducers/appSlice';
+
+import { UserFavoriteDogParkState } from '../../../states/user-favorite-dog-park';
+
+import DogParkModal from '../../DogPark/DogParkModal';
 
 const DogParkCardContainer = styled.div`
     height: 280px; // margin from hr 8px added
@@ -34,7 +44,7 @@ const DogParkCardContextContainer = styled.div`
     height: 100%;
     width: 100%;
     background-color: white;
-    padding: 35px;
+    padding: 16px 26px;
 
     display: flex;
     flex-direction: column;
@@ -43,22 +53,46 @@ const DogParkCardContextContainer = styled.div`
     align-items: middle;
 `;
 
-const FavoriteDogParkCard: React.FC<Partial<DogParkState>> = () => {
+const FavoriteDogParkCard: React.FC<Partial<UserFavoriteDogParkState>> = ({ id, dog_park_id, dog_park }) => {
+    const dispatch = useAppDispatch();
+    const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
+
+    const [deleteFavoriteDogPark] = useDeleteFavoriteDogParkMutation();
+    const dogPark = dog_park;
+    const fullAddress = dog_park?.address?.full_address;
+
+    const handleDeleteFavoriteDogPark: React.MouseEventHandler<HTMLButtonElement> = event => {
+        event.stopPropagation();
+
+        if (window.confirm(`Are you sure you want to delete this favorite dog park?`) && id) {
+            deleteFavoriteDogPark({ userFavoriteDogParkId: id });
+        }
+    };
+
     return (
-        <DogParkCardContainer>
+        <DogParkCardContainer onClick={() => dispatch(setDogParkModalId(dogPark?.id))} style={{ cursor: 'pointer' }}>
             <FlexContainer $flexDirection='row'>
                 <DogParkCardImageContainer>
                     <img src={dogParkExample.src} alt='' />
                 </DogParkCardImageContainer>
                 <FlexContainer $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start'>
-                    <DogParkCardContextContainer>
-                        <span>Dog run type</span>
-                        <H2 $margin='16px 0px'>Name</H2>
-                        <P $margin='16px 0px'>Notes</P>
-                    </DogParkCardContextContainer>
-                    <P $margin='35px'>Delete</P>
+                    <FlexContainer style={{ flexBasis: '95%' }}>
+                        <DogParkCardContextContainer>
+                            <span>{dogPark?.type}</span>
+                            <H2 $margin='16px 0px'>{dogPark?.name}</H2>
+                            <P $noMargin>{fullAddress}</P>
+                        </DogParkCardContextContainer>
+                    </FlexContainer>
+                    <FlexContainer $alignItems='flex-start' style={{ justifySelf: 'flex-end', flexBasis: '5%' }}>
+                        <Button $width='150px' $margin='16px 22px' $borderRadius='30px' $delete onClick={e => handleDeleteFavoriteDogPark(e)}>
+                            <FlexContainer $flexDirection='row' $gap='5px'>
+                                Delete <DeleteIcon size='16px' color='white' />
+                            </FlexContainer>
+                        </Button>
+                    </FlexContainer>
                 </FlexContainer>
             </FlexContainer>
+            {dogParkModalId && <DogParkModal />}
         </DogParkCardContainer>
     );
 };

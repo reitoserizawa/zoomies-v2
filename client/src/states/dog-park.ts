@@ -8,12 +8,8 @@ export interface DogParkState extends BaseState {
     address: AddressState;
 
     type: string | null;
-
-    latitude: number | null;
-    altitude: number | null;
+    notes: string | null;
 
     check_ins?: CheckInState[];
-
-    active_check_ins?: CheckInState[];
     active_check_ins_count?: number;
 }
