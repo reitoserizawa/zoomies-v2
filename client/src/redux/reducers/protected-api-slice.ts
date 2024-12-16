@@ -113,7 +113,7 @@ export const protectedApiSlice = createApi({
         }),
         deleteCheckIn: builder.mutation<{ success: boolean }, { checkInId: number }>({
             query: ({ checkInId }) => ({
-                url: `users/check-ins`,
+                url: `users/dog-park-check-ins`,
                 method: 'DELETE',
                 body: {
                     check_in_id: checkInId
