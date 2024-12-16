@@ -101,6 +101,13 @@ export const protectedApiSlice = createApi({
             }),
             providesTags: ['CheckIn']
         }),
+        getRecentDogParkCheckIns: builder.query<DogParkState[], null>({
+            query: () => ({
+                url: `users/recent-dog-park-check-ins`,
+                method: 'DELETE'
+            }),
+            providesTags: ['CheckIn']
+        }),
         createCheckIns: builder.mutation<CheckInState[], CreateCheckInState>({
             query: ({ dogParkId, petIds }) => ({
                 url: `dog-parks/${dogParkId}/check-ins`,
@@ -169,5 +176,6 @@ export const {
     useGetFavoriteDogParksQuery,
     useCheckFavoriteDogParkStatusQuery,
     useAddFavoriteDogParkMutation,
-    useDeleteFavoriteDogParkMutation
+    useDeleteFavoriteDogParkMutation,
+    useGetRecentDogParkCheckInsQuery
 } = protectedApiSlice;
