@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { deleteUser, getUserDetails, updateUserProfile } from './single-user';
-import { deleteDogParkCheckIn } from './user-dog-park-check-in';
+import { deleteDogParkCheckIn, getRecentDogParkCheckIns } from './user-dog-park-check-in';
 import { getPetsFromUser } from './user-pets';
 import { addFavoriteDogPark, checkFavoriteDogParkStatus, deleteFavoriteDogPark, getFavoriteDogParks } from './user-favorite-dog-park';
 
@@ -13,7 +13,9 @@ userRoutes.delete('/', deleteUser);
 
 userRoutes.get('/pets', getPetsFromUser);
 
-userRoutes.delete('/check-ins', deleteDogParkCheckIn);
+userRoutes.delete('/dog-park-check-ins', deleteDogParkCheckIn);
+
+userRoutes.get('/recent-dog-park-check-ins', getRecentDogParkCheckIns);
 
 userRoutes.get('/favorite-dog-parks', getFavoriteDogParks);
 userRoutes.post('/favorite-dog-parks', addFavoriteDogPark);

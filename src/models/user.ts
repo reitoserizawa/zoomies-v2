@@ -2,7 +2,6 @@ import { Prisma } from '@prisma/client';
 import { CustomRequest } from 'express';
 
 import { UserInterface, UserModelInterface } from '../interfaces/user';
-import { ExtractKeys } from '../interfaces/base';
 import { PetInterface } from '../interfaces/pet';
 import { DogParkCheckInInterface } from '../interfaces/dog-park-check-in';
 

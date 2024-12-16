@@ -4,6 +4,18 @@ import DogParkCheckIn from '../../../models/dog-park-check-in';
 import User from '../../../models/user';
 import { BadRequestError, NoAccessError } from '../../../models/errors';
 
+export const getRecentDogParkCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
+    try {
+        const user = await User.fromJwtPayload(req);
+
+        const check_ins = await DogParkCheckIn.fromUser(user, 20);
+
+        res.json(await Promise.all(check_ins.map(check_in => check_in.prepareForCollection())));
+    } catch (err) {
+        next(err);
+    }
+};
+
 export const deleteDogParkCheckIn = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const { check_in_id } = req.body;

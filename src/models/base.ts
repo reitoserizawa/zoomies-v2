@@ -82,7 +82,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return this.fromProperties(item);
     }
 
-    static async manyFromQuery<P, M>(query: Partial<P>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_input?: IncludeInput): Promise<M[]> {
+    static async manyFromQuery<P, M>(query: Partial<P>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_input?: IncludeInput, limit?: number): Promise<M[]> {
         if (!uncap_model_name) {
             throw new BadRequestError('Model name is required');
         }
@@ -97,7 +97,8 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         //@ts-expect-error
         const items = await model.findMany({
             where: query,
-            ...include_properties
+            ...include_properties,
+            take: limit ? limit : undefined
         });
 
         return items.map((item: P) => this.fromProperties(item));
