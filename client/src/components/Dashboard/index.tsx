@@ -2,11 +2,12 @@ import React from 'react';
 
 import { ContainerWithWidth, FlexContainer } from '../../ui/container.styles';
 
+import { useAppSelector } from '../../redux/hooks/hooks';
+
 import ProfileHeader from './ProfileHeader';
 import SideBar from './SideBar';
 import Pet from './Pet';
-import { useAppSelector } from '../../redux/hooks/hooks';
-import FavoriteDogParkSection from './FavoriteDogParkSection';
+import FavoriteDogParkSection from './FavoriteDogPark';
 
 const Dashboard: React.FC = () => {
     const dashboardContent = useAppSelector(state => state.app.dashboardContent);
