@@ -20,7 +20,7 @@ const SideBar: React.FC = () => {
             $alignItems='left'
             $gap='30px'
             style={{
-                flex: '20%',
+                flex: '25%',
                 alignSelf: 'flex-start',
                 position: 'sticky',
                 top: '120px'
@@ -47,9 +47,12 @@ const SideBar: React.FC = () => {
                     </FlexContainer>
                     {dashboardContent === 'favoriteDogPark' && <RightArrow />}
                 </FlexContainer>
-                <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap='20px'>
-                    <ClockIcon size='40px' />
-                    <P $noMargin>Recent Check-in</P>
+                <FlexContainer $flexDirection='row' style={{ cursor: 'pointer' }} onClick={() => dispatch(switchDashboardContent('recentDogParkCheckIn'))}>
+                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap='20px'>
+                        <ClockIcon size='40px' />
+                        <P $noMargin>Recent Check-in</P>
+                    </FlexContainer>
+                    {dashboardContent === 'recentDogParkCheckIn' && <RightArrow />}
                 </FlexContainer>
             </FlexContainer>
             <FlexContainer

@@ -9,6 +9,7 @@ interface ButtonProps {
     $opacity?: number;
     $disabled?: boolean;
     $margin?: string;
+    $padding?: string;
     $borderRadius?: string;
     $delete?: boolean;
     $edit?: boolean;

@@ -103,8 +103,7 @@ export const protectedApiSlice = createApi({
         }),
         getRecentDogParkCheckIns: builder.query<DogParkState[], null>({
             query: () => ({
-                url: `users/recent-dog-park-check-ins`,
-                method: 'DELETE'
+                url: `users/recent-dog-park-check-ins`
             }),
             providesTags: ['CheckIn']
         }),
