@@ -24,8 +24,6 @@ const DogParkCardContainer = styled.div`
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
 
     overflow: hidden;
-
-    margin: 16px;
 `;
 
 const DogParkCardImageContainer = styled.div`
