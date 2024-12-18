@@ -3,7 +3,7 @@ import { DogParkState } from './dog-park';
 import { PetState } from './pet';
 import { UserState } from './user';
 
-export interface CheckInState extends BaseState {
+export interface DogParkCheckInState extends BaseState {
     user?: UserState;
     user_id?: number;
 
@@ -20,7 +20,7 @@ export interface CheckInState extends BaseState {
     user_owns_check_in?: boolean;
 }
 
-export interface CreateCheckInState {
+export interface CreateDogParkCheckInState {
     dogParkId: number;
     petIds: number[];
 }

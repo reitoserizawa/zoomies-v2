@@ -17,7 +17,7 @@ import useClickOutside from '../../../hooks/useClickOutisde';
 
 import ModalHeader from './ModalHeader';
 import ModalMap from './ModalMap';
-import ModalCheckInList from './ModalCheckInList';
+import ModalCheckInListGroup from './ModalCheckInListGroup';
 import ModalCheckInForm from './ModalCheckInForm';
 import Loader from '../../Loader';
 
@@ -116,7 +116,7 @@ const Modal: React.FC = () => {
                         </FlexContainer>
                         <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap='15px'>
                             <H3 $margin='16px 0px'>Current checked-in puppies</H3>
-                            <ModalCheckInList />
+                            <ModalCheckInListGroup />
                         </FlexContainer>
                     </FlexContainer>
                     {/* sub content */}

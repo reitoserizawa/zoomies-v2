@@ -1,5 +1,5 @@
 import { BaseState } from './base';
-import { CheckInState } from './check-in';
+import { DogParkCheckInState } from './dog-park-check-in';
 import { UserState } from './user';
 
 export interface PetState extends BaseState {
@@ -16,7 +16,7 @@ export interface PetState extends BaseState {
 
     introduction: string;
 
-    check_ins?: CheckInState[];
+    check_ins?: DogParkCheckInState[];
 
     created_at?: Date;
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import { useGetRecentDogParkCheckInsQuery } from '../../../redux/reducers/protected-api-slice';
 
 import Loader from '../../Loader';
+import DogParkCheckInList from '../../DogPark/DogParkCheckInList';
 
 const RecentDogParkCheckInSectionContent: React.FC = () => {
     const { data: recentDogParkCheckIns, isFetching: fetchingRecentDogParkCheckIns } = useGetRecentDogParkCheckInsQuery(null);
@@ -17,9 +18,9 @@ const RecentDogParkCheckInSectionContent: React.FC = () => {
 
     return (
         <>
-            {/* {recentDogParkCheckIns?.map((check_in, idx) => (
-                <PetCard key={idx} id={pet.id} name={pet.name} breed={pet.breed} birthday={pet?.birthday} introduction={pet.introduction} />
-            ))} */}
+            {recentDogParkCheckIns?.map((checkIn, idx) => (
+                <DogParkCheckInList key={idx} id={checkIn.id} dog_park={checkIn?.dog_park} pet={checkIn.pet} user={checkIn.user} user_owns_check_in={checkIn.user_owns_check_in} />
+            ))}
         </>
     );
 };

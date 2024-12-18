@@ -1,5 +1,5 @@
 import { BaseState } from './base';
-import { CheckInState } from './check-in';
+import { DogParkCheckInState } from './dog-park-check-in';
 import { PetState } from './pet';
 
 export interface UserState extends BaseState {
@@ -7,7 +7,7 @@ export interface UserState extends BaseState {
     username: string;
 
     pets?: PetState[];
-    check_ins?: CheckInState[];
+    check_ins?: DogParkCheckInState[];
 
     signedIn: boolean;
     loading?: boolean;

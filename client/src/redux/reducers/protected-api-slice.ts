@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { UserLogInRequest, UserState } from '../../states/user';
 import { PetState } from '../../states/pet';
 import { DogParkState } from '../../states/dog-park';
-import { CheckInState, CreateCheckInState } from '../../states/check-in';
+import { DogParkCheckInState, CreateDogParkCheckInState } from '../../states/dog-park-check-in';
 import { UserFavoriteDogParkState } from '../../states/user-favorite-dog-park';
 
 export const protectedApiSlice = createApi({
@@ -95,19 +95,19 @@ export const protectedApiSlice = createApi({
             }),
             providesTags: ['DogPark']
         }),
-        getActiveCheckInsFromDogPark: builder.query<CheckInState[], { id: number }>({
+        getActiveCheckInsFromDogPark: builder.query<DogParkCheckInState[], { id: number }>({
             query: ({ id: dogParkId }) => ({
                 url: `dog-parks/${dogParkId}/active-check-ins`
             }),
             providesTags: ['CheckIn']
         }),
-        getRecentDogParkCheckIns: builder.query<DogParkState[], null>({
+        getRecentDogParkCheckIns: builder.query<DogParkCheckInState[], null>({
             query: () => ({
                 url: `users/recent-dog-park-check-ins`
             }),
             providesTags: ['CheckIn']
         }),
-        createCheckIns: builder.mutation<CheckInState[], CreateCheckInState>({
+        createCheckIns: builder.mutation<DogParkCheckInState[], CreateDogParkCheckInState>({
             query: ({ dogParkId, petIds }) => ({
                 url: `dog-parks/${dogParkId}/check-ins`,
                 method: 'POST',
