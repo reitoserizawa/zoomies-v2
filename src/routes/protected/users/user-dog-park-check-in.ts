@@ -7,10 +7,20 @@ import { BadRequestError, NoAccessError } from '../../../models/errors';
 export const getRecentDogParkCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const user = await User.fromJwtPayload(req);
-
         const check_ins = await DogParkCheckIn.fromUser(user, 20);
 
-        res.json(await Promise.all(check_ins.map(check_in => check_in.prepareForCollection())));
+        const response = await Promise.all(
+            check_ins.map(async check_in => {
+                console.log(check_in.userOwnsCheckIn(user));
+
+                return {
+                    ...(await check_in.prepareForCollection()),
+                    user_owns_check_in: check_in.userOwnsCheckIn(user)
+                };
+            })
+        );
+
+        res.json(response);
     } catch (err) {
         next(err);
     }
