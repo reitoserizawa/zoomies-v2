@@ -11,8 +11,6 @@ export const getRecentDogParkCheckIns = async (req: CustomRequest, res: Response
 
         const response = await Promise.all(
             check_ins.map(async check_in => {
-                console.log(check_in.userOwnsCheckIn(user));
-
                 return {
                     ...(await check_in.prepareForCollection()),
                     user_owns_check_in: check_in.userOwnsCheckIn(user)
