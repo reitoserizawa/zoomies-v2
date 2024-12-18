@@ -1,4 +1,4 @@
-export type DashboardContentType = 'pet' | 'favoriteDogPark' | 'recentDogParkCheckIn';
+export type DashboardContentType = 'pet' | 'favoriteDogPark' | 'recentDogParkCheckIn' | 'profileSettings';
 
 export interface AppState {
     isPetCreateFormModalOpen: boolean;

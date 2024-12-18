@@ -55,20 +55,31 @@ const SideBar: React.FC = () => {
                     {dashboardContent === 'recentDogParkCheckIn' && <RightArrow />}
                 </FlexContainer>
             </FlexContainer>
+
             <FlexContainer
                 $flexDirection='row'
                 $justifyContent='flex-start'
-                $gap='20px'
                 style={{
-                    flexGrow: 1,
-                    paddingTop: '30px',
                     borderTop: '1px solid black'
                 }}
+            ></FlexContainer>
+            <FlexContainer
+                $flexDirection='row'
+                $justifyContent='flex-start'
+                $gap='30px'
+                style={{
+                    cursor: 'pointer',
+                    flexGrow: 1
+                }}
+                onClick={() => dispatch(switchDashboardContent('profileSettings'))}
             >
-                <RoundImgContainer>
-                    <img src={blankProfileImg.src} alt={blankProfileImg.alt} />
-                </RoundImgContainer>
-                <P $noMargin>Profile Setting</P>
+                <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap='20px'>
+                    <RoundImgContainer>
+                        <img src={blankProfileImg.src} alt={blankProfileImg.alt} />
+                    </RoundImgContainer>
+                    <P $noMargin>Profile Settings</P>
+                </FlexContainer>
+                {dashboardContent === 'profileSettings' && <RightArrow />}
             </FlexContainer>
         </FlexContainer>
     );
