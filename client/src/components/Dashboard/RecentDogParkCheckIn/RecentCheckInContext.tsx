@@ -19,7 +19,7 @@ const RecentDogParkCheckInSectionContent: React.FC = () => {
     return (
         <>
             {recentDogParkCheckIns?.map((checkIn, idx) => (
-                <DogParkCheckInList key={idx} id={checkIn.id} dog_park={checkIn?.dog_park} pet={checkIn.pet} user={checkIn.user} user_owns_check_in={checkIn.user_owns_check_in} />
+                <DogParkCheckInList key={idx} id={checkIn.id} dog_park={checkIn?.dog_park} pet={checkIn.pet} user={checkIn.user} user_owns_check_in={checkIn.user_owns_check_in} active={checkIn.active} />
             ))}
         </>
     );

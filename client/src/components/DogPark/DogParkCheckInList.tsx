@@ -10,7 +10,7 @@ import DeleteIcon from '../../images/icons/DeleteIcon';
 import { useDeleteCheckInMutation } from '../../redux/reducers/protected-api-slice';
 import { DogParkCheckInState } from '../../states/dog-park-check-in';
 
-const DogParkCheckInList: React.FC<Partial<DogParkCheckInState>> = ({ id, dog_park, pet, user, user_owns_check_in }) => {
+const DogParkCheckInList: React.FC<DogParkCheckInState> = ({ id, dog_park, pet, user, user_owns_check_in, active }) => {
     const dogPark = dog_park;
 
     const [deleteCheckIn] = useDeleteCheckInMutation();
@@ -49,7 +49,7 @@ const DogParkCheckInList: React.FC<Partial<DogParkCheckInState>> = ({ id, dog_pa
                     <RoundImgContainer>
                         <img src={blankProfileImg?.src || ''} alt={blankProfileImg?.alt || 'User profile'} />
                     </RoundImgContainer>
-                    {user_owns_check_in && (
+                    {user_owns_check_in && active && (
                         <Button onClick={() => handleDeleteCheckIn(id)} $width='fit-content' $backgroundColor='white' $margin='0px' style={{ paddingLeft: '15px' }}>
                             <DeleteIcon color='red' />
                         </Button>
