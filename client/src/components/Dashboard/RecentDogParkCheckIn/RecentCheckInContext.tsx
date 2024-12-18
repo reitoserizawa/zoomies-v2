@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useGetRecentDogParkCheckInsQuery } from '../../../redux/reducers/protected-api-slice';
 
+import { FlexContainer } from '../../../ui/container.styles';
+
 import Loader from '../../Loader';
 import DogParkCheckInList from '../../DogPark/DogParkCheckInList';
 
@@ -17,11 +19,11 @@ const RecentDogParkCheckInSectionContent: React.FC = () => {
     }
 
     return (
-        <>
+        <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap='15px' style={{ padding: '16px' }}>
             {recentDogParkCheckIns?.map((checkIn, idx) => (
                 <DogParkCheckInList key={idx} id={checkIn.id} dog_park={checkIn?.dog_park} pet={checkIn.pet} user={checkIn.user} user_owns_check_in={checkIn.user_owns_check_in} active={checkIn.active} />
             ))}
-        </>
+        </FlexContainer>
     );
 };
 

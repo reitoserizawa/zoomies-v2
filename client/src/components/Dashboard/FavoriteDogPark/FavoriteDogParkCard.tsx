@@ -53,13 +53,15 @@ const DogParkCardContextContainer = styled.div`
     align-items: middle;
 `;
 
-const FavoriteDogParkCard: React.FC<Partial<UserFavoriteDogParkState>> = ({ id, dog_park_id, dog_park }) => {
+const FavoriteDogParkCard: React.FC<Partial<UserFavoriteDogParkState>> = ({ id, dog_park }) => {
     const dispatch = useAppDispatch();
+
     const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
 
-    const [deleteFavoriteDogPark] = useDeleteFavoriteDogParkMutation();
     const dogPark = dog_park;
     const fullAddress = dog_park?.address?.full_address;
+
+    const [deleteFavoriteDogPark] = useDeleteFavoriteDogParkMutation();
 
     const handleDeleteFavoriteDogPark: React.MouseEventHandler<HTMLButtonElement> = event => {
         event.stopPropagation();

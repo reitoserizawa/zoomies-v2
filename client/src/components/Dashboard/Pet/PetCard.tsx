@@ -19,7 +19,7 @@ import DeleteIcon from '../../../images/icons/DeleteIcon';
 
 import PetForm from './PetForm';
 
-const PetCard: React.FC<Partial<PetState>> = ({ id, name, breed, birthday, introduction }) => {
+const PetCard: React.FC<PetState> = ({ id, name, breed, birthday, introduction }) => {
     const dispatch = useAppDispatch();
 
     const isPetUpdateFormModalOpen = useAppSelector(state => state.app.isPetUpdateFormModalOpen);
