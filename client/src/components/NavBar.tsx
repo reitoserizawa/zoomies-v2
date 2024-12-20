@@ -9,19 +9,14 @@ import { blankProfileImg, dogPawWithWhiteImg } from '../images';
 import HomeIcon from '../images/icons/HomeIcon';
 import DogParkIcon from '../images/icons/DogParkicon';
 
-import { useAppDispatch } from '../redux/hooks/hooks';
-import { resetUserState } from '../redux/reducers/userSlice';
-
 const NavBar: React.FC = () => {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const handleLogout = useCallback(() => {
         window.localStorage.removeItem('token');
-        dispatch(resetUserState());
 
         navigate('/login');
-    }, [dispatch, navigate]);
+    }, [navigate]);
 
     return (
         <NavBarContainer>

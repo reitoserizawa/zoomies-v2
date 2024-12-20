@@ -7,51 +7,37 @@ import { Button, LogInForm } from '../ui/form.styles';
 import { FlexContainer, FullScreenContainer, ImgContainer } from '../ui/container.styles';
 
 import { useLogInUserMutation } from '../redux/reducers/public-api-slice';
-import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
-import { setUserDetails, resetUserState, setLoading, setUserError } from '../redux/reducers/userSlice';
 
-import Error from './Error';
-import Form from './Form';
 import { UserLogInRequest } from '../states/user';
+
+// import Error from './Error';
+import Form from './Form';
 import FormInput from './Form/FormInput';
 
 const LogIn: React.FC = () => {
-    const [logInUser] = useLogInUserMutation();
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
-    const signedIn = useAppSelector(state => state?.user?.signedIn);
-    const error = useAppSelector(state => state?.user?.error);
-
     const token = localStorage.getItem('token');
 
+    const [logInUser, { data: loggedInUserData }] = useLogInUserMutation();
+    const navigate = useNavigate();
+
     useEffect(() => {
-        if (signedIn || token) {
+        if (token) {
             navigate('/');
         }
-    }, [token, signedIn, navigate]);
+    }, [token, navigate]);
 
     const login = useCallback(
-        (data: UserLogInRequest) => {
-            dispatch(resetUserState());
-            dispatch(setLoading());
+        async (data: UserLogInRequest) => {
+            await logInUser(data);
 
-            logInUser(data)
-                .unwrap()
-                .then(({ token, user }) => {
-                    localStorage.setItem('token', token);
-                    dispatch(setUserDetails(user));
+            const token = loggedInUserData?.token;
 
-                    navigate('/');
-                })
-                .catch(error => {
-                    const statusCode = error?.status;
-                    const message = error?.data?.error?.message;
-
-                    dispatch(setUserError({ message, statusCode }));
-                });
+            if (token) {
+                localStorage.setItem('token', token);
+                navigate('/');
+            }
         },
-        [logInUser, dispatch, navigate]
+        [logInUser, loggedInUserData?.token, navigate]
     );
 
     return (
@@ -71,7 +57,8 @@ const LogIn: React.FC = () => {
                 <P>
                     Not a member? <a href='/register'>Register here</a>
                 </P>
-                {error && <Error message={error.message} />}
+                {/* TODO: add error handling */}
+                {/* {error && <Error message={error.data.message as string || error.message || ''} />} */}
             </FlexContainer>
         </FullScreenContainer>
     );

@@ -3,27 +3,24 @@ import { useNavigate } from 'react-router-dom';
 
 import { ChildrenProps } from '../states/react-children';
 
-import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
+import { useAppDispatch } from '../redux/hooks/hooks';
+import { useGetUserDetailsQuery } from '../redux/reducers/protected-api-slice';
 
 import FullScreenLoader from './FullScreenLoader';
 import NavBar from './NavBar';
-import { useGetUserDetailsQuery } from '../redux/reducers/protected-api-slice';
-import { setLoading, setUserDetails } from '../redux/reducers/userSlice';
 
 const AuthRequired: React.FC<ChildrenProps> = ({ children }) => {
-    const loading = useAppSelector(state => state.user.loading);
-    const signedIn = useAppSelector(state => state.user.signedIn);
     const token = localStorage.getItem('token');
 
     const { data, isLoading, error } = useGetUserDetailsQuery(null, {
-        skip: signedIn || !token
+        skip: !token
     });
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (signedIn) {
+        if (data) {
             return;
         }
 
@@ -36,17 +33,11 @@ const AuthRequired: React.FC<ChildrenProps> = ({ children }) => {
             navigate('/login');
             return;
         }
-
-        if (!isLoading && data && token) {
-            dispatch(setLoading());
-            dispatch(setUserDetails(data));
-            return;
-        }
-    }, [token, signedIn, data, error, isLoading, navigate, dispatch]);
+    }, [token, data, error, isLoading, navigate, dispatch]);
 
     return (
         <>
-            {loading || isLoading ? (
+            {isLoading ? (
                 <FullScreenLoader text='Logging in' />
             ) : (
                 <>
