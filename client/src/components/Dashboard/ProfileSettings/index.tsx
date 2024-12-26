@@ -3,6 +3,8 @@ import React from 'react';
 import { FlexContainer } from '../../../ui/container.styles';
 import { H2 } from '../../../ui/text-tags.styles';
 
+import ProfileSettingsSectionContent from './ProfileSettingsSectionContent';
+
 const ProfilleSettingsSection: React.FC = () => {
     return (
         <>
@@ -10,6 +12,7 @@ const ProfilleSettingsSection: React.FC = () => {
                 <H2>Profile Settings</H2>
             </FlexContainer>
             <hr />
+            <ProfileSettingsSectionContent />
         </>
     );
 };
