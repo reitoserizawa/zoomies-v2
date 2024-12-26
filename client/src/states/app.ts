@@ -5,4 +5,5 @@ export interface AppState {
     isPetUpdateFormModalOpen: boolean;
     dogParkModalId?: number;
     dashboardContent: DashboardContentType;
+    isChangePasswordModalOpen: boolean;
 }
