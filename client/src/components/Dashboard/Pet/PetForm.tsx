@@ -1,5 +1,4 @@
 import React, { useCallback, useRef } from 'react';
-import styled from 'styled-components';
 
 import { PetState } from '../../../states/pet';
 
@@ -10,6 +9,7 @@ import { useCreatePetMutation, useUpdatePetDetailsMutation } from '../../../redu
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button } from '../../../ui/form.styles';
 import { FlexContainer } from '../../../ui/container.styles';
+import { ModalContentContainer, ModalContainer } from '../../../ui/modal.styles';
 
 import useClickOutside from '../../../hooks/useClickOutisde';
 
@@ -18,37 +18,6 @@ import requiredValidator from '../../../utils/validators/requiredValidator';
 import Form from '../../Form';
 import FormInput from '../../Form/FormInput';
 import FormDate from '../../Form/FormDate';
-
-const ModalContentContainer = styled.div`
-    width: 500px;
-    min-width: 340px;
-
-    background-color: #fefefe;
-
-    padding: 30px;
-    padding-bottom: 48px;
-
-    border: 1px solid #888;
-    border-radius: 5px;
-
-    p {
-        margin: 16px 16px 16px 8px;
-    }
-`;
-
-const ModalContainer = styled.div`
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 60px;
-    width: 100%;
-    height: 100%;
-    overflow: none;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-
-    padding-bottom: 120px;
-`;
 
 const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, name: current_name, breed: current_breed, introduction: current_introduction, birthday: current_birthday, toUpdate }) => {
     const initialValues: Partial<PetState> = {
