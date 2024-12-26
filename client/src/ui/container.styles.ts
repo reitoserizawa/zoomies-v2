@@ -94,24 +94,6 @@ export const BorderlineContainer = styled.div`
     border-radius: 5px;
 `;
 
-export const ModalContainer = styled.div`
-    position: fixed;
-    top: 60px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    background-color: white;
-    opacity: 1;
-
-    overflow-y: scroll;
-
-    height: ft-content;
-    width: 1000px;
-
-    margin: auto;
-`;
-
 // img
 
 export const ImgContainer = styled.div<ImgContainerProps>`
