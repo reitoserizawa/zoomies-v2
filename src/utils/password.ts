@@ -5,6 +5,7 @@ class PasswordUtil {
     hashed_password: string;
     is_match: boolean;
 
+    // TODO: update and add secret key
     constructor(public password: string) {
         this.salt_rounds = process.env.SALT_ROUNDS ? parseInt(process.env.SALT_ROUNDS) : 10;
     }
