@@ -11,11 +11,13 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         if (!password || typeof password !== 'string') throw new BadRequestError('Invalid password');
 
         const user = await User.fromUsername(username);
-        const found_user = await user.login(password);
 
-        const token = found_user.generateToken();
+        if (!user) throw new BadRequestError('User does not exist');
 
-        res.json({ user: await found_user.prepareForCollection(), token });
+        const matched_user = await user.login(password);
+        const token = matched_user.generateToken();
+
+        res.json({ user: await matched_user.prepareForCollection(), token });
     } catch (err) {
         next(err);
     }

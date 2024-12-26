@@ -35,8 +35,12 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         return user;
     }
 
-    static async fromUsername(username: string): Promise<User> {
-        return this.fromQuery<UserInterface, User>({ username }, 'user', ['pets']);
+    static async fromUsername(username: string): Promise<User | null> {
+        return this.findFirst<UserInterface, User>({ username, deleted: false }, 'user', ['pets']);
+    }
+
+    static async fromEmail(email: string): Promise<User | null> {
+        return this.findFirst<UserInterface, User>({ email, deleted: false }, 'user');
     }
 
     static async fromJwtPayload(req: CustomRequest): Promise<User> {

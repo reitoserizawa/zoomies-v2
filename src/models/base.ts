@@ -60,6 +60,31 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return { include };
     }
 
+    static async findFirst<P, M>(query: Partial<P>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_input?: IncludeInput): Promise<M | null> {
+        if (!uncap_model_name) {
+            throw new BadRequestError('Model name is required');
+        }
+
+        const model = PrismaClientModel.prisma[uncap_model_name];
+        if (!model) {
+            throw new BadRequestError(`Invalid model name: ${uncap_model_name}`);
+        }
+
+        const include_properties = include_input && BaseModel.buildIncludeObject(include_input);
+
+        //@ts-expect-error
+        const item = await model.findFirst({
+            where: query,
+            ...include_properties
+        });
+
+        if (!item) {
+            return null;
+        }
+
+        return this.fromProperties(item);
+    }
+
     static async fromQuery<P, M>(query: Partial<P>, uncap_model_name?: Uncapitalize<Prisma.ModelName>, include_input?: IncludeInput): Promise<M> {
         if (!uncap_model_name) {
             throw new BadRequestError('Model name is required');
