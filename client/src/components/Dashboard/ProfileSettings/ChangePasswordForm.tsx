@@ -1,18 +1,19 @@
 import React, { useCallback, useRef } from 'react';
 
 import { Button } from '../../../ui/form.styles';
-
-import { useChangeUserPasswordMutation } from '../../../redux/reducers/protected-api-slice';
-
-import { UserChangePasswordRequest, UserState } from '../../../states/user';
-
-import Form from '../../Form';
-import { useAppDispatch } from '../../../redux/hooks/hooks';
-import { toggleChangePasswordForm } from '../../../redux/reducers/appSlice';
 import { ModalContainer, ModalContentContainer } from '../../../ui/modal.styles';
 import { FlexContainer } from '../../../ui/container.styles';
-import FormInput from '../../Form/FormInput';
+
+import { useChangeUserPasswordMutation } from '../../../redux/reducers/protected-api-slice';
+import { useAppDispatch } from '../../../redux/hooks/hooks';
+import { toggleChangePasswordForm } from '../../../redux/reducers/appSlice';
+
+import { UserChangePasswordRequest } from '../../../states/user';
+
 import useClickOutside from '../../../hooks/useClickOutisde';
+
+import Form from '../../Form';
+import FormInput from '../../Form/FormInput';
 
 const ChangePasswordForm: React.FC = () => {
     const [changePassword] = useChangeUserPasswordMutation();

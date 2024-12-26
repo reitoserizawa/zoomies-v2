@@ -14,7 +14,7 @@ import Loader from '../../Loader';
 import Form from '../../Form';
 import FormInput from '../../Form/FormInput';
 import ChangePasswordForm from './ChangePasswordForm';
-import DeleteAccountForm from './DeleteAccountForm';
+import DeleteAccount from './DeleteAccount';
 
 export const ProfileSettingsFormContainer = styled.div`
     width: 100%;
@@ -76,7 +76,7 @@ const EditProfileForm: React.FC = () => {
                     </Button>
                 </div>
                 {isChangePasswordModalOpen && <ChangePasswordForm />}
-                <DeleteAccountForm />
+                <DeleteAccount />
             </FlexContainer>
         </FlexContainer>
     );

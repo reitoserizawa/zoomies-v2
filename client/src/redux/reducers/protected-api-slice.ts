@@ -38,6 +38,13 @@ export const protectedApiSlice = createApi({
             }),
             invalidatesTags: ['User']
         }),
+        deleteUser: builder.mutation<{ success: boolean }, null>({
+            query: () => ({
+                url: `users`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['User']
+        }),
         getPetsFromUser: builder.query<PetState[], null>({
             query: () => ({
                 url: `users/pets`
@@ -162,6 +169,7 @@ export const protectedApiSlice = createApi({
 export const {
     useGetUserDetailsQuery,
     useChangeUserPasswordMutation,
+    useDeleteUserMutation,
     useCreatePetMutation,
     useUpdatePetDetailsMutation,
     useDeletePetMutation,
