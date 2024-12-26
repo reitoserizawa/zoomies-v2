@@ -15,7 +15,7 @@ import Form from './Form';
 import FormInput from './Form/FormInput';
 
 const Register: React.FC = () => {
-    const [createUser, { data: registeredUserData }] = useCreateUserMutation();
+    const [createUser] = useCreateUserMutation();
 
     const navigate = useNavigate();
 
@@ -29,16 +29,16 @@ const Register: React.FC = () => {
 
     const handleCreateUser = useCallback(
         async (data: UserCreateRequest) => {
-            await createUser(data);
+            const registeredUserData = await createUser(data);
 
-            const token = registeredUserData?.token;
+            const token = registeredUserData?.data?.token;
 
             if (token) {
                 localStorage.setItem('token', token);
                 navigate('/');
             }
         },
-        [createUser, registeredUserData?.token, navigate]
+        [createUser, navigate]
     );
 
     return (

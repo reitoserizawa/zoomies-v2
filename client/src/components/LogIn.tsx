@@ -17,7 +17,7 @@ import FormInput from './Form/FormInput';
 const LogIn: React.FC = () => {
     const token = localStorage.getItem('token');
 
-    const [logInUser, { data: loggedInUserData }] = useLogInUserMutation();
+    const [logInUser] = useLogInUserMutation();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,16 +28,16 @@ const LogIn: React.FC = () => {
 
     const login = useCallback(
         async (data: UserLogInRequest) => {
-            await logInUser(data);
+            const loggedInUserData = await logInUser(data);
 
-            const token = loggedInUserData?.token;
+            const token = loggedInUserData?.data?.token;
 
             if (token) {
                 localStorage.setItem('token', token);
                 navigate('/');
             }
         },
-        [logInUser, loggedInUserData?.token, navigate]
+        [logInUser, navigate]
     );
 
     return (
