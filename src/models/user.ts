@@ -118,11 +118,9 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
 
     async changePassword(current_password: string, new_password: string): Promise<User> {
         const current_password_util = new PasswordUtil(current_password);
-        const matched_with_current_password = await current_password_util.verify(this.properties.password);
+        const is_match = await current_password_util.verify(this.properties.password);
 
-        if (matched_with_current_password) {
-            throw new BadRequestError('The current password does not match');
-        }
+        if (!is_match) throw new BadRequestError('The current password does not match');
 
         const new_password_util = new PasswordUtil(new_password);
         const hashed_new_password = await new_password_util.hash();
