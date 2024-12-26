@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { UserLogInRequest, UserState } from '../../states/user';
+import { UserChangePasswordRequest, UserState } from '../../states/user';
 import { PetState } from '../../states/pet';
 import { DogParkState } from '../../states/dog-park';
 import { DogParkCheckInState, CreateDogParkCheckInState } from '../../states/dog-park-check-in';
@@ -21,22 +21,22 @@ export const protectedApiSlice = createApi({
     }),
     tagTypes: ['User', 'Pet', 'DogPark', 'CheckIn', 'UserFavoriteDogPark'],
     endpoints: builder => ({
-        logInUser: builder.mutation<UserState, UserLogInRequest>({
-            query: ({ username, password }) => ({
-                url: `login`,
-                method: 'POST',
-                body: {
-                    username,
-                    password
-                }
-            }),
-            invalidatesTags: ['User']
-        }),
         getUserDetails: builder.query<UserState, null>({
             query: () => ({
                 url: `users`
             }),
             providesTags: ['User']
+        }),
+        changeUserPassword: builder.mutation<UserState, UserChangePasswordRequest>({
+            query: ({ currentPassword, newPassword }) => ({
+                url: `users/change-password`,
+                method: 'POST',
+                body: {
+                    current_password: currentPassword,
+                    new_password: newPassword
+                }
+            }),
+            invalidatesTags: ['User']
         }),
         getPetsFromUser: builder.query<PetState[], null>({
             query: () => ({
@@ -160,8 +160,8 @@ export const protectedApiSlice = createApi({
 });
 
 export const {
-    useLogInUserMutation,
     useGetUserDetailsQuery,
+    useChangeUserPasswordMutation,
     useCreatePetMutation,
     useUpdatePetDetailsMutation,
     useDeletePetMutation,
