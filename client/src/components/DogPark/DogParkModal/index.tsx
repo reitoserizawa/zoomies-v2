@@ -1,7 +1,8 @@
 import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
-import { BorderlineContainer, FlexContainer, FullScreenContainer, ImgContainer, ModalContainer } from '../../../ui/container.styles';
+import { BorderlineContainer, FlexContainer, FullScreenContainer, ImgContainer } from '../../../ui/container.styles';
+import { ScrollableModalContainer } from '../../../ui/modal.styles';
 import { H2, H3, P } from '../../../ui/text-tags.styles';
 
 import { dogParkExample } from '../../../images';
@@ -60,9 +61,9 @@ const Modal: React.FC = () => {
     if (fetchingDogParkDetails || fetchingActiveCheckIns) {
         return (
             <FullScreenContainer $top={60} $backgroundColor='rgba(0, 0, 0, 0.4)'>
-                <ModalContainer ref={ref}>
+                <ScrollableModalContainer ref={ref}>
                     <Loader />
-                </ModalContainer>
+                </ScrollableModalContainer>
             </FullScreenContainer>
         );
     }
@@ -71,7 +72,7 @@ const Modal: React.FC = () => {
 
     return (
         <FullScreenContainer $top={60} $backgroundColor='rgba(0, 0, 0, 0.4)'>
-            <ModalContainer ref={ref}>
+            <ScrollableModalContainer ref={ref}>
                 {/* header */}
                 <ModalHeader dogParkId={dogParkDetails?.id} closeDogParkModal={closeDogParkModal} />
                 <ImgContainer height='500px' width='100%' $borderRadius='0px'>
@@ -131,7 +132,7 @@ const Modal: React.FC = () => {
                         </BorderlineContainer>
                     </FlexContainer>
                 </FlexContainer>
-            </ModalContainer>
+            </ScrollableModalContainer>
         </FullScreenContainer>
     );
 };
