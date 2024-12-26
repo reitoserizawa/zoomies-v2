@@ -104,7 +104,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
     }
 
     async login(password: string): Promise<User> {
-        if (this.properties.deleted) throw new Error('User is already deleted');
+        if (this.properties.deleted) throw new AuthError('User is already deleted');
 
         const password_util = new PasswordUtil(password);
         const is_match = await password_util.verify(this.properties.password);
