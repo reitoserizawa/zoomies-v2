@@ -1,25 +1,15 @@
 model Pet {
-  id    Int      @id @default(autoincrement())
-  
-  name String
-
-  owner User @relation(fields: [owner_id], references: [id])
-  owner_id Int
-
-  type String
-  breed String?
-
-  birthday DateTime?
-  introduction String?
-
-  characteristics String[] @default([])
-
-  dog_park_check_ins DogParkCheckIn[]
+  id                            Int                        @id @default(autoincrement())
+  name                          String
+  owner_id                      Int
+  type                          String
+  breed                         String?
+  birthday                      DateTime?
+  introduction                  String?
+  characteristics               String[]                   @default([])
+  created_at                    DateTime                   @default(now())
+  user_deleted                  Boolean                    @default(false)
   dog_friendly_dining_check_ins DogFriendlyDiningCheckIn[]
-
-  created_at DateTime @default(now())
-
-  user_deleted Boolean @default(false)
-
-  // characteristics in array
+  dog_park_check_ins            DogParkCheckIn[]
+  owner                         User                       @relation(fields: [owner_id], references: [id])
 }

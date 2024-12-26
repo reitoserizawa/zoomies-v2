@@ -1,19 +1,12 @@
 model DogPark {
-  id    Int      @id @default(autoincrement())
-  
-  name String @unique
-
-  address Address @relation(fields: [address_id], references: [id])
+  id         Int                   @id @default(autoincrement())
+  name       String                @unique
   address_id Int
-
-  type String?
-  notes String?
-
-  check_ins DogParkCheckIn[]
-
-  favorites UserFavoriteDogPark[]
-
-  tags String[] @default([])
-
-  created_at DateTime @default(now())
+  type       String?
+  notes      String?
+  tags       String[]              @default([])
+  created_at DateTime              @default(now())
+  address    Address               @relation(fields: [address_id], references: [id])
+  check_ins  DogParkCheckIn[]
+  favorites  UserFavoriteDogPark[]
 }

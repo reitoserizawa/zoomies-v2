@@ -1,13 +1,10 @@
 model UserFavoriteDogPark {
-  id    Int      @id @default(autoincrement())
-  
-  user User @relation(fields: [user_id], references: [id])
-  user_id Int
-  
-  dog_park DogPark @relation(fields: [dog_park_id], references: [id])
+  id          Int      @id @default(autoincrement())
+  user_id     Int
   dog_park_id Int
-  
-  created_at DateTime @default(now())
+  created_at  DateTime @default(now())
+  dog_park    DogPark  @relation(fields: [dog_park_id], references: [id])
+  user        User     @relation(fields: [user_id], references: [id])
 
-  @@unique(fields: [user_id, dog_park_id], name: "user_id_dog_park_id")
+  @@unique([user_id, dog_park_id], name: "user_id_dog_park_id")
 }

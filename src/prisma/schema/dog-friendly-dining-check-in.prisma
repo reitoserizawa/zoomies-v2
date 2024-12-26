@@ -1,19 +1,13 @@
 model DogFriendlyDiningCheckIn {
-  id    Int      @id @default(autoincrement())
-  
-  user User @relation(fields: [user_id], references: [id])
-  user_id Int
-
-  pet Pet @relation(fields: [pet_id], references: [id], onDelete: Cascade)
-  pet_id Int
-
-  dog_friendly_dining DogFriendlyDining @relation(fields: [dog_friendly_dining_id], references: [id])
+  id                     Int               @id @default(autoincrement())
+  user_id                Int
+  pet_id                 Int
   dog_friendly_dining_id Int
-
-  active Boolean @default(true)
-
-  checked_in_at DateTime @default(now())
-  checked_out_at DateTime?
-
-  created_at DateTime @default(now())
+  active                 Boolean           @default(true)
+  checked_in_at          DateTime          @default(now())
+  checked_out_at         DateTime?
+  created_at             DateTime          @default(now())
+  dog_friendly_dining    DogFriendlyDining @relation(fields: [dog_friendly_dining_id], references: [id])
+  pet                    Pet               @relation(fields: [pet_id], references: [id], onDelete: Cascade)
+  user                   User              @relation(fields: [user_id], references: [id])
 }

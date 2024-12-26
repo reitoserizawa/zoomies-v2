@@ -1,21 +1,18 @@
 model Address {
-  id         Int    @id @default(autoincrement())
-  full_address String @unique
-  address String
-  address2     String?
-  district String // state, province, prefecture etc...
-  city       String
-  postal_code String
-  country    String
-  
-  latitude Float?
-  longitude Float?
-
-  dog_parks DogPark[]
+  id                  Int                 @id @default(autoincrement())
+  full_address        String              @unique
+  address             String
+  address2            String?
+  district            String
+  city                String
+  postal_code         String
+  country             String
+  latitude            Float?
+  longitude           Float?
   dog_friendly_dining DogFriendlyDining[]
+  dog_parks           DogPark[]
 
   @@unique([address, address2, district, city, postal_code, country])
-
   @@index([city])
   @@index([postal_code])
 }
