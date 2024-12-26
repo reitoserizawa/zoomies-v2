@@ -26,14 +26,14 @@ export const updateUserProfile = async (req: CustomRequest, res: Response, next:
     }
 };
 
-export const updatePassword = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const changePassword = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const user = await User.fromJwtPayload(req);
         const { current_password, new_password } = req.body;
 
         if (!current_password || !new_password || typeof current_password !== 'string' || typeof new_password !== 'string') throw new BadRequestError('Invalid user password');
 
-        await user.updatePassword(current_password, new_password);
+        await user.changePassword(current_password, new_password);
 
         res.json(await user.prepareForCollection());
     } catch (err) {

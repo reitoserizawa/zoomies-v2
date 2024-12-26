@@ -116,7 +116,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         }
     }
 
-    async updatePassword(current_password: string, new_password: string): Promise<User> {
+    async changePassword(current_password: string, new_password: string): Promise<User> {
         const current_password_util = new PasswordUtil(current_password);
         const matched_with_current_password = await current_password_util.verify(this.properties.password);
 
