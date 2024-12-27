@@ -10,14 +10,14 @@ import { useLogInUserMutation } from '../redux/reducers/public-api-slice';
 
 import { UserLogInRequest } from '../states/user';
 
-// import Error from './Error';
+import Error from './Error';
 import Form from './Form';
 import FormInput from './Form/FormInput';
 
 const LogIn: React.FC = () => {
     const token = localStorage.getItem('token');
 
-    const [logInUser] = useLogInUserMutation();
+    const [logInUser, { error }] = useLogInUserMutation();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -57,8 +57,7 @@ const LogIn: React.FC = () => {
                 <P>
                     Not a member? <a href='/register'>Register here</a>
                 </P>
-                {/* TODO: add error handling */}
-                {/* {error && <Error message={error.data.message as string || error.message || ''} />} */}
+                {error && 'data' in error && <Error message={error.data as string} />}
             </FlexContainer>
         </FullScreenContainer>
     );

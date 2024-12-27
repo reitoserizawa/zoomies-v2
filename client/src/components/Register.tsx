@@ -10,12 +10,12 @@ import { useCreateUserMutation } from '../redux/reducers/public-api-slice';
 
 import { UserCreateRequest } from '../states/user';
 
-// import Error from './Error';
+import Error from './Error';
 import Form from './Form';
 import FormInput from './Form/FormInput';
 
 const Register: React.FC = () => {
-    const [createUser] = useCreateUserMutation();
+    const [createUser, { error }] = useCreateUserMutation();
 
     const navigate = useNavigate();
 
@@ -58,8 +58,7 @@ const Register: React.FC = () => {
                         <Button type='submit'>Register</Button>
                     </LogInForm>
                 </Form>
-                {/* TODO: add error handling */}
-                {/* {error && <Error message={error.data.message as string || error.message || ''} />} */}
+                {error && 'data' in error && <Error message={error.data as string} />}
                 <P>
                     Already a member? <a href='/login'>Login here</a>
                 </P>
