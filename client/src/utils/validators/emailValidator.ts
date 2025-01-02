@@ -1,5 +1,7 @@
 const emailValidator = (email: string): string[] => {
-    if (email && email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) return [];
+    if (email && typeof email === 'string' && email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        return [];
+    }
 
     return ['Invalid email'];
 };
