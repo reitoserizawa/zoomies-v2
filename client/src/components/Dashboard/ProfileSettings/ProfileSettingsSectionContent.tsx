@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
 import { FlexContainer } from '../../../ui/container.styles';
 import { Button } from '../../../ui/form.styles';
 
-import { useGetUserDetailsQuery } from '../../../redux/reducers/protected-api-slice';
+import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from '../../../redux/reducers/protected-api-slice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 import { toggleChangePasswordForm } from '../../../redux/reducers/appSlice';
 
@@ -17,6 +17,8 @@ import ChangePasswordForm from './ChangePasswordForm';
 import DeleteAccount from './DeleteAccount';
 import requiredValidator from '../../../utils/validators/requiredValidator';
 import emailValidator from '../../../utils/validators/emailValidator';
+import Error from '../../Error';
+import Message from '../../Message';
 
 export const ProfileSettingsFormContainer = styled.div`
     width: 100%;
@@ -31,6 +33,14 @@ const EditProfileForm: React.FC = () => {
     const isChangePasswordModalOpen = useAppSelector(state => state.app.isChangePasswordModalOpen);
 
     const { data, isFetching: fetchingUserDetails } = useGetUserDetailsQuery(null);
+    const [updateUserDetails, { error, isSuccess }] = useUpdateUserDetailsMutation();
+
+    const handleUpdateProfile = useCallback(
+        async (data: UserState) => {
+            await updateUserDetails(data);
+        },
+        [updateUserDetails]
+    );
 
     if (fetchingUserDetails) {
         return (
@@ -55,7 +65,9 @@ const EditProfileForm: React.FC = () => {
     return (
         <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' style={{ padding: '0px 16px 48px' }}>
             <ProfileSettingsFormContainer>
-                <Form<UserState> initialValues={initialValues} onSubmit={() => console.log(0)}>
+                {isSuccess && <Message message='Profile updated' />}
+                {error && 'data' in error && <Error message={error.data as string} />}
+                <Form<UserState> initialValues={initialValues} onSubmit={handleUpdateProfile}>
                     <FormInput<UserState> name='email' label='Email*' validators={[requiredValidator, emailValidator]}></FormInput>
                     <FormInput<UserState> name='first_name' label='First name*' validators={[requiredValidator]}></FormInput>
                     <FormInput<UserState> name='last_name' label='Last name*' validators={[requiredValidator]}></FormInput>
