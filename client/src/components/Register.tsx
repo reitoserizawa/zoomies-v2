@@ -13,6 +13,8 @@ import { UserCreateRequest } from '../states/user';
 import Error from './Error';
 import Form from './Form';
 import FormInput from './Form/FormInput';
+import requiredValidator from '../utils/validators/requiredValidator';
+import emailValidator from '../utils/validators/emailValidator';
 
 const Register: React.FC = () => {
     const [createUser, { error }] = useCreateUserMutation();
@@ -50,11 +52,11 @@ const Register: React.FC = () => {
                 <H2>Register your Zoomies account</H2>
                 <Form<UserCreateRequest> onSubmit={handleCreateUser}>
                     <LogInForm>
-                        <FormInput<UserCreateRequest> name='email' label='Email*' />
-                        <FormInput<UserCreateRequest> name='first_name' label='First name*' />
-                        <FormInput<UserCreateRequest> name='last_name' label='Last name*' />
-                        <FormInput<UserCreateRequest> name='username' label='Username*' />
-                        <FormInput<UserCreateRequest> type='password' name='password' label='Password*' />
+                        <FormInput<UserCreateRequest> name='email' label='Email*' validators={[requiredValidator, emailValidator]} />
+                        <FormInput<UserCreateRequest> name='first_name' label='First name*' validators={[requiredValidator]} />
+                        <FormInput<UserCreateRequest> name='last_name' label='Last name*' validators={[requiredValidator]} />
+                        <FormInput<UserCreateRequest> name='username' label='Username*' validators={[requiredValidator]} />
+                        <FormInput<UserCreateRequest> type='password' name='password' label='Password*' validators={[requiredValidator]} />
                         <Button type='submit'>Register</Button>
                     </LogInForm>
                 </Form>

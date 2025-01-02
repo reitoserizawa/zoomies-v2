@@ -13,6 +13,7 @@ import { UserLogInRequest } from '../states/user';
 import Error from './Error';
 import Form from './Form';
 import FormInput from './Form/FormInput';
+import requiredValidator from '../utils/validators/requiredValidator';
 
 const LogIn: React.FC = () => {
     const token = localStorage.getItem('token');
@@ -49,8 +50,8 @@ const LogIn: React.FC = () => {
                 <H2>Sign in to your Zoomies account</H2>
                 <LogInForm>
                     <Form<UserLogInRequest> onSubmit={login}>
-                        <FormInput<UserLogInRequest> name='username' label='Username'></FormInput>
-                        <FormInput<UserLogInRequest> type='password' name='password' label='Password'></FormInput>
+                        <FormInput<UserLogInRequest> name='username' label='Username' validators={[requiredValidator]}></FormInput>
+                        <FormInput<UserLogInRequest> type='password' name='password' label='Password' validators={[requiredValidator]}></FormInput>
                         <Button type='submit'>Sign in</Button>
                     </Form>
                 </LogInForm>

@@ -51,17 +51,9 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
     };
 
     const handleUpdatePet = useCallback(
-        (data: Partial<PetState>) => {
-            updatePetDetails(data)
-                .unwrap()
-                .then(() => {
-                    closeModal();
-                })
-                .catch(error => {
-                    // const statusCode = error?.status;
-                    // const message = error?.data?.error?.message;
-                    // dispatch(setPetError({ message, statusCode }));
-                });
+        async (data: Partial<PetState>) => {
+            await updatePetDetails(data);
+            closeModal();
         },
         [updatePetDetails, closeModal]
     );

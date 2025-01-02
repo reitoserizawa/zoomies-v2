@@ -1,9 +1,7 @@
 const requiredValidator = (val: string): string[] => {
-    if (!val) {
-        return ['This field is required'];
-    }
+    if (val) return [];
 
-    return [];
+    return ['This field is required'];
 };
 
 export default requiredValidator;

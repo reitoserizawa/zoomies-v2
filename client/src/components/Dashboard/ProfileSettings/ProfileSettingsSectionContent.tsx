@@ -15,6 +15,8 @@ import Form from '../../Form';
 import FormInput from '../../Form/FormInput';
 import ChangePasswordForm from './ChangePasswordForm';
 import DeleteAccount from './DeleteAccount';
+import requiredValidator from '../../../utils/validators/requiredValidator';
+import emailValidator from '../../../utils/validators/emailValidator';
 
 export const ProfileSettingsFormContainer = styled.div`
     width: 100%;
@@ -42,28 +44,24 @@ const EditProfileForm: React.FC = () => {
 
     const initialValues: UserState = {
         id: data.id,
-
         email: data?.email,
-
-        username: data.username,
-
         first_name: data?.first_name,
         last_name: data?.last_name,
-        phone: data?.phone,
-        avatar_url: data?.avatar_url
+        username: data.username,
+        phone: data?.phone
+        // avatar_url: data?.avatar_url
     };
 
     return (
         <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' style={{ padding: '0px 16px 48px' }}>
             <ProfileSettingsFormContainer>
                 <Form<UserState> initialValues={initialValues} onSubmit={() => console.log(0)}>
-                    <FormInput<UserState> name='email' label='Email'></FormInput>
-                    <FormInput<UserState> name='username' label='Username'></FormInput>
-
-                    <FormInput<UserState> name='first_name' label='First name'></FormInput>
-                    <FormInput<UserState> name='last_name' label='Last name'></FormInput>
+                    <FormInput<UserState> name='email' label='Email*' validators={[requiredValidator, emailValidator]}></FormInput>
+                    <FormInput<UserState> name='first_name' label='First name*' validators={[requiredValidator]}></FormInput>
+                    <FormInput<UserState> name='last_name' label='Last name*' validators={[requiredValidator]}></FormInput>
+                    <FormInput<UserState> name='username' label='Username*' validators={[requiredValidator]}></FormInput>
                     <FormInput<UserState> name='phone' label='Phone'></FormInput>
-                    <FormInput<UserState> name='avatar_url' label='Avatar URL'></FormInput>
+                    {/* <FormInput<UserState> name='avatar_url' label='Avatar URL'></FormInput> */}
 
                     <Button type='submit'>Edit profile</Button>
                 </Form>
