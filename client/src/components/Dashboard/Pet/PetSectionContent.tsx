@@ -20,12 +20,10 @@ const PetSectionContent: React.FC = () => {
     }
 
     return (
-        <>
+        <div style={{ padding: '16px 16px 16px' }}>
             {isPetFormModalOpen && <PetForm />}
-            {pets?.map((pet, idx) => (
-                <PetCard key={idx} id={pet.id} name={pet.name} breed={pet.breed} birthday={pet?.birthday} introduction={pet.introduction} />
-            ))}
-        </>
+            {pets && pets.length > 0 ? pets?.map((pet, idx) => <PetCard key={idx} id={pet.id} name={pet.name} breed={pet.breed} birthday={pet?.birthday} introduction={pet.introduction} />) : 'Please add a pet'}
+        </div>
     );
 };
 
