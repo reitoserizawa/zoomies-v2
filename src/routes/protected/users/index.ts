@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { changePassword, deleteUser, getUserDetails, updateUserProfile } from './single-user';
+import { changePassword, deleteUser, getUserDetails, updateUserDetails } from './single-user';
 import { deleteDogParkCheckIn, getRecentDogParkCheckIns } from './user-dog-park-check-in';
 import { getPetsFromUser } from './user-pets';
 import { addFavoriteDogPark, checkFavoriteDogParkStatus, deleteFavoriteDogPark, getFavoriteDogParks } from './user-favorite-dog-park';
@@ -8,7 +8,7 @@ import { addFavoriteDogPark, checkFavoriteDogParkStatus, deleteFavoriteDogPark, 
 const userRoutes = Router();
 
 userRoutes.get('/', getUserDetails);
-userRoutes.post('/', updateUserProfile);
+userRoutes.post('/', updateUserDetails);
 userRoutes.delete('/', deleteUser);
 
 userRoutes.post('/change-password', changePassword);

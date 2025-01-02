@@ -27,6 +27,13 @@ export const protectedApiSlice = createApi({
             }),
             providesTags: ['User']
         }),
+        updateUserDetails: builder.mutation<UserState, UserState>({
+            query: userDetails => ({
+                url: `users/${userDetails.id}`,
+                method: 'POST',
+                body: userDetails
+            })
+        }),
         changeUserPassword: builder.mutation<UserState, UserChangePasswordRequest>({
             query: ({ currentPassword, newPassword }) => ({
                 url: `users/change-password`,
@@ -168,6 +175,7 @@ export const protectedApiSlice = createApi({
 
 export const {
     useGetUserDetailsQuery,
+    useUpdateUserDetailsMutation,
     useChangeUserPasswordMutation,
     useDeleteUserMutation,
     useCreatePetMutation,

@@ -13,7 +13,7 @@ export const getUserDetails = async (req: CustomRequest, res: Response, next: Ne
     }
 };
 
-export const updateUserProfile = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const updateUserDetails = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const user = await User.fromJwtPayload(req);
         const payload = user.validate(req.body);
