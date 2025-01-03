@@ -62,6 +62,32 @@ export const getActiveDogParkCheckIns = async (req: CustomRequest, res: Response
     }
 };
 
+export const getPastDogParkCheckIns = async (req: CustomRequest, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const dog_park_id = parseInt(id);
+
+        if (!dog_park_id || typeof dog_park_id !== 'number') throw new BadRequestError('Invalid dog park ID');
+
+        const dog_park = await DogPark.fromId(dog_park_id);
+
+        const dog_park_check_ins = await DogParkCheckIn.fromDogPark(dog_park, 20);
+        const past_dog_park_check_ins = dog_park_check_ins.filter(check_in => !check_in.isActive());
+
+        const response = await Promise.all(
+            past_dog_park_check_ins.map(async check_in => {
+                check_in.setUser();
+
+                return await check_in.prepareForCollection();
+            })
+        );
+
+        res.json(response);
+    } catch (err) {
+        next(err);
+    }
+};
+
 // export const deleteCheckIn = async (req: CustomRequest, res: Response, next: NextFunction) => {
 //     try {
 //         const { check_in_id } = req.body;
