@@ -8,7 +8,7 @@ import { UserFavoriteDogParkState } from '../../states/user-favorite-dog-park';
 export const protectedApiSlice = createApi({
     reducerPath: 'protectedApiSlice',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3000/api/protected',
+        baseUrl: process.env.REACT_APP_API_URL || 'http://localhost:3000/api/protected',
         prepareHeaders: headers => {
             const token = localStorage.getItem('token');
 
