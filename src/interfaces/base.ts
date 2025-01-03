@@ -24,6 +24,12 @@ export interface BaseModelInterface<T> {
 
 export type IncludeInput = (string | string[])[];
 
+type OrderByValue = 'desc' | 'asc';
+
+export type OrderByInput = {
+    [key: string]: OrderByValue;
+};
+
 export type IncludeRelations = {
     include: {
         [key: string]: IncludeRelations | boolean;

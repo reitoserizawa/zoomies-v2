@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-import { BaseModelInterface, IncludeInput, IncludeRelations, ValidateInput, WhereInput } from '../interfaces/base';
+import { BaseModelInterface, IncludeInput, IncludeRelations, OrderByInput, ValidateInput, WhereInput } from '../interfaces/base';
 
 import PrismaClientModel from './prisma-client';
 
@@ -60,7 +60,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return { include };
     }
 
-    static async findFirst<P, M>(query: Partial<P>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_input?: IncludeInput): Promise<M | null> {
+    static async findFirst<P, M>(query: Partial<P>, uncap_model_name: Uncapitalize<Prisma.ModelName>, include_input?: IncludeInput, order_by?: OrderByInput): Promise<M | null> {
         if (!uncap_model_name) {
             throw new BadRequestError('Model name is required');
         }
@@ -71,11 +71,13 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         }
 
         const include_properties = include_input && BaseModel.buildIncludeObject(include_input);
+        const order_by_properties = order_by && { orderBy: order_by };
 
         //@ts-expect-error
         const item = await model.findFirst({
             where: query,
-            ...include_properties
+            ...include_properties,
+            ...order_by_properties
         });
 
         if (!item) {
