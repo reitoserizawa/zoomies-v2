@@ -9,7 +9,7 @@ export const protectedApiSlice = createApi({
     reducerPath: 'protectedApiSlice',
     baseQuery: fetchBaseQuery({
         baseUrl: process.env.REACT_APP_API_URL || 'http://localhost:3000/api/protected',
-        prepareHeaders: headers => {
+        prepareHeaders: (headers: Headers) => {
             const token = localStorage.getItem('token');
 
             if (token) {
