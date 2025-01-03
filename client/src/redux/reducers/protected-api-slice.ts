@@ -116,6 +116,12 @@ export const protectedApiSlice = createApi({
             }),
             providesTags: ['CheckIn']
         }),
+        getPastCheckInsFromDogPark: builder.query<DogParkCheckInState[], { id: number }>({
+            query: ({ id: dogParkId }) => ({
+                url: `dog-parks/${dogParkId}/past-check-ins`
+            }),
+            providesTags: ['CheckIn']
+        }),
         getRecentDogParkCheckIns: builder.query<DogParkCheckInState[], null>({
             query: () => ({
                 url: `users/recent-dog-park-check-ins`
@@ -186,6 +192,7 @@ export const {
     useGetAllDogParksQuery,
     useGetDogParkDetailsQuery,
     useGetActiveCheckInsFromDogParkQuery,
+    useGetPastCheckInsFromDogParkQuery,
     useCreateCheckInsMutation,
     useDeleteCheckInMutation,
     useGetPetsFromUserQuery,

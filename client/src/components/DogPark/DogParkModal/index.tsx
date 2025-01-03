@@ -115,10 +115,7 @@ const Modal: React.FC = () => {
                             <H3 $margin='16px 0px'>Description</H3>
                             <P $noMargin>This dog park is very clean and big. It has 2 separated areas for small and big puppies. Please make sure to pick up the waste!</P>
                         </FlexContainer>
-                        <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap='15px'>
-                            <H3 $margin='16px 0px'>Current checked-in puppies</H3>
-                            <ModalCheckInListGroup />
-                        </FlexContainer>
+                        <ModalCheckInListGroup />
                     </FlexContainer>
                     {/* sub content */}
                     <FlexContainer $gap='30px' $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
