@@ -11,7 +11,6 @@ import HistoryIcon from '../../../images/icons/HistoryIcon';
 
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 import { setDogParkModalId } from '../../../redux/reducers/appSlice';
-
 import { useGetActiveCheckInsFromDogParkQuery, useGetDogParkDetailsQuery } from '../../../redux/reducers/protected-api-slice';
 
 import useClickOutside from '../../../hooks/useClickOutisde';
