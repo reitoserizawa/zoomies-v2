@@ -51,6 +51,11 @@ class DogParkCheckIn extends BaseModel<DogParkCheckInInterface, 'DogParkCheckIn'
         return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ dog_park_id }, 'dogParkCheckIn', ['pet', 'user']);
     }
 
+    static async mostRecentfromDogPark(dog_park: DogPark): Promise<DogParkCheckIn | null> {
+        const dog_park_id = dog_park.id;
+        return await DogParkCheckIn.findFirst<DogParkCheckInInterface, DogParkCheckIn>({ dog_park_id }, 'dogParkCheckIn', ['pet', 'user'], { created_at: 'desc' });
+    }
+
     static async create(user: User, pets: Pet[], dog_park: DogPark): Promise<DogParkCheckIn[]> {
         const user_datails = Prisma.validator<Prisma.UserWhereInput>()({
             id: user.id
