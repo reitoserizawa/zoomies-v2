@@ -78,7 +78,7 @@ const Map: React.FC = () => {
                                 {popupOpen[id] && (
                                     <Popup longitude={longitude} latitude={latitude} anchor='bottom' onClose={() => handleMarkerClick(id)} closeOnClick={false} offset={15}>
                                         <div style={{ margin: '-10px', cursor: 'pointer' }} onClick={() => dispatch(setDogParkModalId(id))}>
-                                            <DogParkCard name={dogPark.name} address={dogPark.address} active_check_ins_count={dogPark.active_check_ins_count}></DogParkCard>
+                                            <DogParkCard name={dogPark.name} address={dogPark.address} active_check_ins_count={dogPark.active_check_ins_count} most_recent_check_in={dogPark.most_recent_check_in} />
                                         </div>
                                     </Popup>
                                 )}

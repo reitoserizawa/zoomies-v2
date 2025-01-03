@@ -12,4 +12,5 @@ export interface DogParkState extends BaseState {
 
     check_ins?: DogParkCheckInState[];
     active_check_ins_count?: number;
+    most_recent_check_in?: DogParkCheckInState;
 }

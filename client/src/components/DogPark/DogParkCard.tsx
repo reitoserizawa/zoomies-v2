@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import { FlexContainer } from '../../ui/container.styles';
 import { H2, P } from '../../ui/text-tags.styles';
 
 import { dogParkExample } from '../../images';
-
-import { DogParkState } from '../../states/dog-park';
-
 import DogIcon from '../../images/icons/DogIconx';
 import HistoryIcon from '../../images/icons/HistoryIcon';
+
+import { DogParkState } from '../../states/dog-park';
 
 const DogParkCardImageContainer = styled.div`
     height: 100%;
@@ -23,7 +23,7 @@ const DogParkCardImageContainer = styled.div`
     }
 `;
 
-const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, active_check_ins_count }) => {
+const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, active_check_ins_count, most_recent_check_in }) => {
     const full_address = address?.full_address;
 
     return (
@@ -45,7 +45,7 @@ const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, activ
                         <P $noMargin>{active_check_ins_count}</P>
                         <P $noMargin>|</P>
                         <HistoryIcon size='16px' />
-                        <P $noMargin>Last visit: 3min</P>
+                        <P $noMargin>Last visit: {most_recent_check_in ? moment(new Date(most_recent_check_in?.checked_in_at as Date)).fromNow() : '-'}</P>
                     </FlexContainer>
                 </div>
             </FlexContainer>

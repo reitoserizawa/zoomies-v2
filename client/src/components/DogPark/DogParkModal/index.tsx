@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import { BorderlineContainer, FlexContainer, FullScreenContainer, ImgContainer } from '../../../ui/container.styles';
 import { ScrollableModalContainer } from '../../../ui/modal.styles';
@@ -88,16 +89,16 @@ const Modal: React.FC = () => {
                                 <P $noMargin>{dogParkDetails?.address?.full_address}</P>
                             </FlexContainer>
                             <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='flex-start' $gap='20px' style={{ flexBasis: '50%' }}>
-                                <FlexContainer $gap='10px' $alignItems='flex-end' style={{ flexBasis: '50%' }}>
-                                    <H2 $noMargin size='2em' style={{ display: 'flex', alignItems: 'center' }}>
+                                <FlexContainer $gap='10px' $alignItems='flex-end' style={{ flexBasis: '40%' }}>
+                                    <H2 $noMargin style={{ display: 'flex', alignItems: 'center' }}>
                                         {activeCheckInsFromDogPark?.length}
                                         <DogIcon size='32px'></DogIcon>
                                     </H2>
                                     <P $noMargin>Now</P>
                                 </FlexContainer>
-                                <FlexContainer $gap='10px' $alignItems='flex-end' style={{ flexBasis: '50%' }}>
-                                    <H2 $noMargin size='2em' style={{ display: 'flex', alignItems: 'center' }}>
-                                        3m <HistoryIcon size='32px' />
+                                <FlexContainer $gap='10px' $alignItems='flex-end' style={{ flexBasis: '60%' }}>
+                                    <H2 $noMargin style={{ display: 'flex', alignItems: 'center' }}>
+                                        {dogParkDetails?.most_recent_check_in ? moment(new Date(dogParkDetails?.most_recent_check_in?.checked_in_at)).fromNow() : '-'} <HistoryIcon size='32px' />
                                     </H2>
                                     <P $noMargin>Last Check-in</P>
                                 </FlexContainer>

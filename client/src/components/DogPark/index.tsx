@@ -50,10 +50,10 @@ const DogPark: React.FC = () => {
                 </div>
                 <div style={{ flexBasis: '40%', overflowY: 'scroll', maxHeight: 'calc(100vh - 138px)', padding: '3px', overflowX: 'hidden' }}>
                     <GridContainer>
-                        {data?.map(({ id, name, address, check_ins, active_check_ins_count }, idx) => (
+                        {data?.map(({ id, name, address, check_ins, active_check_ins_count, most_recent_check_in }, idx) => (
                             <DogParkCardListContainer key={idx} onClick={() => dispatch(setDogParkModalId(id))}>
                                 <FlexContainer $flexDirection='column'>
-                                    <DogParkCard id={id} name={name} address={address} check_ins={check_ins} active_check_ins_count={active_check_ins_count} />
+                                    <DogParkCard id={id} name={name} address={address} check_ins={check_ins} active_check_ins_count={active_check_ins_count} most_recent_check_in={most_recent_check_in} />
                                 </FlexContainer>
                             </DogParkCardListContainer>
                         ))}
