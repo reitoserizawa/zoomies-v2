@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 
 import DogPark from '../../../models/dog-park';
-import { BadRequestError } from '../../../models/errors';
 import DogParkCheckIn from '../../../models/dog-park-check-in';
+import { BadRequestError } from '../../../models/errors';
 
 export const getDogParkDetails = async (req: Request, res: Response, next: NextFunction) => {
     try {

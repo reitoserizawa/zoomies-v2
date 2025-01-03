@@ -38,7 +38,7 @@ class DogParkCheckIn extends BaseModel<DogParkCheckInInterface, 'DogParkCheckIn'
 
     static async fromUser(user: User, limit?: number): Promise<DogParkCheckIn[]> {
         const user_id = user.id;
-        return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ user_id }, 'dogParkCheckIn', ['dog_park', 'pet', 'user'], limit);
+        return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ user_id }, 'dogParkCheckIn', ['dog_park', 'pet', 'user'], limit, { created_at: 'desc' });
     }
 
     static async fromPet(pet: Pet): Promise<DogParkCheckIn[]> {
@@ -46,9 +46,9 @@ class DogParkCheckIn extends BaseModel<DogParkCheckInInterface, 'DogParkCheckIn'
         return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ pet_id }, 'dogParkCheckIn');
     }
 
-    static async fromDogPark(dog_park: DogPark): Promise<DogParkCheckIn[]> {
+    static async fromDogPark(dog_park: DogPark, limit?: number): Promise<DogParkCheckIn[]> {
         const dog_park_id = dog_park.id;
-        return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ dog_park_id }, 'dogParkCheckIn', ['pet', 'user']);
+        return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ dog_park_id }, 'dogParkCheckIn', ['pet', 'user'], limit, { created_at: 'desc' });
     }
 
     static async mostRecentfromDogPark(dog_park: DogPark): Promise<DogParkCheckIn | null> {
