@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import moment from 'moment';
 
 import { P } from '../../ui/text-tags.styles';
 import { BorderlineContainer, FlexContainer, RoundImgContainer } from '../../ui/container.styles';
@@ -10,7 +11,7 @@ import DeleteIcon from '../../images/icons/DeleteIcon';
 import { useDeleteCheckInMutation } from '../../redux/reducers/protected-api-slice';
 import { DogParkCheckInState } from '../../states/dog-park-check-in';
 
-const DogParkCheckInList: React.FC<DogParkCheckInState> = ({ id, dog_park, pet, user, user_owns_check_in, active }) => {
+const DogParkCheckInList: React.FC<DogParkCheckInState> = ({ id, dog_park, pet, user, user_owns_check_in, active, checked_in_at }) => {
     const dogPark = dog_park;
 
     const [deleteCheckIn] = useDeleteCheckInMutation();
@@ -27,33 +28,38 @@ const DogParkCheckInList: React.FC<DogParkCheckInState> = ({ id, dog_park, pet, 
 
     return (
         <BorderlineContainer>
-            <FlexContainer $flexDirection='row' $justifyContent='space-between' style={{ padding: '5px 15px' }}>
-                {/* pet */}
-                <FlexContainer $flexDirection='row' $justifyContent='flex-start'>
-                    <RoundImgContainer>
-                        <img src={dogProfileImg?.src || ''} alt={dogProfileImg?.alt || 'Dog profile'} />
-                    </RoundImgContainer>
-                    <P>{pet?.name || 'Unknown Name'}</P>
-                    <P>{pet?.breed || 'Unknown Breed'}</P>
-                </FlexContainer>
+            <FlexContainer $flexDirection='column'>
+                <FlexContainer $flexDirection='row' $justifyContent='space-between' style={{ padding: '5px 15px' }}>
+                    {/* pet */}
+                    <FlexContainer $flexDirection='row' $justifyContent='flex-start'>
+                        <RoundImgContainer>
+                            <img src={dogProfileImg?.src || ''} alt={dogProfileImg?.alt || 'Dog profile'} />
+                        </RoundImgContainer>
+                        <P>{pet?.name || 'Unknown Name'}</P>
+                        <P>{pet?.breed || 'Unknown Breed'}</P>
+                    </FlexContainer>
 
-                {/* user */}
-                <FlexContainer $flexDirection='row' $justifyContent='flex-end'>
-                    <P
-                        style={{
-                            textWrap: 'nowrap'
-                        }}
-                    >
-                        Checked-in by {user?.username || 'Unknown User'}
-                    </P>
-                    <RoundImgContainer>
-                        <img src={blankProfileImg?.src || ''} alt={blankProfileImg?.alt || 'User profile'} />
-                    </RoundImgContainer>
-                    {user_owns_check_in && active && (
-                        <Button onClick={() => handleDeleteCheckIn(id)} $width='fit-content' $backgroundColor='white' $margin='0px' style={{ paddingLeft: '15px' }}>
-                            <DeleteIcon color='red' />
-                        </Button>
-                    )}
+                    {/* user */}
+                    <FlexContainer $flexDirection='row' $justifyContent='flex-end'>
+                        <P
+                            style={{
+                                textWrap: 'nowrap'
+                            }}
+                        >
+                            Checked-in by {user?.username || 'Unknown User'}
+                        </P>
+                        <RoundImgContainer>
+                            <img src={blankProfileImg?.src || ''} alt={blankProfileImg?.alt || 'User profile'} />
+                        </RoundImgContainer>
+                        {user_owns_check_in && active && (
+                            <Button onClick={() => handleDeleteCheckIn(id)} $width='fit-content' $backgroundColor='white' $margin='0px' style={{ paddingLeft: '15px' }}>
+                                <DeleteIcon color='red' />
+                            </Button>
+                        )}
+                    </FlexContainer>
+                </FlexContainer>
+                <FlexContainer $flexDirection='row' $justifyContent='end'>
+                    <P $margin='0px 20px 16px 0px'>Checked-in at {moment(new Date(checked_in_at as Date)).fromNow()}</P>
                 </FlexContainer>
             </FlexContainer>
         </BorderlineContainer>

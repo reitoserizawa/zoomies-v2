@@ -15,7 +15,7 @@ export interface DogParkCheckInState extends BaseState {
 
     active: boolean;
 
-    checked_in_at?: Date;
+    checked_in_at: Date;
     checked_out_at?: Date | null;
     user_owns_check_in?: boolean;
 }
