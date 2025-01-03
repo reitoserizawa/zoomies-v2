@@ -5,48 +5,53 @@ import { H2, H3 } from '../../ui/text-tags.styles';
 
 import { blankProfileImg, coverExaple } from '../../images';
 import MailIcon from '../../images/icons/MailIcon';
+import { useGetUserDetailsQuery } from '../../redux/reducers/protected-api-slice';
 
-const ProfileHeader: React.FC = () => (
-    <>
-        <div
-            style={{
-                width: '100%'
-            }}
-        >
-            <ImgContainer height='300px' width='100%'>
-                <img src={coverExaple.src} alt={coverExaple.alt} />
-            </ImgContainer>
-        </div>
-        <FlexContainer $flexDirection='row' style={{ marginBottom: '30px' }}>
+const ProfileHeader: React.FC = () => {
+    const { data: userDetails } = useGetUserDetailsQuery(null);
+
+    return (
+        <>
             <div
                 style={{
-                    marginTop: '-100px',
-                    flex: '20%'
+                    width: '100%'
                 }}
             >
-                <RoundImgContainer height='200px' width='200px'>
-                    <img
-                        src={blankProfileImg.src}
-                        alt={blankProfileImg.alt}
-                        style={{
-                            border: '5px solid white'
-                        }}
-                    />
-                </RoundImgContainer>
+                <ImgContainer height='300px' width='100%'>
+                    <img src={coverExaple.src} alt={coverExaple.alt} />
+                </ImgContainer>
             </div>
-            <div
-                style={{
-                    flex: '80%'
-                }}
-            >
-                <H2 $margin='16px 0px 0px 0px'>Reito Serizawa</H2>
-                <FlexContainer $flexDirection='row' $justifyContent='flex-start'>
-                    <MailIcon />
-                    <H3 fontWeight={500}>reitoserizawa@gmail.com</H3>
-                </FlexContainer>
-            </div>
-        </FlexContainer>
-    </>
-);
+            <FlexContainer $flexDirection='row' style={{ marginBottom: '30px' }}>
+                <div
+                    style={{
+                        marginTop: '-100px',
+                        flex: '20%'
+                    }}
+                >
+                    <RoundImgContainer height='200px' width='200px'>
+                        <img
+                            src={blankProfileImg.src}
+                            alt={blankProfileImg.alt}
+                            style={{
+                                border: '5px solid white'
+                            }}
+                        />
+                    </RoundImgContainer>
+                </div>
+                <div
+                    style={{
+                        flex: '80%'
+                    }}
+                >
+                    <H2 $margin='16px 0px 0px 0px'>{userDetails ? userDetails?.first_name + ' ' + userDetails?.last_name : 'Unknown name'}</H2>
+                    <FlexContainer $flexDirection='row' $justifyContent='flex-start'>
+                        <MailIcon />
+                        <H3 fontWeight={500}>{userDetails ? userDetails?.email : 'Unknown email'}</H3>
+                    </FlexContainer>
+                </div>
+            </FlexContainer>
+        </>
+    );
+};
 
 export default ProfileHeader;
