@@ -19,4 +19,6 @@ export interface PetState extends BaseState {
     check_ins?: DogParkCheckInState[];
 
     created_at?: Date;
+
+    active_check_in?: DogParkCheckInState;
 }

@@ -83,7 +83,7 @@ export const protectedApiSlice = createApi({
                     introduction
                 }
             }),
-            invalidatesTags: (result, error, { id }) => [{ type: 'Pet', id }]
+            invalidatesTags: ['Pet']
         }),
         deletePet: builder.mutation<{ success: boolean }, { id: number }>({
             query: ({ id }) => ({
@@ -136,7 +136,7 @@ export const protectedApiSlice = createApi({
                     pet_ids: petIds
                 }
             }),
-            invalidatesTags: ['CheckIn']
+            invalidatesTags: ['Pet', 'CheckIn']
         }),
         deleteCheckIn: builder.mutation<{ success: boolean }, { checkInId: number }>({
             query: ({ checkInId }) => ({
@@ -146,7 +146,7 @@ export const protectedApiSlice = createApi({
                     check_in_id: checkInId
                 }
             }),
-            invalidatesTags: ['CheckIn']
+            invalidatesTags: ['Pet', 'CheckIn']
         }),
         getFavoriteDogParks: builder.query<UserFavoriteDogParkState[], null>({
             query: () => ({
