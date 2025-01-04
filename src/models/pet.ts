@@ -6,6 +6,7 @@ import { PetInterface, PetModelInterface } from '../interfaces/pet';
 import PrismaClientModel from './prisma-client';
 import User from './user';
 import DogParkCheckIn from './dog-park-check-in';
+import { BadRequestError } from './errors';
 
 class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
     public_properties: (keyof PetInterface)[] = ['name', 'owner', 'type', 'breed', 'birthday', 'owner_id', 'created_at', 'introduction'];
@@ -57,6 +58,24 @@ class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
         const pet = Pet.fromProperties(new_pet);
 
         return pet;
+    }
+
+    override async delete(): Promise<PetInterface> {
+        if (!this.id) {
+            throw new BadRequestError('ID not set');
+        }
+
+        const active_check_in = await DogParkCheckIn.activeFromPet(this);
+
+        if (active_check_in) {
+            await active_check_in.update({
+                active: false
+            });
+        }
+
+        const deleted_pet = await this.update({ deleted: true });
+
+        return deleted_pet;
     }
 
     async hasActiveDogParkCheckIn(): Promise<boolean> {

@@ -19,6 +19,8 @@ export interface PetInterface extends BaseInterface {
     dog_park_check_ins?: DogParkCheckInInterface[];
 
     created_at: Date;
+
+    deleted: boolean;
 }
 
 export interface PetModelInterface extends BaseModelInterface<PetInterface> {}

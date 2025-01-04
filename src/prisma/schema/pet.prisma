@@ -9,6 +9,7 @@ model Pet {
   characteristics               String[]                   @default([])
   created_at                    DateTime                   @default(now())
   user_deleted                  Boolean                    @default(false)
+  deleted                       Boolean                    @default(false)
   dog_friendly_dining_check_ins DogFriendlyDiningCheckIn[]
   dog_park_check_ins            DogParkCheckIn[]
   owner                         User                       @relation(fields: [owner_id], references: [id])

@@ -137,7 +137,7 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
     setPets(): void {
         if (this.pets) return;
 
-        this.pets = this.properties.pets?.map(pet => Pet.fromProperties(pet));
+        this.pets = this.properties.pets?.filter(pet => !pet.deleted).map(pet => Pet.fromProperties(pet));
     }
 
     ownsPet(pet: Pet): boolean {
