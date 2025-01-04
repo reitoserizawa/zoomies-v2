@@ -43,7 +43,7 @@ class DogParkCheckIn extends BaseModel<DogParkCheckInInterface, 'DogParkCheckIn'
 
     static async fromPet(pet: Pet): Promise<DogParkCheckIn[]> {
         const pet_id = pet.id;
-        return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ pet_id }, 'dogParkCheckIn');
+        return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ pet_id }, 'dogParkCheckIn', ['dog_park']);
     }
 
     static async fromDogPark(dog_park: DogPark, limit?: number): Promise<DogParkCheckIn[]> {
