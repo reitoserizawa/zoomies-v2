@@ -79,9 +79,9 @@ class Pet extends BaseModel<PetInterface, 'Pet'> implements PetModelInterface {
     }
 
     async hasActiveDogParkCheckIn(): Promise<boolean> {
-        const dog_park_check_ins = await DogParkCheckIn.fromPet(this);
+        const active_check_in = await DogParkCheckIn.activeFromPet(this);
 
-        if (dog_park_check_ins.some(check_in => check_in.properties.active)) {
+        if (active_check_in) {
             return true;
         } else {
             return false;

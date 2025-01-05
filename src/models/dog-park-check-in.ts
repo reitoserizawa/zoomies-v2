@@ -46,6 +46,11 @@ class DogParkCheckIn extends BaseModel<DogParkCheckInInterface, 'DogParkCheckIn'
         return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ pet_id }, 'dogParkCheckIn', ['dog_park']);
     }
 
+    static async activeFromPet(pet: Pet): Promise<DogParkCheckIn | null> {
+        const pet_id = pet.id;
+        return await DogParkCheckIn.findFirst<DogParkCheckInInterface, DogParkCheckIn>({ pet_id, active: true }, 'dogParkCheckIn', ['dog_park']);
+    }
+
     static async fromDogPark(dog_park: DogPark, limit?: number): Promise<DogParkCheckIn[]> {
         const dog_park_id = dog_park.id;
         return await DogParkCheckIn.manyFromQuery<DogParkCheckInInterface, DogParkCheckIn>({ dog_park_id }, 'dogParkCheckIn', ['pet', 'user'], limit, { created_at: 'desc' });

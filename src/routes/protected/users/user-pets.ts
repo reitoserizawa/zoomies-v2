@@ -10,8 +10,8 @@ export const getPetsFromUser = async (req: CustomRequest, res: Response, next: N
 
         const response = await Promise.all(
             (user?.pets || []).map(async pet => {
-                const check_ins = await DogParkCheckIn.fromPet(pet);
-                const active_check_in = check_ins.find(check_in => check_in.isActive());
+                const active_check_in = await DogParkCheckIn.activeFromPet(pet);
+
                 return {
                     ...(await pet.prepareForCollection()),
                     active_check_in: await active_check_in?.prepareForCollection()
