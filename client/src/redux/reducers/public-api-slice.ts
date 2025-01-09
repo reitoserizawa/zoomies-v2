@@ -4,7 +4,7 @@ import { UserCreateRequest, UserLogInPayload, UserLogInRequest } from '../../sta
 export const publicApiSlice = createApi({
     reducerPath: 'publicApiSlice',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3000/api/public'
+        baseUrl: `${process.env.REACT_APP_API_URL}api/public`
     }),
     endpoints: builder => ({
         logInUser: builder.mutation<UserLogInPayload, UserLogInRequest>({

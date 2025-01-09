@@ -16,11 +16,9 @@ declare module 'express' {
 
 class App {
     public server;
-    port: number;
 
     constructor() {
         this.server = express();
-        this.port = 3002;
 
         this.middlewares();
         this.routes();
