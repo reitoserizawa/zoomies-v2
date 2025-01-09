@@ -33,6 +33,10 @@
   <li>PostgreSQL</li>
 </ul>
 
+<h2>Database Diagram</h2>
+![Screenshot 2025-01-09 at 4 39 28 PM](https://github.com/user-attachments/assets/31a5f301-3c73-431d-92ce-f8931f20d2c9)
+
+
 <h2>Installation</h2>
 <p>Editing</p>
 
