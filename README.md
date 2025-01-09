@@ -39,11 +39,83 @@
 
 <p>Some tables or fields are not included but already added in the schema such as pet-friendly dining. They will be added in the upcoming version.</p>
 
-<h2>Installation</h2>
-<p>Editing</p>
+<h2>Set-up/Installation</h2>
+<h3>Environment variables</h3>
+
+<p>Frontend (create .env file the client directory and add the below variables)</p>
+<ul>
+  <li>REACT_APP_MAPBOX_ACCESS_TOKEN</li>
+  <ul>
+    <li>Add the token from Mapbox.com</li>
+  </ul>
+
+  <li>REACT_APP_API_URL</li>
+  <ul>
+    <li>Add the API URL</li>
+  </ul>
+</ul>
+
+
+<p>Backend (create .env file the root and add the below variables)</p>
+<ul>
+  <li>PORT</li>
+  <ul>
+    <li>Default is set as 3001, change the port as needed</li>
+  </ul>
+
+  <li>POSTGRES_HOST</li>
+  <li>POSTGRES_USER</li>
+  <li>POSTGRES_PASSWORD</li>
+  <li>POSTGRES_DB</li>
+  <li>POSTGRES_PORT</li>
+
+  <ul>
+    <li>Add the postgres related information</li>
+  </ul>
+
+  <li>DATABASE_URL</li>
+  <ul>
+    <li>Add the database hosted URL</li>
+  </ul>
+
+  <li>SALT_ROUNDS</li>
+  <ul>
+    <li>Set a number</li>
+  </ul>
+  <li>JWT_SECRET_KEY</li>
+  <ul>
+    <li>Set it to 'reito-serizawa-zoomies-v2', or preferred secret key</li>
+  </ul>
+
+  <li>GOOGLE_API_KEY</li>
+  <ul>
+    <li>Required to convert the address to the geolocation</li>
+    <li>Create and add from Google Maps API</li>
+  </ul>
+</ul>
+
+<h3>Installation</h3>
+
+<p>Frontend</p>
+
+```
+yarn install --prefix client
+```
+
+<p>Backend</p>
+
+```
+yarn install
+```
+
 
 <h2>Usage</h2>
-<p>Editing instructions, screenshots, and demo</p>
+
+![Screenshot 2025-01-09 at 5 31 14 PM](https://github.com/user-attachments/assets/daeca090-0f94-4681-9fb8-c7c7efe27fa1)
+![Screenshot 2025-01-09 at 5 29 53 PM](https://github.com/user-attachments/assets/ad459c53-57d3-415d-8c6a-a61eb1abe526)
+![Screenshot 2025-01-09 at 5 31 36 PM](https://github.com/user-attachments/assets/03f9cb58-7073-4977-957a-51d10b3c6153)
+
+<p>Demo to be added</p>
 
 <h2>Testing</h2>
 <p>The app has been manually tested. You can test the following features:</p>
