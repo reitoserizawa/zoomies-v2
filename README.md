@@ -39,6 +39,18 @@
 <h2>Usage</h2>
 <p>Editing instructions, screen shots and demo</p>
 
+<h2>Testing</h2>
+<p>The app has been manually tested. You can test the following features:</p>
+<ol>
+<li>**Authentication**: Register, log in, and log out.</li>
+<li>**CRUD Operations**: Create, update, and delete records.</li>
+<li>**Frontend Interactions**: Verify responsiveness and UI components.</li>
+<li>**API Endpoints**: Use tools like Postman to test API responses.</li>
+</ol>
+
+Future plans include adding automated tests using Jest and React Testing Library.
+
+
 <h2>API documentation</h2>
 <p>Editing detailed API endpoints</p>
 
