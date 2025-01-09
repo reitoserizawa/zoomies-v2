@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { BadRequestError } from '../models/errors';
 
 class PasswordUtil {
     salt_rounds: number;
@@ -7,7 +8,10 @@ class PasswordUtil {
 
     // TODO: update and add secret key
     constructor(public password: string) {
-        this.salt_rounds = process.env.SALT_ROUNDS ? parseInt(process.env.SALT_ROUNDS) : 10;
+        if (!process.env.SALT_ROUNDS) {
+            throw new BadRequestError('Salt rounds must be set');
+        }
+        this.salt_rounds = parseInt(process.env.SALT_ROUNDS);
     }
 
     async hash(): Promise<string> {
