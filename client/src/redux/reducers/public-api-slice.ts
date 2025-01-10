@@ -6,6 +6,7 @@ export const publicApiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: `${process.env.REACT_APP_API_URL}api/public`
     }),
+    tagTypes: ['User'],
     endpoints: builder => ({
         logInUser: builder.mutation<UserLogInPayload, UserLogInRequest>({
             query: ({ username, password }) => ({
@@ -15,7 +16,8 @@ export const publicApiSlice = createApi({
                     username,
                     password
                 }
-            })
+            }),
+            invalidatesTags: ['User']
         }),
         createUser: builder.mutation<UserLogInPayload, UserCreateRequest>({
             query: ({ first_name, last_name, email, username, password }) => ({
@@ -28,7 +30,8 @@ export const publicApiSlice = createApi({
                     username,
                     password
                 }
-            })
+            }),
+            invalidatesTags: ['User']
         })
     })
 });
