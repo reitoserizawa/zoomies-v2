@@ -154,7 +154,7 @@ export const protectedApiSlice = createApi({
             }),
             providesTags: ['UserFavoriteDogPark']
         }),
-        checkFavoriteDogParkStatus: builder.query<{ favoritedDogPark: UserFavoriteDogParkState | null }, { dogParkId?: number }>({
+        checkFavoriteDogParkStatus: builder.query<{ favorited_dog_park: UserFavoriteDogParkState | null }, { dogParkId?: number }>({
             query: ({ dogParkId }) => ({
                 url: `users/favorite-dog-parks/dog-parks/${dogParkId}`
             }),
