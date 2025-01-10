@@ -1109,7 +1109,10 @@ yarn install
   </ul>
 </ul>
 
+<h2>Data Sources</h2>
 
+The data used in this project was obtained from the following sources:
 
-<h2>Credentials</h2>
-<p>Editing</p>
+- [Directory of Dog Runs and Off-Leash Areas](https://catalog.data.gov/dataset/directory-of-dog-runs-and-off-leash-areas): Utilized name, address, note and dog run type.
+
+Please ensure you comply with the respective licenses and terms of use of these datasets.
