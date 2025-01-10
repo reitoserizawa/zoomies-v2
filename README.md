@@ -895,7 +895,39 @@ yarn install
 
 <hr />
 
+<b>DELETE /api/protected/pets/:id</b>
+<p>Delete the pet</p>
 
+<ul>
+  <li>URL: /api/protected/pets/:id</li>
+  <li>Method: DELETE</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Authorization: Bearer <Token>" \
+  -X DELETE \
+  http://localhost:3001/api/protected/pets/1
+</pre>
+
+<b>Response</b>
+<pre>
+{
+    "success": true
+}
+</pre>
 
 
 <h2>Credentials</h2>
