@@ -748,5 +748,155 @@ yarn install
 
 <hr />
 
+<b>POST /api/protected/pets</b>
+<p>Add a pet</p>
+
+<ul>
+  <li>URL: /api/protected/pets</li>
+  <li>Method: POST</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Content-Type: application/json</pre></li>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Body:</li>
+  <ul>
+    <li><pre>{ birthday: "2025-01-10T06:37:01.461Z", breed: "Golden Doodle", introduction: "Hi, this is Test!", name: "Test"}</pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <Token>" \
+  -X POST \
+  -d '{"birthday":"2025-01-10T06:37:01.461Z","breed":"Golden Doodle","introduction":"Hi, this is Test!","name":"Test"}' \
+  http://localhost:3001/api/protected/pets
+</pre>
+
+<b>Response</b>
+<pre>
+{
+    "id": 1,
+    "name": "Test",
+    "owner_id": 1,
+    "type": "Dog",
+    "breed": "Golden Doodle",
+    "birthday": "2025-01-10T06:37:01.461Z",
+    "introduction": "Hi, this is Test!",
+    "created_at": "2025-01-10T06:37:09.041Z"
+}
+</pre>
+
+<hr />
+
+<b>GET /api/protected/pets/unchecked-in</b>
+<p>Get the unchecked-in pets</p>
+
+<ul>
+  <li>URL: /api/protected/pets/unchecked-in</li>
+  <li>Method: GET</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Authorization: Bearer <Token>" \
+  -X GET \
+  http://localhost:3001/api/protected/pets/unchecked-in
+</pre>
+
+<b>Response</b>
+<pre>
+  [
+    {
+        "id": 1,
+        "name": "Test",
+        "owner_id": 1,
+        "type": "Dog",
+        "breed": "Golden Doodle",
+        "birthday": "2025-01-10T06:37:01.461Z",
+        "introduction": "Hi, this is Test!",
+        "created_at": "2025-01-10T06:37:09.041Z"
+    }
+  ]
+</pre>
+
+<hr />
+
+<b>POST /api/protected/pets/:id</b>
+<p>Update the pet details</p>
+
+<ul>
+  <li>URL: /api/protected/pets/:id</li>
+  <li>Method: POST</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Content-Type: application/json</pre></li>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Body:</li>
+  <ul>
+    <li><pre>{ birthday: "2025-01-10T06:37:01.461Z", breed: "Golden Doodle", introduction: "Hi, this is Test!", name: "Test"}</pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <Token>" \
+  -X POST \
+  -d '{"birthday":"2025-01-10T06:37:01.461Z","breed":"Golden Doodle","introduction":"Hi, this is Test!","name":"Test"}' \
+  http://localhost:3001/api/protected/pets/1
+</pre>
+
+<b>Response</b>
+<pre>
+{
+    "id": 1,
+    "name": "Test",
+    "owner_id": 1,
+    "type": "Dog",
+    "breed": "Golden Doodle",
+    "birthday": "2025-01-10T06:37:01.461Z",
+    "introduction": "Hi, this is Test!",
+    "created_at": "2025-01-10T06:37:09.041Z"
+}
+</pre>
+
+<hr />
+
+
+
+
 <h2>Credentials</h2>
 <p>Editing</p>
