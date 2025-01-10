@@ -131,11 +131,23 @@ yarn install
 
 <h2>API documentation</h2>
 
+<h3>Public</h3>
+
 <b>POST /api/public/login</b>
 
 <ul>
-  <li>URL: <pre>/api/public/login</pre></li>
-  <li>Method: <pre>POST</pre></li>
+  <li>URL: /api/public/login</li>
+  <li>Method: POST</li>
+
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Content-Type: application/json</pre></li>
+  </ul>
+
+  <li>Body:</li>
+  <ul>
+    <li><pre>{ username:"test", password:"test" }</pre></li>
+  </ul>
 
   <li>Response:</li>
   <ul>
@@ -146,9 +158,9 @@ yarn install
 
 <b>Example Request</b>
 <pre>
-  curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"username":"test","password":"test"}' \
+  curl -H "Content-Type: application/json" \
+  -X POST \
+  -d '{"username":"test","password":"test"}' \
   http://localhost:3001/api/public/login
 </pre>
 
@@ -176,8 +188,18 @@ yarn install
 <b>POST /api/public/create-user</b>
 
 <ul>
-  <li>URL: <pre>/api/public/create-user</pre></li>
-  <li>Method: <pre>POST</pre></li>
+  <li>URL: /api/public/create-user</li>
+  <li>Method: POST</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Content-Type: application/json</pre></li>
+  </ul>
+
+  <li>Body:</li>
+  <ul>
+    <li><pre>{ email: "test@test.com", first_name: "Test", last_name: "Test", password: "test", username: "test" }</pre></li>
+  </ul>
 
   <li>Response:</li>
   <ul>
@@ -188,9 +210,9 @@ yarn install
 
 <b>Example Request</b>
 <pre>
-  curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"email":"test@test.com","first_name":"Test","last_name":"Test","password":"test","username":"test"}' \
+  curl -H "Content-Type: application/json" \
+  -X POST \
+  -d '{"email":"test@test.com","first_name":"Test","last_name":"Test","password":"test","username":"test"}' \
   http://localhost:3001/api/public/create-user
 </pre>
 
@@ -213,6 +235,279 @@ yarn install
 }
 </pre>
 
+<hr />
+
+<h3>Protected</h3>
+
+<b>GET /api/protected/users</b>
+<p>Get the user details</p>
+
+<ul>
+  <li>URL: /api/protected/users</li>
+  <li>Method: GET</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Authorization: Bearer <Token>" \
+  -X GET \
+  http://localhost:3001/api/protected/users
+</pre>
+
+<b>Response</b>
+<pre>
+  {
+    "user": {
+        "id": 1,
+        "email": "test@test.com",
+        "username": "test",
+        "first_name": "Test",
+        "last_name": "Test",
+        "phone": null,
+        "avatar_url": null,
+        "allergies": [],
+        "dog_park_check_ins": [],
+        "pets": []
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzM2NDY4MDYzLCJleHAiOjE3MzY2NDA4NjN9.Mf30NE__vCqHN-66ne9aPtk2z6tXjk_1pgUm7WW5DKI"
+}
+</pre>
+
+<hr />
+
+<b>POST /api/protected/users</b>
+<p>Update the user details</p>
+
+<ul>
+  <li>URL: /api/protected/users</li>
+  <li>Method: POST</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Content-Type: application/json</pre></li>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <Token>" \
+  -X POST \
+  -d '{"email":"test@test.com","first_name":"Test","last_name":"Test","password":"test","username":"test"}' \
+  http://localhost:3001/api/protected/users
+</pre>
+
+<b>Response</b>
+<pre>
+  {
+        "id": 1,
+        "email": "test@test.com",
+        "username": "test",
+        "first_name": "Test",
+        "last_name": "Test",
+        "phone": null,
+        "avatar_url": null,
+        "allergies": [],
+        "dog_park_check_ins": [],
+        "pets": []
+  }
+</pre>
+
+<hr />
+
+<b>DELETE /api/protected/users</b>
+<p>Delete the user</p>
+
+<ul>
+  <li>URL: /api/protected/users</li>
+  <li>Method: DELETE</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Authorization: Bearer <Token>" \
+  -X DELETE \
+  http://localhost:3001/api/protected/users
+</pre>
+
+<b>Response</b>
+<pre>
+  {
+        "success": true
+  }
+</pre>
+
+<hr />
+
+<b>POST /api/protected/users/change-password</b>
+<p>Update the password</p>
+
+<ul>
+  <li>URL: /api/protected/users/change-password</li>
+  <li>Method: POST</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Content-Type: application/json</pre></li>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Body:</li>
+  <ul>
+    <li><pre>{ current_password: "test", new_password: "test2" }</pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <Token>" \
+  -X POST \
+  -d '{"current_password":"test","new_password":"test2"}' \
+  http://localhost:3001/api/protected/users
+</pre>
+
+<b>Response</b>
+<pre>
+  {
+        "id": 1,
+        "email": "test@test.com",
+        "username": "test",
+        "first_name": "Test",
+        "last_name": "Test",
+        "phone": null,
+        "avatar_url": null,
+        "allergies": [],
+        "dog_park_check_ins": [],
+        "pets": []
+  }
+</pre>
+
+<hr />
+
+<b>GET /api/protected/users/pets</b>
+<p>Get the user's pets</p>
+
+<ul>
+  <li>URL: /api/protected/users/pets</li>
+  <li>Method: GET</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Authorization: Bearer <Token>" \
+  -X GET \
+  http://localhost:3001/api/protected/users/pets
+</pre>
+
+<b>Response</b>
+<pre>
+  [
+    {
+        "id": 1,
+        "name": "Test",
+        "owner_id": 1,
+        "type": "Dog",
+        "breed": "Golden Doodle",
+        "birthday": "2025-01-10T04:51:18.571Z",
+        "introduction": "Hi, this is Test!",
+        "created_at": "2025-01-10T04:51:30.948Z"
+    }
+  ]
+</pre>
+
+<hr />
+
+<b>DELETE /api/protected/users/dog-park-check-ins</b>
+<p>Delete the dog park check-in</p>
+
+<ul>
+  <li>URL: /api/protected/users/dog-park-check-ins</li>
+  <li>Method: DELETE</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Body:</li>
+  <ul>
+    <li><pre>{ check_in_id: 1 }</pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Authorization: Bearer <Token>" \
+  -X DELETE \
+  -d '{"check_in_id":"1"}' \
+  http://localhost:3001/api/protected/users
+</pre>
+
+<b>Response</b>
+<pre>
+  {
+        "success": true
+  }
+</pre>
 
 <h2>Credentials</h2>
 <p>Editing</p>
