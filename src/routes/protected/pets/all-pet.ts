@@ -15,9 +15,9 @@ export const createPet = async (req: CustomRequest, res: Response, next: NextFun
 
         if (has_duplicates) throw new BadRequestError('You already have a pet with the same name');
 
-        await user.createPet(req.body);
+        const pet = await user.createPet(req.body);
 
-        res.json(await user.prepareForCollection());
+        res.json(await pet.prepareForCollection());
     } catch (err) {
         next(err);
     }
