@@ -929,6 +929,187 @@ yarn install
 }
 </pre>
 
+<hr />
+
+<b>GET /api/protected/dog-parks</b>
+<p>Get all the dog parks</p>
+
+<ul>
+  <li>URL: /api/protected/dog-parks</li>
+  <li>Method: GET</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<hr />
+
+<b>GET /api/protected/dog-parks/:id</b>
+<p>Get the dog park details</p>
+
+<ul>
+  <li>URL: /api/protected/dog-parks</li>
+  <li>Method: GET</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Authorization: Bearer <Token>" \
+  -X GET \
+  http://localhost:3001/api/protected/dog-parks/1
+</pre>
+
+<b>Response</b>
+<pre>
+{
+    "id": 1,
+    "name": "Crotona Park Off-Leash Area",
+    "type": "Off-Leash",
+    "address": {},
+    "most_recent_check_in": {
+        "id": 1,
+        "user_id": 1,
+        "pet_id": 1,
+        "dog_park_id": 1,
+        "active": true,
+        "checked_in_at": "2025-01-10T06:12:50.169Z",
+        "checked_out_at": null,
+        "pet": {
+            "id": 1,
+            "name": "Test",
+            "owner_id": 1,
+            "type": "Dog",
+            "breed": "Golden Doodle",
+            "birthday": "2025-01-10T06:12:31.609Z",
+            "introduction": "Hi, this is Test!",
+            "created_at": "2025-01-10T06:12:45.541Z"
+        },
+        "user": {
+            "id": 1,
+            "email": "test@test.com",
+            "username": "test",
+            "first_name": "Test",
+            "last_name": "Test",
+            "phone": null,
+            "avatar_url": null,
+            "allergies": [],
+            "dog_park_check_ins": [],
+            "pets": []
+        }
+    }
+}
+</pre>
+
+<hr />
+
+<b>POST /api/protected/dog-parks/:id/check-ins</b>
+<p>Create a dog park check-in</p>
+
+<ul>
+  <li>URL: /api/protected/dog-parks/:id/check-ins</li>
+  <li>Method: POST</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Content-Type: application/json</pre></li>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Body:</li>
+  <ul>
+    <li><pre>{ pet_ids: [ 1 ] }</pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <Token>" \
+  -X POST \
+  -d '{"pet_ids":[1]}' \
+  http://localhost:3001/api/protected/dog-parks/:id/check-ins
+</pre>
+
+<b>Response</b>
+<pre>
+{
+    "success": true
+}
+</pre>
+
+<hr />
+
+<b>GET /api/protected/dog-parks/:id/active-check-ins</b>
+<p>Get the active check-ins</p>
+
+<ul>
+  <li>URL: /api/protected/dog-parks/:id/active-check-ins</li>
+  <li>Method: GET</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+<hr />
+
+<b>GET /api/protected/dog-parks/:id/active-check-ins</b>
+<p>Get the past check-ins</p>
+
+<ul>
+  <li>URL: /api/protected/dog-parks/:id/past-check-ins</li>
+  <li>Method: GET</li>
+  
+  <li>Headers:</li>
+  <ul>
+    <li><pre>Authorization: Bearer <Token></pre></li>
+  </ul>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+    <li><pre>401 Auth Error</pre></li>
+  </ul>
+</ul>
+
+
 
 <h2>Credentials</h2>
 <p>Editing</p>
