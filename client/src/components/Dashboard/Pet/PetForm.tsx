@@ -18,6 +18,7 @@ import requiredValidator from '../../../utils/validators/requiredValidator';
 import Form from '../../Form';
 import FormInput from '../../Form/FormInput';
 import FormDate from '../../Form/FormDate';
+import ErrorMessage from '../../Error';
 
 const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, name: current_name, breed: current_breed, introduction: current_introduction, birthday: current_birthday, toUpdate }) => {
     const initialValues: Partial<PetState> = {
@@ -29,8 +30,8 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
 
     const ref = useRef<HTMLDivElement>(null);
 
-    const [createPet] = useCreatePetMutation();
-    const [updatePetDetails] = useUpdatePetDetailsMutation();
+    const [createPet, { error: createError }] = useCreatePetMutation();
+    const [updatePetDetails, { error: updateError }] = useUpdatePetDetailsMutation();
 
     const dispatch = useAppDispatch();
 
@@ -41,12 +42,12 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
 
     useClickOutside(closeModal, ref);
 
-    const handleCreateOrUpdatePet = (data: Partial<PetState>) => {
+    const handleCreateOrUpdatePet = async (data: Partial<PetState>) => {
         if (toUpdate) {
             data.id = id;
-            handleUpdatePet(data);
+            await handleUpdatePet(data);
         } else {
-            handleCreatePet(data);
+            await handleCreatePet(data);
         }
     };
 
@@ -59,17 +60,9 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
     );
 
     const handleCreatePet = useCallback(
-        (data: Partial<PetState>) => {
-            createPet(data)
-                .unwrap()
-                .then(() => {
-                    closeModal();
-                })
-                .catch(error => {
-                    // const statusCode = error?.status;
-                    // const message = error?.data?.error?.message;
-                    // dispatch(setPetError({ message, statusCode }));
-                });
+        async (data: Partial<PetState>) => {
+            await createPet(data);
+            closeModal();
         },
         [createPet, closeModal]
     );
@@ -87,7 +80,8 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
                             {toUpdate ? 'Update Pet' : 'Add Pet'}
                         </Button>
                     </Form>
-                    {/* TODO: error handlingt */}
+                    {createError && 'data' in createError && <ErrorMessage message={createError.data as string} />}
+                    {updateError && 'data' in updateError && <ErrorMessage message={updateError.data as string} />}
                 </ModalContentContainer>
             </FlexContainer>
         </ModalContainer>
