@@ -130,7 +130,89 @@ yarn install
 
 
 <h2>API documentation</h2>
-<p>Editing detailed API endpoints</p>
+
+<b>POST /api/public/login</b>
+
+<ul>
+  <li>URL: <pre>/api/public/login</pre></li>
+  <li>Method: <pre>POST</pre></li>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"username":"test","password":"test"}' \
+  http://localhost:3001/api/public/login
+</pre>
+
+<b>Response</b>
+<pre>
+  {
+    "user": {
+        "id": 1,
+        "email": "test@test.com",
+        "username": "test",
+        "first_name": "Test",
+        "last_name": "Test",
+        "phone": null,
+        "avatar_url": null,
+        "allergies": [],
+        "dog_park_check_ins": [],
+        "pets": []
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzM2NDY4MDYzLCJleHAiOjE3MzY2NDA4NjN9.Mf30NE__vCqHN-66ne9aPtk2z6tXjk_1pgUm7WW5DKI"
+}
+</pre>
+
+<hr />
+
+<b>POST /api/public/create-user</b>
+
+<ul>
+  <li>URL: <pre>/api/public/create-user</pre></li>
+  <li>Method: <pre>POST</pre></li>
+
+  <li>Response:</li>
+  <ul>
+    <li><pre>200 OK</pre></li>
+    <li><pre>400 Bad Request</pre></li>
+  </ul>
+</ul>
+
+<b>Example Request</b>
+<pre>
+  curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"email":"test@test.com","first_name":"Test","last_name":"Test","password":"test","username":"test"}' \
+  http://localhost:3001/api/public/create-user
+</pre>
+
+<b>Response</b>
+<pre>
+  {
+    "user": {
+        "id": 1,
+        "email": "test@test.com",
+        "username": "test",
+        "first_name": "Test",
+        "last_name": "Test",
+        "phone": null,
+        "avatar_url": null,
+        "allergies": [],
+        "dog_park_check_ins": [],
+        "pets": []
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzM2NDY4MDYzLCJleHAiOjE3MzY2NDA4NjN9.Mf30NE__vCqHN-66ne9aPtk2z6tXjk_1pgUm7WW5DKI"
+}
+</pre>
+
 
 <h2>Credentials</h2>
 <p>Editing</p>
