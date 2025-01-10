@@ -11,8 +11,15 @@ export const getRecentDogParkCheckIns = async (req: CustomRequest, res: Response
 
         const response = await Promise.all(
             check_ins.map(async check_in => {
+                check_in.setUser();
+                check_in.setDogPark();
+                check_in.setPet();
+
                 return {
                     ...(await check_in.prepareForCollection()),
+                    user: await check_in.user?.prepareForCollection(),
+                    dog_park: await check_in.dog_park?.prepareForCollection(),
+                    pet: await check_in.pet?.prepareForCollection(),
                     user_owns_check_in: check_in.userOwnsCheckIn(user)
                 };
             })

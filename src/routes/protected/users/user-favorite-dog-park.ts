@@ -11,7 +11,22 @@ export const getFavoriteDogParks = async (req: CustomRequest, res: Response, nex
         const user = await User.fromJwtPayload(req);
         const favorite_dog_parks = await UserFavoriteDogPark.fromUser(user);
 
-        res.json(await Promise.all(favorite_dog_parks.map(favorite_dog_park => favorite_dog_park.prepareForCollection())));
+        res.json(
+            await Promise.all(
+                favorite_dog_parks.map(async favorite_dog_park => {
+                    favorite_dog_park.setDogPark();
+                    favorite_dog_park.dog_park?.setAddress();
+
+                    return {
+                        ...(await favorite_dog_park.prepareForCollection()),
+                        dog_park: {
+                            ...(await favorite_dog_park.dog_park?.prepareForCollection()),
+                            address: await favorite_dog_park.dog_park?.address?.prepareForCollection()
+                        }
+                    };
+                })
+            )
+        );
     } catch (err) {
         next(err);
     }
@@ -70,10 +85,10 @@ export const checkFavoriteDogParkStatus = async (req: CustomRequest, res: Respon
 
         try {
             const user_favorite_dog_park = await UserFavoriteDogPark.fromUserAndDogPark(user, dog_park);
-            res.json({ favoritedDogPark: await user_favorite_dog_park.prepareForCollection() });
+            res.json({ favorited_dog_park: await user_favorite_dog_park.prepareForCollection() });
         } catch (err) {
             if (err instanceof NotFoundError) {
-                res.json({ favoritedDogPark: null });
+                res.json({ favorited_dog_park: null });
             } else {
                 console.log(err);
                 throw new BadRequestError('Unknown error occured');

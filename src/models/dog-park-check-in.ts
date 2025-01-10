@@ -14,6 +14,8 @@ class DogParkCheckIn extends BaseModel<DogParkCheckInInterface, 'DogParkCheckIn'
     updatable_properties: (keyof DogParkCheckInInterface)[] = ['pet', 'dog_park', 'active', 'checked_in_at', 'checked_out_at'];
 
     user?: User;
+    dog_park?: DogPark;
+    pet?: Pet;
 
     static override async fromId(id: number): Promise<DogParkCheckIn> {
         const check_in = new DogParkCheckIn(id);
@@ -107,6 +109,20 @@ class DogParkCheckIn extends BaseModel<DogParkCheckInInterface, 'DogParkCheckIn'
         if (!this.properties.user) throw new Error("Check-in doesn't have a user property");
 
         this.user = User.fromProperties(this.properties.user);
+    }
+
+    setDogPark(): void {
+        if (this.dog_park) return;
+        if (!this.properties.dog_park) throw new Error("Check-in doesn't have a dog park property");
+
+        this.dog_park = DogPark.fromProperties(this.properties.dog_park);
+    }
+
+    setPet(): void {
+        if (this.pet) return;
+        if (!this.properties.pet) throw new Error("Check-in doesn't have a pet property");
+
+        this.pet = Pet.fromProperties(this.properties.pet);
     }
 
     isActive(): boolean {
