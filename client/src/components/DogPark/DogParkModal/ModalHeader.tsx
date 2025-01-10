@@ -90,13 +90,13 @@ const ModalHeader: React.FC<{ dogParkId?: number; closeDogParkModal: () => void 
     const [deleteFavoriteDogPark, { isLoading: loadingDeleteFavoriteDogPark }] = useDeleteFavoriteDogParkMutation();
 
     const isSpinning = (fetchingFavoriteStatus || loadingAddFavoriteDogPark || loadingDeleteFavoriteDogPark) && !data;
-    const showFilledFavoriteIcon = !fetchingFavoriteStatus && !loadingAddFavoriteDogPark && !loadingDeleteFavoriteDogPark && data?.favoritedDogPark;
+    const showFilledFavoriteIcon = !fetchingFavoriteStatus && !loadingAddFavoriteDogPark && !loadingDeleteFavoriteDogPark && data?.favorited_dog_park;
 
     const handleAddOrDeleteFavoriteDogPark = () => {
-        if (dogParkId && !data?.favoritedDogPark) {
+        if (dogParkId && !data?.favorited_dog_park) {
             addFavoriteDogPark({ dogParkId });
-        } else if (data?.favoritedDogPark?.id) {
-            deleteFavoriteDogPark({ userFavoriteDogParkId: data?.favoritedDogPark?.id });
+        } else if (data?.favorited_dog_park?.id) {
+            deleteFavoriteDogPark({ userFavoriteDogParkId: data?.favorited_dog_park?.id });
         }
     };
 
