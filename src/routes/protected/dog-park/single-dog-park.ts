@@ -12,9 +12,21 @@ export const getDogParkDetails = async (req: Request, res: Response, next: NextF
         if (!dog_park_id || typeof dog_park_id !== 'number') throw new BadRequestError('Invalida dog park ID');
 
         const dog_park = await DogPark.fromId(dog_park_id);
-        const most_recent_check_in = await DogParkCheckIn.mostRecentfromDogPark(dog_park);
+        dog_park.setAddress();
 
-        res.json({ ...(await dog_park.prepareForCollection()), most_recent_check_in: await most_recent_check_in?.prepareForCollection() });
+        const most_recent_check_in = await DogParkCheckIn.mostRecentfromDogPark(dog_park);
+        most_recent_check_in?.setPet();
+        most_recent_check_in?.setUser();
+
+        res.json({
+            ...(await dog_park.prepareForCollection()),
+            address: dog_park.address?.prepareForCollection(),
+            most_recent_check_in: {
+                ...(await most_recent_check_in?.prepareForCollection()),
+                pet: await most_recent_check_in?.pet?.prepareForCollection(),
+                user: await most_recent_check_in?.user?.prepareForCollection()
+            }
+        });
     } catch (err) {
         next(err);
     }

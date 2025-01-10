@@ -103,8 +103,8 @@ class User extends BaseModel<UserInterface, 'User'> implements UserModelInterfac
         return deleted_user;
     }
 
-    async createPet(payload: Prisma.PetCreateInput) {
-        await Pet.create(payload, this);
+    async createPet(payload: Prisma.PetCreateInput): Promise<Pet> {
+        return await Pet.create(payload, this);
     }
 
     async login(password: string): Promise<User> {

@@ -15,7 +15,8 @@ class UserFavoriteDogPark extends BaseModel<UserFavoriteDogParkInterface, 'UserF
     static model_name: Prisma.ModelName = 'UserFavoriteDogPark';
     static uncap_model_name: Uncapitalize<Prisma.ModelName> = 'userFavoriteDogPark';
 
-    dog_park: DogPark;
+    user?: User;
+    dog_park?: DogPark;
 
     static override async fromId(id: number): Promise<UserFavoriteDogPark> {
         const user_favorite_park = new UserFavoriteDogPark(id);

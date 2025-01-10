@@ -48,9 +48,12 @@ export const getActiveDogParkCheckIns = async (req: CustomRequest, res: Response
         const response = await Promise.all(
             active_dog_park_check_ins.map(async check_in => {
                 check_in.setUser();
+                check_in.setPet();
 
                 return {
                     ...(await check_in.prepareForCollection()),
+                    user: await check_in.user?.prepareForCollection(),
+                    pet: await check_in.pet?.prepareForCollection(),
                     user_owns_check_in: check_in.userOwnsCheckIn(user)
                 };
             })
@@ -77,8 +80,13 @@ export const getPastDogParkCheckIns = async (req: CustomRequest, res: Response, 
         const response = await Promise.all(
             past_dog_park_check_ins.map(async check_in => {
                 check_in.setUser();
+                check_in.setPet();
 
-                return await check_in.prepareForCollection();
+                return {
+                    ...(await check_in.prepareForCollection()),
+                    user: await check_in.user?.prepareForCollection(),
+                    pet: await check_in.pet?.prepareForCollection()
+                };
             })
         );
 
