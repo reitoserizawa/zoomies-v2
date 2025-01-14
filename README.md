@@ -1,7 +1,16 @@
 <h1>Zoomies-v2</h1>
 <p>This is a dog social media application where users can create dog profiles in addition to their profiles. You can check the dog park locations in NYC and check in to a dog park. You can see other dogs who are checked in at the dog park or previously checked in.</p>
 
-<h2>Key features</h2>
+<h2>Overview</h2>
+
+- [Key features](#key-features)
+- [Tech stacks](#tech-stacks)
+- [Set-up/Installation](#set-up-installation)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Data Sources](#data-sources)
+
+<h2 id="key-features">Key features</h2>
 <ul>
   <li>CRUD operations with user and dog profiles</li>
   <li>Check in and out from dog parks</li>
@@ -11,7 +20,7 @@
   <li>Used PostgreSQL on Docker Container</li>
 </ul>
 
-<h2>Tech stacks</h2>
+<h2 id="tech-stacks">Tech stacks</h2>
 <p>Frontend</p>
 <ul>
   <li>JavaScript</li>
@@ -39,7 +48,7 @@
 
 <p>Some tables or fields are not included but already added in the schema such as pet-friendly dining. They will be added in the upcoming version.</p>
 
-<h2>Set-up/Installation</h2>
+<h2 id="set-up-installation">Set-up/Installation</h2>
 <h3>Environment variables</h3>
 
 <p>Frontend (create .env file the client directory and add the below variables)</p>
@@ -109,7 +118,7 @@ yarn install
 ```
 
 
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 
 ![Screenshot 2025-01-09 at 5 31 14 PM](https://github.com/user-attachments/assets/daeca090-0f94-4681-9fb8-c7c7efe27fa1)
 ![Screenshot 2025-01-09 at 5 29 53 PM](https://github.com/user-attachments/assets/ad459c53-57d3-415d-8c6a-a61eb1abe526)
@@ -129,7 +138,7 @@ yarn install
 <p>Future plans include adding automated tests using Jest and React Testing Library.</p>
 
 
-<h2>API documentation</h2>
+<h2 id="api-documentation">API documentation</h2>
 
 <h3>Public</h3>
 
@@ -1109,7 +1118,10 @@ yarn install
   </ul>
 </ul>
 
+<h2 id="data-sources">Data Sources</h2>
 
+The data used in this project was obtained from the following sources:
 
-<h2>Credentials</h2>
-<p>Editing</p>
+- [Directory of Dog Runs and Off-Leash Areas](https://catalog.data.gov/dataset/directory-of-dog-runs-and-off-leash-areas): Utilized name, address, note and dog run type.
+
+Please ensure you comply with the respective licenses and terms of use of these datasets.
