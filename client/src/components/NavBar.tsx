@@ -30,18 +30,26 @@ const NavBar: React.FC = () => {
                 <FlexContainer $flexDirection='row' style={{ flexBasis: '33.33%' }}>
                     <NavBarLink to='/' className={({ isActive }) => (isActive ? 'active' : '')}>
                         <HomeIcon size='30px' />
+                        <P size={1.2} fontWeight={600}>
+                            Home
+                        </P>
                     </NavBarLink>
                     <NavBarLink to='/parks' className={({ isActive }) => (isActive ? 'active' : '')}>
                         <DogParkIcon size='30px' />
+                        <P size={1.2} fontWeight={600}>
+                            Dog Park
+                        </P>
                     </NavBarLink>
                 </FlexContainer>
                 <FlexContainer $flexDirection='row' $justifyContent='flex-end' style={{ flexBasis: '33.33%' }}>
-                    <RoundImgContainer>
-                        <img src={blankProfileImg.src} alt={blankProfileImg.alt} />
-                    </RoundImgContainer>
-                    <P style={{ cursor: 'pointer' }} onClick={handleLogout}>
-                        Logout
-                    </P>
+                    <FlexContainer $flexDirection='row' $justifyContent='flex-end' $gap={5} style={{ cursor: 'pointer' }} onClick={handleLogout}>
+                        <RoundImgContainer>
+                            <img src={blankProfileImg.src} alt={blankProfileImg.alt} />
+                        </RoundImgContainer>
+                        <P $marginLeft={5} $marginRight={5}>
+                            Logout
+                        </P>
+                    </FlexContainer>
                 </FlexContainer>
             </FlexContainer>
         </NavBarContainer>
