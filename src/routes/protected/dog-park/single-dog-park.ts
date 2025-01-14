@@ -20,7 +20,7 @@ export const getDogParkDetails = async (req: Request, res: Response, next: NextF
 
         res.json({
             ...(await dog_park.prepareForCollection()),
-            address: dog_park.address?.prepareForCollection(),
+            address: await dog_park.address?.prepareForCollection(),
             most_recent_check_in: {
                 ...(await most_recent_check_in?.prepareForCollection()),
                 pet: await most_recent_check_in?.pet?.prepareForCollection(),
