@@ -13,6 +13,8 @@ interface TextTagProps {
     $marginRight?: number;
     $marginTop?: number;
     $marginBottom?: number;
+
+    $mobileInvisible?: boolean;
 }
 
 export const H1 = styled.h1<TextTagProps>`
@@ -27,7 +29,7 @@ export const H1 = styled.h1<TextTagProps>`
 
     font-weight: ${({ fontWeight = '700' }) => fontWeight};
 
-    @media only screen and (max-width: 600px) {
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
         font-size: ${({ size = 1.5 }) => size}em;
         margin: ${({ $margin, $noMargin }) => ($noMargin ? 0 : $margin ?? 8)}px;
 
@@ -50,7 +52,7 @@ export const H2 = styled.h2<TextTagProps>`
 
     font-weight: ${({ fontWeight = '700' }) => fontWeight};
 
-    @media only screen and (max-width: 600px) {
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
         font-size: ${({ size = 1.3 }) => size}em;
         margin: ${({ $margin, $noMargin }) => ($noMargin ? 0 : $margin ?? 8)}px;
 
@@ -73,7 +75,7 @@ export const H3 = styled.h3<TextTagProps>`
 
     font-weight: ${({ fontWeight = '700' }) => fontWeight};
 
-    @media only screen and (max-width: 600px) {
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
         font-size: ${({ size = 1.1 }) => size}em;
         margin: ${({ $margin, $noMargin }) => ($noMargin ? 0 : $margin ?? 8)}px;
 
@@ -96,7 +98,7 @@ export const H4 = styled.h3<TextTagProps>`
 
     font-weight: ${({ fontWeight = '700' }) => fontWeight};
 
-    @media only screen and (max-width: 600px) {
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
         font-size: ${({ size = 1.1 }) => size}em;
         margin: ${({ $margin, $noMargin }) => ($noMargin ? 0 : $margin ?? 8)}px;
 
@@ -117,7 +119,9 @@ export const P = styled.p<TextTagProps>`
     ${({ $marginLeft }) => $marginLeft !== undefined && `margin-left: ${$marginLeft}px;`}
     ${({ $marginRight }) => $marginRight !== undefined && `margin-right: ${$marginRight}px;`}
 
-    @media only screen and (max-width: 600px) {
+    font-weight: ${({ fontWeight = '500' }) => fontWeight};
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
         font-size: ${({ size = 0.9 }) => size}em;
         margin: ${({ $margin, $noMargin }) => ($noMargin ? 0 : $margin ?? 8)}px;
 

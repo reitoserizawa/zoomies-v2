@@ -56,6 +56,12 @@ export const FullScreenContainer = styled.div<FullScreenContainerProps>`
     background-color: ${({ $backgroundColor }) => ($backgroundColor ? $backgroundColor : 'rgba(247, 247, 247, 0.95)')};
 
     z-index: 10;
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        display: inline;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
 `;
 
 export const FlexContainer = styled.div<FlexContainerProps>`
@@ -68,7 +74,8 @@ export const FlexContainer = styled.div<FlexContainerProps>`
     justify-content: ${({ $justifyContent }) => ($justifyContent ? $justifyContent : 'center')};
     gap: ${({ $gap }) => ($gap ? $gap : 0)}px;
 
-    @media only screen and (max-width: 600px) {
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        min-height: fit-content;
         gap: ${({ $gap }) => ($gap ? $gap - 2 : 0)}px;
     }
 `;

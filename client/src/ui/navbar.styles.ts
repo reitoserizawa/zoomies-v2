@@ -30,6 +30,8 @@ export const NavBarLink = styled(NavLink)`
     align-items: center;
     justify-content: center;
 
+    text-decoration: none;
+
     &.active {
         padding-top: 3px;
         border-bottom: 3px solid black;

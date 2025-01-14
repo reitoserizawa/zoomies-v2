@@ -67,8 +67,8 @@ export const Button = styled.button<ButtonProps>`
         background-color: #f0ad4e;
     `}
 
-
-    @media only screen and (max-width: 600px) {
-        margin: ${({ $margin }) => ($margin ? $margin : '16px 0px;')};
+    @media (max-width: 600px), 
+       (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        margin: ${({ $margin }) => $margin || '16px 0px'};
     }
 `;
