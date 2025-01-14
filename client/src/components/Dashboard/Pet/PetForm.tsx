@@ -22,10 +22,10 @@ import ErrorMessage from '../../Error';
 
 const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, name: current_name, breed: current_breed, introduction: current_introduction, birthday: current_birthday, toUpdate }) => {
     const initialValues: Partial<PetState> = {
-        name: current_name ? current_name : '',
-        breed: current_breed ? current_breed : '',
-        introduction: current_introduction ? current_introduction : '',
-        birthday: current_birthday ? current_birthday : null
+        name: current_name || '',
+        breed: current_breed || '',
+        introduction: current_introduction || '',
+        birthday: current_birthday || null
     };
 
     const ref = useRef<HTMLDivElement>(null);
