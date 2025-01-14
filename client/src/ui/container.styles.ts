@@ -9,7 +9,7 @@ interface FlexContainerProps {
     $flexDirection?: string;
     $alignItems?: string;
     $justifyContent?: string;
-    $gap?: string;
+    $gap?: number;
 }
 
 interface ImgContainerProps {
@@ -66,7 +66,11 @@ export const FlexContainer = styled.div<FlexContainerProps>`
     flex-direction: ${({ $flexDirection }) => ($flexDirection ? $flexDirection : 'column')};
     align-items: ${({ $alignItems }) => ($alignItems ? $alignItems : 'center')};
     justify-content: ${({ $justifyContent }) => ($justifyContent ? $justifyContent : 'center')};
-    gap: ${({ $gap }) => ($gap ? $gap : '0em')};
+    gap: ${({ $gap }) => ($gap ? $gap : 0)}px;
+
+    @media only screen and (max-width: 600px) {
+        gap: ${({ $gap }) => ($gap ? $gap - 2 : 0)}px;
+    }
 `;
 
 export const GridContainer = styled.div<FlexContainerProps>`

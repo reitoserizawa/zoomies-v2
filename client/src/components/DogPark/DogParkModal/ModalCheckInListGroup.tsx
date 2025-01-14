@@ -17,14 +17,14 @@ const ModalCheckInListGroup: React.FC = () => {
     // TODO: add loader
 
     return (
-        <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap='30px'>
-            <H3 $margin='16px 0px'>Current check-ins</H3>
+        <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap={15}>
+            <H3 $marginLeft={0}>Current check-ins</H3>
             {!activeCheckInsFromDogPark || activeCheckInsFromDogPark.length === 0 ? (
                 <P $noMargin>No checked-in puppies at the moment</P>
             ) : (
                 activeCheckInsFromDogPark.map((checkIn, idx) => <DogParkCheckInList key={idx} id={checkIn.id} dog_park={checkIn.dog_park} pet={checkIn.pet} user={checkIn.user} user_owns_check_in={checkIn.user_owns_check_in} active={checkIn.active} checked_in_at={checkIn.checked_in_at} />)
             )}
-            <H3 $margin='16px 0px'>Past check-ins</H3>
+            <H3 $marginLeft={0}>Past check-ins</H3>
             {!pastCheckInsFromDogPark || pastCheckInsFromDogPark.length === 0 ? (
                 <P $noMargin>No checked-in puppies in the past</P>
             ) : (

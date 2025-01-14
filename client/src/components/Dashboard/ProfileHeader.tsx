@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FlexContainer, ImgContainer, RoundImgContainer } from '../../ui/container.styles';
-import { H2, H3 } from '../../ui/text-tags.styles';
+import { H2, H3, P } from '../../ui/text-tags.styles';
 
 import { blankProfileImg, coverExaple } from '../../images';
 import MailIcon from '../../images/icons/MailIcon';
@@ -43,10 +43,12 @@ const ProfileHeader: React.FC = () => {
                         flex: '80%'
                     }}
                 >
-                    <H2 $margin='16px 0px 0px 0px'>{userDetails ? userDetails?.first_name + ' ' + userDetails?.last_name : 'Unknown name'}</H2>
+                    <H2 $marginLeft={0} $marginBottom={0}>
+                        {userDetails ? userDetails?.first_name + ' ' + userDetails?.last_name : 'Unknown name'}
+                    </H2>
                     <FlexContainer $flexDirection='row' $justifyContent='flex-start'>
                         <MailIcon />
-                        <H3 fontWeight={500}>{userDetails ? userDetails?.email : 'Unknown email'}</H3>
+                        <P fontWeight={500}>{userDetails ? userDetails?.email : 'Unknown email'}</P>
                     </FlexContainer>
                 </div>
             </FlexContainer>

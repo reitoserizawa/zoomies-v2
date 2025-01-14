@@ -31,10 +31,6 @@ export const Input = styled.input<InputProps>`
 export const LogInForm = styled.div`
     min-width: 320px;
     max-width: 1200px;
-
-    p {
-        margin: 16px 16px 16px 8px;
-    }
 `;
 
 export const Button = styled.button<ButtonProps>`
@@ -70,4 +66,9 @@ export const Button = styled.button<ButtonProps>`
         `
         background-color: #f0ad4e;
     `}
+
+
+    @media only screen and (max-width: 600px) {
+        margin: ${({ $margin }) => ($margin ? $margin : '16px 0px;')};
+    }
 `;

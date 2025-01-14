@@ -24,7 +24,7 @@ const FormInput = <State,>({ name, validators, placeholder, label, type = 'text'
 
     return (
         <>
-            {label ? <P>{label}</P> : null}
+            {label ? <P $marginLeft={8}>{label}</P> : null}
             <Input name={name as string} value={data[name] ? (data[name] as string) : ''} onChange={e => handleChange(e)} placeholder={placeholder} type={type} />
             {errors[name] && errors[name]?.map((error, i) => <Error key={i} message={error} />)}
         </>

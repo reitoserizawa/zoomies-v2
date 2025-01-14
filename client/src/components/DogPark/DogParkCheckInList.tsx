@@ -59,7 +59,9 @@ const DogParkCheckInList: React.FC<DogParkCheckInState> = ({ id, dog_park, pet, 
                     </FlexContainer>
                 </FlexContainer>
                 <FlexContainer $flexDirection='row' $justifyContent='end'>
-                    <P $margin='0px 20px 16px 0px'>Checked-in at {moment(new Date(checked_in_at as Date)).fromNow()}</P>
+                    <P $marginTop={0} $marginRight={16}>
+                        Checked-in at {moment(new Date(checked_in_at as Date)).fromNow()}
+                    </P>
                 </FlexContainer>
             </FlexContainer>
         </BorderlineContainer>

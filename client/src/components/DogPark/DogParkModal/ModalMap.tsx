@@ -25,6 +25,8 @@ const ModalMap: React.FC = () => {
     const longitude = dogParkDetails?.address?.longitude;
     const latitude = dogParkDetails?.address?.latitude;
 
+    console.log({ dogParkDetails });
+
     const token = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
     if (!token || !longitude || !latitude) return null;

@@ -54,14 +54,14 @@ const PetCard: React.FC<PetState> = ({ id, name, breed, birthday, introduction, 
                     <img src={dogProfileImg.src} alt={dogProfileImg.alt} />
                 </RoundImgContainer>
                 <div style={{ flexBasis: '60%' }}>
-                    <H3 size='1.5em' $noMargin style={{ width: 'fit-content', borderBottom: '2px solid gray', paddingBottom: '5px' }}>
+                    <H3 $noMargin style={{ width: 'fit-content', borderBottom: '2px solid gray', paddingBottom: '5px' }}>
                         {name}
                     </H3>
                     <Button $disabled $margin='10px 0px 0px 0px' $opacity={1.0} $width='auto'>
                         {breed}
                     </Button>
                     {birthday && (
-                        <FlexContainer $flexDirection='row' $justifyContent='start' $gap='10px' style={{ margin: '16px 0px' }}>
+                        <FlexContainer $flexDirection='row' $justifyContent='start' $gap={10} style={{ margin: '16px 0px' }}>
                             <BirthdayCakeIcon size='1em' />
                             <H4 $noMargin>{moment(new Date(birthday)).format('LL')}</H4>
                         </FlexContainer>
@@ -86,14 +86,14 @@ const PetCard: React.FC<PetState> = ({ id, name, breed, birthday, introduction, 
                         </>
                     )}
 
-                    <FlexContainer $flexDirection='row' $gap='50px' style={{ margin: '30px 0px 0px' }}>
+                    <FlexContainer $flexDirection='row' $gap={50} style={{ margin: '30px 0px 0px' }}>
                         <Button $width='150px' $margin='0px' $borderRadius='30px' $edit onClick={() => dispatch(togglePetUpdateFormModal(true))}>
-                            <FlexContainer $flexDirection='row' $gap='5px'>
+                            <FlexContainer $flexDirection='row' $gap={5}>
                                 Edit <EditIcon size='1em' color='white' />
                             </FlexContainer>
                         </Button>
                         <Button $width='150px' $margin='0px' $borderRadius='30px' $delete onClick={handleDeletePet}>
-                            <FlexContainer $flexDirection='row' $gap='5px'>
+                            <FlexContainer $flexDirection='row' $gap={5}>
                                 Delete <DeleteIcon size='1em' color='white' />
                             </FlexContainer>
                         </Button>

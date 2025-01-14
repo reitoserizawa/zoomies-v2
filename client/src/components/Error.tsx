@@ -17,7 +17,7 @@ const ErrorContainer = styled.div`
 
 const Error: React.FC<ErrorState> = ({ message = 'Unknown error occured' }) => (
     <ErrorContainer>
-        <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='center' $gap='5px'>
+        <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='center' $gap={5}>
             <WarnIcon size='16px' color='red' />
             <P color='red' style={{ margin: '0px' }}>
                 {message}

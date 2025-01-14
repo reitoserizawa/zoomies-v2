@@ -20,7 +20,7 @@ const FavoriteDogParkSectionContent: React.FC = () => {
     }
 
     return (
-        <FlexContainer $flexDirection='column' $gap='15px' style={{ padding: '16px 16px 16px' }}>
+        <FlexContainer $flexDirection='column' $gap={15} style={{ padding: '16px 16px 16px' }}>
             {favoriteDogParks && favoriteDogParks.length > 0 ? favoriteDogParks?.map((favoriteDogPark, idx) => <FavoriteDogParkCard key={idx} id={favoriteDogPark.id} dog_park_id={favoriteDogPark.dog_park_id} dog_park={favoriteDogPark.dog_park} />) : 'No favorite dog park found'}
         </FlexContainer>
     );

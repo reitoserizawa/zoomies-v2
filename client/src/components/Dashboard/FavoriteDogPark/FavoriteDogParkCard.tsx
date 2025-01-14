@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { BorderlineContainer, FlexContainer } from '../../../ui/container.styles';
 import { dogParkExample } from '../../../images';
-import { H2, P } from '../../../ui/text-tags.styles';
+import { H3, P } from '../../../ui/text-tags.styles';
 import { Button } from '../../../ui/form.styles';
 
 import DeleteIcon from '../../../images/icons/DeleteIcon';
@@ -75,13 +75,13 @@ const FavoriteDogParkCard: React.FC<Partial<UserFavoriteDogParkState>> = ({ id, 
                         <FlexContainer style={{ flexBasis: '95%' }}>
                             <DogParkCardContextContainer>
                                 <span>{dogPark?.type}</span>
-                                <H2 $margin='16px 0px'>{dogPark?.name}</H2>
+                                <H3 $marginLeft={0}>{dogPark?.name}</H3>
                                 <P $noMargin>{fullAddress}</P>
                             </DogParkCardContextContainer>
                         </FlexContainer>
-                        <FlexContainer $alignItems='flex-start' style={{ justifySelf: 'flex-end', flexBasis: '5%' }}>
+                        <FlexContainer $alignItems='flex-start' style={{ flexBasis: '5%' }}>
                             <Button $width='150px' $margin='16px 22px' $borderRadius='30px' $delete onClick={e => handleDeleteFavoriteDogPark(e)}>
-                                <FlexContainer $flexDirection='row' $gap='5px'>
+                                <FlexContainer $flexDirection='row' $gap={5}>
                                     Delete <DeleteIcon size='16px' color='white' />
                                 </FlexContainer>
                             </Button>

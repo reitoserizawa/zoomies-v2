@@ -79,7 +79,7 @@ const EditProfileForm: React.FC = () => {
                 </Form>
                 <hr />
             </ProfileSettingsFormContainer>
-            <FlexContainer $flexDirection='row' $gap='32px' $justifyContent='center' $alignItems='middle' style={{ marginTop: '32px' }}>
+            <FlexContainer $flexDirection='row' $gap={32} $justifyContent='center' $alignItems='middle' style={{ marginTop: '32px' }}>
                 <div style={{ flexBasis: '50%' }}>
                     <Button type='submit' $margin='0px' $edit style={{ width: '100%' }} onClick={() => dispatch(toggleChangePasswordForm(true))}>
                         Change password

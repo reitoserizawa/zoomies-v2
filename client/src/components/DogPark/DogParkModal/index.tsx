@@ -78,25 +78,25 @@ const Modal: React.FC = () => {
                 <ImgContainer height='500px' width='100%' $borderRadius='0px'>
                     <img src={dogParkExample.src} alt={dogParkExample.alt}></img>
                 </ImgContainer>
-                <FlexContainer $gap='30px' $flexDirection='row' $alignItems='flex-start' style={{ height: 'fit-content', padding: '30px' }}>
+                <FlexContainer $gap={30} $flexDirection='row' $alignItems='flex-start' style={{ height: 'fit-content', padding: '30px' }}>
                     {/* main content */}
-                    <FlexContainer $alignItems='flex-start' $gap='30px' style={{ height: 'fit-content', flexBasis: '70%' }}>
+                    <FlexContainer $alignItems='flex-start' $gap={30} style={{ height: 'fit-content', flexBasis: '70%' }}>
                         <FlexContainer $flexDirection='row' $justifyContent='space-between' $alignItems='flex-start'>
-                            <FlexContainer $alignItems='flex-start' $gap='10px' style={{ flexBasis: '50%' }}>
-                                <H2 $noMargin size='2em'>
+                            <FlexContainer $alignItems='flex-start' $gap={10} style={{ flexBasis: '50%' }}>
+                                <H2 $noMargin size={2}>
                                     {dogParkDetails?.name}
                                 </H2>
                                 <P $noMargin>{dogParkDetails?.address?.full_address}</P>
                             </FlexContainer>
-                            <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='flex-start' $gap='20px' style={{ flexBasis: '50%' }}>
-                                <FlexContainer $gap='10px' $alignItems='flex-end' style={{ flexBasis: '40%' }}>
+                            <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='flex-start' $gap={20} style={{ flexBasis: '50%' }}>
+                                <FlexContainer $gap={10} $alignItems='flex-end' style={{ flexBasis: '40%' }}>
                                     <H2 $noMargin style={{ display: 'flex', alignItems: 'center' }}>
                                         {activeCheckInsFromDogPark?.length}
                                         <DogIcon size='32px'></DogIcon>
                                     </H2>
                                     <P $noMargin>Now</P>
                                 </FlexContainer>
-                                <FlexContainer $gap='10px' $alignItems='flex-end' style={{ flexBasis: '60%' }}>
+                                <FlexContainer $gap={10} $alignItems='flex-end' style={{ flexBasis: '60%' }}>
                                     <H2 $noMargin style={{ display: 'flex', alignItems: 'center' }}>
                                         {dogParkDetails?.most_recent_check_in ? moment(new Date(dogParkDetails?.most_recent_check_in?.checked_in_at)).fromNow() : '-'} <HistoryIcon size='32px' />
                                     </H2>
@@ -111,14 +111,14 @@ const Modal: React.FC = () => {
                             <TagList>Waste bin</TagList>
                             <TagList>Poop bags</TagList>
                         </TagContainer>
-                        <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap='10px'>
-                            <H3 $margin='16px 0px'>Description</H3>
+                        <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap={10}>
+                            <H3 $marginLeft={0}>Description</H3>
                             <P $noMargin>This dog park is very clean and big. It has 2 separated areas for small and big puppies. Please make sure to pick up the waste!</P>
                         </FlexContainer>
                         <ModalCheckInListGroup />
                     </FlexContainer>
                     {/* sub content */}
-                    <FlexContainer $gap='30px' $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
+                    <FlexContainer $gap={30} $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
                         <BorderlineContainer style={{ height: '150px' }}>
                             <FlexContainer>
                                 <ModalCheckInForm />

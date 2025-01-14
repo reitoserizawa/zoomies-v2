@@ -102,13 +102,13 @@ const ModalHeader: React.FC<{ dogParkId?: number; closeDogParkModal: () => void 
 
     return (
         <ModalHeaderContainer>
-            <FlexContainer $flexDirection='row' $gap='30px'>
+            <FlexContainer $flexDirection='row' $gap={30}>
                 <div style={{ flexBasis: '33.33%' }}></div>
-                <FlexContainer $flexDirection='row' $gap='30px' style={{ flexBasis: '33.33%' }}>
+                <FlexContainer $flexDirection='row' $gap={30} style={{ flexBasis: '33.33%' }}>
                     {/* <ModalHeaderAnchor style={{ flexBasis: '50%' }}>Details</ModalHeaderAnchor>
                     <ModalHeaderAnchor style={{ flexBasis: '50%' }}>Check-ins</ModalHeaderAnchor> */}
                 </FlexContainer>
-                <FlexContainer $flexDirection='row' $gap='30px' style={{ flexBasis: '33.33%' }}>
+                <FlexContainer $flexDirection='row' $gap={30} style={{ flexBasis: '33.33%' }}>
                     <ModalFavoriteButton style={{ marginLeft: 'auto' }} onClick={handleAddOrDeleteFavoriteDogPark} $isSpinning={isSpinning} disabled={isSpinning || !!error}>
                         {isSpinning ? <SyncIcon color='white' size='1.75em' /> : showFilledFavoriteIcon ? <FilledFavoriteIcon color='pink' size='1.75em' /> : <FavoriteIcon color='white' size='1.75em' />}
                     </ModalFavoriteButton>

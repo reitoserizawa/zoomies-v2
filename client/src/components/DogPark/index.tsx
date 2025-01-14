@@ -44,7 +44,7 @@ const DogPark: React.FC = () => {
                     <SearchIcon size='20px' />
                 </div>
             </FlexContainer>
-            <FlexContainer $flexDirection='row' $gap='20px' style={{ paddingBottom: '15px' }}>
+            <FlexContainer $flexDirection='row' $gap={20} style={{ paddingBottom: '15px' }}>
                 <div style={{ alignSelf: 'flex-start', justifySelf: 'flex-start', flexBasis: '60%', overflowY: 'hidden', paddingLeft: '5px' }}>
                     <Map />
                 </div>

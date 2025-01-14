@@ -16,7 +16,7 @@ const MessageContainer = styled.div`
 
 const Message: React.FC<{ message: string }> = ({ message = 'Success!' }) => (
     <MessageContainer>
-        <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='center' $gap='5px'>
+        <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='center' $gap={5}>
             <CheckIcon size='16px' color='green' />
             <P color='green' style={{ margin: '0px' }}>
                 {message}

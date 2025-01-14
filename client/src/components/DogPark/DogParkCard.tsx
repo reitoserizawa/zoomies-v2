@@ -35,12 +35,12 @@ const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, activ
             </FlexContainer>
             <FlexContainer $justifyContent='flex-start' $alignItems='flex-start' style={{ width: '100%', flexBasis: '50%' }}>
                 <div style={{ flexBasis: '80%' }}>
-                    <H2 size='1.2em'>{name}</H2>
+                    <H2 size={1.2}>{name}</H2>
                     <P>{full_address}</P>
                 </div>
 
                 <div style={{ justifySelf: 'flex-end' }}>
-                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap='10px' style={{ padding: '16px' }}>
+                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap={10} style={{ padding: '16px' }}>
                         <DogIcon size='16px' />
                         <P $noMargin>{active_check_ins_count}</P>
                         <P $noMargin>|</P>
