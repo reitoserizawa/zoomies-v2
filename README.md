@@ -116,6 +116,9 @@ yarn install --prefix client
 ```
 yarn install
 ```
+<ul>
+  <li><b>Editing installation for PostgresSQL with Docker container</b></li>
+</ul>
 
 
 <h2 id="usage">Usage</h2>
