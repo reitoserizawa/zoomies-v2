@@ -6,4 +6,5 @@ export interface AppState {
     dogParkModalId?: number;
     dashboardContent: DashboardContentType;
     isChangePasswordModalOpen: boolean;
+    isMobileNavOpen: boolean;
 }

@@ -6,7 +6,8 @@ const initialState: AppState = {
     isPetUpdateFormModalOpen: false,
     dogParkModalId: undefined,
     dashboardContent: 'pet',
-    isChangePasswordModalOpen: false
+    isChangePasswordModalOpen: false,
+    isMobileNavOpen: false
 };
 
 const appSlice = createSlice({
@@ -42,10 +43,16 @@ const appSlice = createSlice({
                 ...state,
                 isChangePasswordModalOpen: action.payload
             };
+        },
+        setIsMobileNavOpen: (state, action) => {
+            return {
+                ...state,
+                isMobileNavOpen: action.payload
+            };
         }
     }
 });
 
-export const { togglePetCreateFormModal, togglePetUpdateFormModal, setDogParkModalId, switchDashboardContent, toggleChangePasswordForm } = appSlice.actions;
+export const { togglePetCreateFormModal, togglePetUpdateFormModal, setDogParkModalId, switchDashboardContent, toggleChangePasswordForm, setIsMobileNavOpen } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -105,6 +105,79 @@ export const BorderlineContainer = styled.div`
     border-radius: 5px;
 `;
 
+export const DesktopContainer = styled.div<{ $margin?: number }>`
+    display: inline;
+
+    @media (max-width: 1000px) {
+        display: none;
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        display: none;
+    }
+`;
+
+export const TabletContainer = styled.div<{ $margin?: number }>`
+    display: none;
+
+    @media (max-width: 1000px) {
+        display: inline;
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        display: inline;
+    }
+`;
+
+export const DesktopTabletContainer = styled.div<{ $margin?: number }>`
+    display: inline;
+
+    @media (max-width: 1000px) {
+        display: inline;
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        display: none;
+    }
+`;
+
+export const MobileContainer = styled.div<{ $margin?: number }>`
+    display: none;
+
+    @media (max-width: 1000px) {
+        display: none;
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        display: inline;
+        margin: ${({ $margin }) => $margin}px;
+    }
+`;
+
+export const DesktopFlexBasisContainer = styled.div<{ flexBasis: number }>`
+    flex-basis: ${({ flexBasis }) => flexBasis}%;
+
+    @media (max-width: 1000px) {
+        flex-basis: auto;
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        flex-basis: auto;
+    }
+`;
+
+export const TabletFlexBasisContainer = styled.div<{ flexBasis: number }>`
+    flex-basis: ${({ flexBasis }) => flexBasis}%;
+
+    @media (max-width: 1000px) {
+        flex-basis: ${({ flexBasis }) => flexBasis}%;
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        flex-basis: auto;
+    }
+`;
+
 // img
 
 export const ImgContainer = styled.div<ImgContainerProps>`
