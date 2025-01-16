@@ -1,8 +1,9 @@
+import { Prisma } from '@prisma/client';
 import NodeGeocoder from 'node-geocoder';
 
 import nyc_dog_park_data from './data/dog-park-data';
+
 import PrismaClientModel from '../models/prisma-client';
-import { Prisma } from '@prisma/client';
 
 const main = async () => {
     const prisma_client = PrismaClientModel.prisma;
