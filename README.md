@@ -20,6 +20,17 @@
   <li>Used PostgreSQL on Docker Container</li>
 </ul>
 
+
+<h2 id="upcoming-features">Upcoming Features</h2>
+<ul>
+  <li>More customization for the profiles including profile images, new sections, and roles</li>
+  <li>NYC's pet-friendly dining in the map to be added</li>
+  <li>Matching feature for puppy dates</li>
+  <li>NYC's shelter profile list and inquiry page for pets looking for home</li>
+  <li>Deployment and progressive web app feature</li>
+</ul>
+
+
 <h2 id="tech-stacks">Tech stacks</h2>
 <p>Frontend</p>
 <ul>
