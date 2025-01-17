@@ -10,6 +10,7 @@ interface FlexContainerProps {
     $alignItems?: string;
     $justifyContent?: string;
     $gap?: number;
+    $mobileFlexDirection?: string;
 }
 
 interface ImgContainerProps {
@@ -41,6 +42,17 @@ export const Container = styled.div`
     padding-right: 20px;
 
     margin: auto;
+`;
+
+export const DashboardContetContainer = styled.div`
+    max-height: 100%;
+    width: 100%;
+    padding: 0px 60px;
+    overflow-y: auto;
+
+    @media (max-width: 1000px) {
+        padding: 5px 10px;
+    }
 `;
 
 export const FullScreenContainer = styled.div<FullScreenContainerProps>`
@@ -79,6 +91,7 @@ export const FlexContainer = styled.div<FlexContainerProps>`
     gap: ${({ $gap }) => ($gap ? $gap : 0)}px;
 
     @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        flex-direction: ${({ $mobileFlexDirection, $flexDirection }) => ($mobileFlexDirection ? $mobileFlexDirection : $flexDirection ? $flexDirection : 'column')};
         min-height: fit-content;
         gap: ${({ $gap }) => ($gap ? $gap - 2 : 0)}px;
     }

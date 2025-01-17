@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ContainerWithWidth, FlexContainer } from '../../ui/container.styles';
+import { ContainerWithWidth, DashboardContetContainer, FlexContainer } from '../../ui/container.styles';
 
 import { useAppSelector } from '../../redux/hooks/hooks';
 
@@ -19,12 +19,12 @@ const Dashboard: React.FC = () => {
             <ProfileHeader />
             <FlexContainer $flexDirection='row' $justifyContent='center' $alignItems='flex-start'>
                 <SideBar />
-                <div style={{ maxHeight: '100%', width: '100%', padding: '0px 60px', overflowY: 'auto' }}>
+                <DashboardContetContainer>
                     {dashboardContent === 'pet' && <Pet />}
                     {dashboardContent === 'favoriteDogPark' && <FavoriteDogParkSection />}
                     {dashboardContent === 'recentDogParkCheckIn' && <RecentDogParkCheckInSection />}
                     {dashboardContent === 'profileSettings' && <ProfilleSettingsSection />}
-                </div>
+                </DashboardContetContainer>
             </FlexContainer>
         </ContainerWithWidth>
     );

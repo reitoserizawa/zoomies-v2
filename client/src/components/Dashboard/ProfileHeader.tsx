@@ -1,11 +1,29 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { FlexContainer, ImgContainer, RoundImgContainer } from '../../ui/container.styles';
-import { H2, H3, P } from '../../ui/text-tags.styles';
+import { H2, P } from '../../ui/text-tags.styles';
 
 import { blankProfileImg, coverExaple } from '../../images';
 import MailIcon from '../../images/icons/MailIcon';
+
 import { useGetUserDetailsQuery } from '../../redux/reducers/protected-api-slice';
+
+const ProfileHeaderTextContainer = styled.div`
+    flex: 80%;
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        flex: 0 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h2 {
+            margin: auto;
+            margin-top: 10px;
+        }
+    }
+`;
 
 const ProfileHeader: React.FC = () => {
     const { data: userDetails } = useGetUserDetailsQuery(null);
@@ -21,7 +39,7 @@ const ProfileHeader: React.FC = () => {
                     <img src={coverExaple.src} alt={coverExaple.alt} />
                 </ImgContainer>
             </div>
-            <FlexContainer $flexDirection='row' style={{ marginBottom: '30px' }}>
+            <FlexContainer $flexDirection='row' $mobileFlexDirection='column' style={{ marginBottom: '30px' }}>
                 <div
                     style={{
                         marginTop: '-100px',
@@ -38,11 +56,7 @@ const ProfileHeader: React.FC = () => {
                         />
                     </RoundImgContainer>
                 </div>
-                <div
-                    style={{
-                        flex: '80%'
-                    }}
-                >
+                <ProfileHeaderTextContainer>
                     <H2 $marginLeft={0} $marginBottom={0}>
                         {userDetails ? userDetails?.first_name + ' ' + userDetails?.last_name : 'Unknown name'}
                     </H2>
@@ -50,7 +64,7 @@ const ProfileHeader: React.FC = () => {
                         <MailIcon />
                         <P fontWeight={500}>{userDetails ? userDetails?.email : 'Unknown email'}</P>
                     </FlexContainer>
-                </div>
+                </ProfileHeaderTextContainer>
             </FlexContainer>
         </>
     );
