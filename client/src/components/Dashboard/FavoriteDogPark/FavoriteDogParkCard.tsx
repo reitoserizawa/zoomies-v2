@@ -16,12 +16,12 @@ import { UserFavoriteDogParkState } from '../../../states/user-favorite-dog-park
 
 import DogParkModal from '../../DogPark/DogParkModal';
 
-const DogParkCardContainer = styled.div`
+const FavoriteDogParkCardContainer = styled.div`
     height: 280px; // margin from hr 8px added
     width: auto;
 `;
 
-const DogParkCardImageContainer = styled.div`
+const FavoriteDogParkCardImageContainer = styled.div`
     height: 280px;
     width: 400px;
 
@@ -33,7 +33,7 @@ const DogParkCardImageContainer = styled.div`
     }
 `;
 
-const DogParkCardContextContainer = styled.div`
+const FavoriteDogParkCardContextContainer = styled.div`
     height: 100%;
     width: 100%;
     background-color: white;
@@ -66,18 +66,18 @@ const FavoriteDogParkCard: React.FC<Partial<UserFavoriteDogParkState>> = ({ id, 
 
     return (
         <BorderlineContainer>
-            <DogParkCardContainer onClick={() => dispatch(setDogParkModalId(dogPark?.id))} style={{ cursor: 'pointer' }}>
+            <FavoriteDogParkCardContainer onClick={() => dispatch(setDogParkModalId(dogPark?.id))} style={{ cursor: 'pointer' }}>
                 <FlexContainer $flexDirection='row'>
-                    <DogParkCardImageContainer>
+                    <FavoriteDogParkCardImageContainer>
                         <img src={dogParkExample.src} alt='' />
-                    </DogParkCardImageContainer>
+                    </FavoriteDogParkCardImageContainer>
                     <FlexContainer $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start'>
                         <FlexContainer style={{ flexBasis: '95%' }}>
-                            <DogParkCardContextContainer>
+                            <FavoriteDogParkCardContextContainer>
                                 <span>{dogPark?.type}</span>
                                 <H3 $marginLeft={0}>{dogPark?.name}</H3>
                                 <P $noMargin>{fullAddress}</P>
-                            </DogParkCardContextContainer>
+                            </FavoriteDogParkCardContextContainer>
                         </FlexContainer>
                         <FlexContainer $alignItems='flex-start' style={{ flexBasis: '5%' }}>
                             <Button $width='150px' $margin='16px 22px' $borderRadius='30px' $delete onClick={e => handleDeleteFavoriteDogPark(e)}>
@@ -89,7 +89,7 @@ const FavoriteDogParkCard: React.FC<Partial<UserFavoriteDogParkState>> = ({ id, 
                     </FlexContainer>
                 </FlexContainer>
                 {dogParkModalId && <DogParkModal />}
-            </DogParkCardContainer>
+            </FavoriteDogParkCardContainer>
         </BorderlineContainer>
     );
 };
