@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactMapGl, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import { useGetAllDogParksQuery } from '../../redux/reducers/protected-api-slice';
 import { useAppDispatch } from '../../redux/hooks/hooks';
@@ -12,22 +12,16 @@ import PointerIcon from '../../images/icons/PointerIcon';
 import Loader from '../Loader';
 
 const MapStyles = createGlobalStyle`
-.map {
-  width: 100%;
-  height: calc(100vh - 138px);
-  margin: auto 0;
+    .map {
+        width: 100%;
+        height: calc(100vh - 138px);
+        margin: auto 0;
+    }
 
-  .marker {
-    width: 50px;
-    height: 50px;
-  }
-}
-
-@media only screen and (max-width: 700px) {
-  .map {
-    margin-bottom: 2em;
-  }
-}
+    .marker {
+        width: 50px;
+        height: 50px;
+    }
 `;
 
 const Map: React.FC = () => {

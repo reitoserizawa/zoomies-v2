@@ -23,6 +23,14 @@ const DogParkCardImageContainer = styled.div`
     }
 `;
 
+const DogParkCardTextContainer = styled.div`
+    padding: 16px;
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        padding-left: 8px;
+    }
+`;
+
 const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, active_check_ins_count, most_recent_check_in }) => {
     const full_address = address?.full_address;
 
@@ -33,21 +41,25 @@ const DogParkCard: React.FC<Partial<DogParkState>> = ({ id, name, address, activ
                     <img src={dogParkExample.src} alt={dogParkExample.alt} />
                 </DogParkCardImageContainer>
             </FlexContainer>
-            <FlexContainer $justifyContent='flex-start' $alignItems='flex-start' style={{ width: '100%', flexBasis: '50%' }}>
-                <div style={{ flexBasis: '80%' }}>
+            <FlexContainer $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ width: '100%', flexBasis: '50%' }}>
+                <div>
                     <H2 size={1.2}>{name}</H2>
                     <P>{full_address}</P>
                 </div>
 
-                <div style={{ justifySelf: 'flex-end' }}>
-                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap={10} style={{ padding: '16px' }}>
-                        <DogIcon size='16px' />
-                        <P $noMargin>{active_check_ins_count}</P>
-                        <P $noMargin>|</P>
-                        <HistoryIcon size='16px' />
-                        <P $noMargin>Last visit: {most_recent_check_in ? moment(new Date(most_recent_check_in?.checked_in_at as Date)).fromNow() : '-'}</P>
-                    </FlexContainer>
-                </div>
+                <FlexContainer $justifyContent='flex-end' $alignItems='flex-start'>
+                    <DogParkCardTextContainer style={{ width: '100%' }}>
+                        <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap={10} style={{ height: 'min-content' }}>
+                            <DogIcon size='16px' />
+                            <P $noMargin>Current check-ins: {active_check_ins_count}</P>
+                        </FlexContainer>
+                        <hr />
+                        <FlexContainer $flexDirection='row' $justifyContent='flex-start' $alignItems='flex-start' $gap={10} style={{ height: 'min-content' }}>
+                            <HistoryIcon size='16px' />
+                            <P $noMargin>Last visit: {most_recent_check_in ? moment(new Date(most_recent_check_in?.checked_in_at as Date)).fromNow() : '-'}</P>
+                        </FlexContainer>
+                    </DogParkCardTextContainer>
+                </FlexContainer>
             </FlexContainer>
         </>
     );

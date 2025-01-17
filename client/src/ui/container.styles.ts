@@ -92,7 +92,7 @@ export const FlexContainer = styled.div<FlexContainerProps>`
 
     @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
         flex-direction: ${({ $mobileFlexDirection, $flexDirection }) => ($mobileFlexDirection ? $mobileFlexDirection : $flexDirection ? $flexDirection : 'column')};
-        min-height: fit-content;
+        // min-height: fit-content;
         gap: ${({ $gap }) => ($gap ? $gap - 2 : 0)}px;
     }
 `;
@@ -111,6 +111,14 @@ export const GridContainer = styled.div<FlexContainerProps>`
     }
 
     @media (max-width: 1300px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
         grid-template-columns: repeat(1, 1fr);
     }
 `;
