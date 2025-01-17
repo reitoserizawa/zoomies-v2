@@ -4,6 +4,7 @@
 <h2>Overview</h2>
 
 - [Key features](#key-features)
+- [Upcoming features](#upcoming-features)
 - [Tech stacks](#tech-stacks)
 - [Set-up/Installation](#set-up-installation)
 - [Usage](#usage)
