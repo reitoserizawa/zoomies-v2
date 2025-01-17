@@ -4,6 +4,7 @@
 <h2>Overview</h2>
 
 - [Key features](#key-features)
+- [Upcoming features](#upcoming-features)
 - [Tech stacks](#tech-stacks)
 - [Set-up/Installation](#set-up-installation)
 - [Usage](#usage)
@@ -19,6 +20,18 @@
   <li>Utilized object-oriented programming in the backend through the base model</li>
   <li>Used PostgreSQL on Docker Container</li>
 </ul>
+
+
+<h2 id="upcoming-features">Upcoming Features</h2>
+<ul>
+  <li>Mobile responsiveness</li>
+  <li>More customization for the profiles including profile images, new sections, and roles</li>
+  <li>NYC's pet-friendly dining in the map to be added</li>
+  <li>Matching feature for puppy dates</li>
+  <li>NYC's shelter profile list and inquiry page for pets looking for home</li>
+  <li>Deployment and progressive web app feature</li>
+</ul>
+
 
 <h2 id="tech-stacks">Tech stacks</h2>
 <p>Frontend</p>
