@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactMapGl, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 import { useGetAllDogParksQuery } from '../../redux/reducers/protected-api-slice';
 import { useAppDispatch } from '../../redux/hooks/hooks';
