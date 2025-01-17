@@ -100,3 +100,22 @@ export const HamburgerMenuButton = styled.button<{ open: boolean }>`
         }
     }
 `;
+
+export const MobileSideNav = styled.div<{ open: boolean }>`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #dfe0e2;
+    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
+    height: 100vh;
+    text-align: left;
+    padding: 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease-in-out;
+
+    @media (max-width: 576px) {
+        width: 100%;
+    }
+`;

@@ -4,6 +4,7 @@ import { FlexContainer, TabletContainer } from '../../ui/container.styles';
 
 import NavBarItemList from './NavBarItemList';
 import HamburgerMenu from './HamburgerMenu';
+import MobileSideNavBar from './MobileSideNavBar';
 
 const MobileNavBar: React.FC = () => {
     return (
@@ -12,6 +13,7 @@ const MobileNavBar: React.FC = () => {
                 <HamburgerMenu />
                 <NavBarItemList />
             </FlexContainer>
+            <MobileSideNavBar />
         </TabletContainer>
     );
 };

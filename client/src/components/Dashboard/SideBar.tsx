@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FlexContainer, RoundImgContainer } from '../../ui/container.styles';
+import { DesktopContainer, FlexContainer, RoundImgContainer } from '../../ui/container.styles';
 import { P } from '../../ui/text-tags.styles';
 
 import DogIcon from '../../images/icons/DogIconx';
@@ -17,9 +17,7 @@ const SideBar: React.FC = () => {
     const dispatch = useAppDispatch();
 
     return (
-        <FlexContainer
-            $alignItems='left'
-            $gap={30}
+        <DesktopContainer
             style={{
                 flex: '25%',
                 alignSelf: 'flex-start',
@@ -27,62 +25,64 @@ const SideBar: React.FC = () => {
                 top: '120px'
             }}
         >
-            <FlexContainer
-                $justifyContent='flex-start'
-                $gap={30}
-                style={{
-                    alignSelf: 'flex-start'
-                }}
-            >
-                <FlexContainer $flexDirection='row' style={{ cursor: 'pointer' }} onClick={() => dispatch(switchDashboardContent('pet'))}>
-                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20}>
-                        <DogIcon size='40px' />
-                        <P $noMargin>Pet</P>
+            <FlexContainer $alignItems='left' $gap={30}>
+                <FlexContainer
+                    $justifyContent='flex-start'
+                    $gap={30}
+                    style={{
+                        alignSelf: 'flex-start'
+                    }}
+                >
+                    <FlexContainer $flexDirection='row' style={{ cursor: 'pointer' }} onClick={() => dispatch(switchDashboardContent('pet'))}>
+                        <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20}>
+                            <DogIcon size='40px' />
+                            <P $noMargin>Pet</P>
+                        </FlexContainer>
+                        {dashboardContent === 'pet' && <RightArrow />}
                     </FlexContainer>
-                    {dashboardContent === 'pet' && <RightArrow />}
-                </FlexContainer>
-                <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20} style={{ cursor: 'pointer' }} onClick={() => dispatch(switchDashboardContent('favoriteDogPark'))}>
-                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20}>
-                        <StarIcon size='40px' />
-                        <P $noMargin>Favorite Park</P>
+                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20} style={{ cursor: 'pointer' }} onClick={() => dispatch(switchDashboardContent('favoriteDogPark'))}>
+                        <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20}>
+                            <StarIcon size='40px' />
+                            <P $noMargin>Favorite Park</P>
+                        </FlexContainer>
+                        {dashboardContent === 'favoriteDogPark' && <RightArrow />}
                     </FlexContainer>
-                    {dashboardContent === 'favoriteDogPark' && <RightArrow />}
-                </FlexContainer>
-                <FlexContainer $flexDirection='row' style={{ cursor: 'pointer' }} onClick={() => dispatch(switchDashboardContent('recentDogParkCheckIn'))}>
-                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20}>
-                        <ClockIcon size='40px' />
-                        <P $noMargin>Recent Check-in</P>
+                    <FlexContainer $flexDirection='row' style={{ cursor: 'pointer' }} onClick={() => dispatch(switchDashboardContent('recentDogParkCheckIn'))}>
+                        <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20}>
+                            <ClockIcon size='40px' />
+                            <P $noMargin>Recent Check-in</P>
+                        </FlexContainer>
+                        {dashboardContent === 'recentDogParkCheckIn' && <RightArrow />}
                     </FlexContainer>
-                    {dashboardContent === 'recentDogParkCheckIn' && <RightArrow />}
                 </FlexContainer>
-            </FlexContainer>
 
-            <FlexContainer
-                $flexDirection='row'
-                $justifyContent='flex-start'
-                style={{
-                    borderTop: '1px solid black'
-                }}
-            ></FlexContainer>
-            <FlexContainer
-                $flexDirection='row'
-                $justifyContent='flex-start'
-                $gap={30}
-                style={{
-                    cursor: 'pointer',
-                    flexGrow: 1
-                }}
-                onClick={() => dispatch(switchDashboardContent('profileSettings'))}
-            >
-                <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20}>
-                    <RoundImgContainer>
-                        <img src={blankProfileImg.src} alt={blankProfileImg.alt} />
-                    </RoundImgContainer>
-                    <P $noMargin>Profile Settings</P>
+                <FlexContainer
+                    $flexDirection='row'
+                    $justifyContent='flex-start'
+                    style={{
+                        borderTop: '1px solid black'
+                    }}
+                ></FlexContainer>
+                <FlexContainer
+                    $flexDirection='row'
+                    $justifyContent='flex-start'
+                    $gap={30}
+                    style={{
+                        cursor: 'pointer',
+                        flexGrow: 1
+                    }}
+                    onClick={() => dispatch(switchDashboardContent('profileSettings'))}
+                >
+                    <FlexContainer $flexDirection='row' $justifyContent='flex-start' $gap={20}>
+                        <RoundImgContainer>
+                            <img src={blankProfileImg.src} alt={blankProfileImg.alt} />
+                        </RoundImgContainer>
+                        <P $noMargin>Profile Settings</P>
+                    </FlexContainer>
+                    {dashboardContent === 'profileSettings' && <RightArrow />}
                 </FlexContainer>
-                {dashboardContent === 'profileSettings' && <RightArrow />}
             </FlexContainer>
-        </FlexContainer>
+        </DesktopContainer>
     );
 };
 
