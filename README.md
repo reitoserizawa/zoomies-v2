@@ -24,6 +24,7 @@
 
 <h2 id="upcoming-features">Upcoming Features</h2>
 <ul>
+  <li>Mobile responsiveness</li>
   <li>More customization for the profiles including profile images, new sections, and roles</li>
   <li>NYC's pet-friendly dining in the map to be added</li>
   <li>Matching feature for puppy dates</li>
