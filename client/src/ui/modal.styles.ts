@@ -15,6 +15,12 @@ export const ModalContentContainer = styled.div`
     p {
         margin: 16px 16px 16px 8px;
     }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        width: calc(100% - 50px);
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
 `;
 
 export const ModalContainer = styled.div`

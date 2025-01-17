@@ -7,7 +7,7 @@ import { useDeleteCheckInMutation, useDeletePetMutation } from '../../../redux/r
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 import { togglePetUpdateFormModal } from '../../../redux/reducers/appSlice';
 
-import { BorderlineContainer, FlexContainer, RoundImgContainer } from '../../../ui/container.styles';
+import { BorderlineContainer, DesktopFlexBasisContainer, FlexContainer, RoundImgContainer, TabletFlexContainer } from '../../../ui/container.styles';
 import { H3, H4, P } from '../../../ui/text-tags.styles';
 import { Button } from '../../../ui/form.styles';
 
@@ -49,14 +49,16 @@ const PetCard: React.FC<PetState> = ({ id, name, breed, birthday, introduction, 
 
     return (
         <BorderlineContainer>
-            <FlexContainer $flexDirection='row' style={{ display: 'inlineBlock', padding: '30px' }}>
+            <FlexContainer $flexDirection='row' $tabletFlexDirection='column' style={{ display: 'inlineBlock', padding: '30px' }}>
                 <RoundImgContainer height='200px' width='200px' style={{ flexBasis: '40%' }}>
                     <img src={dogProfileImg.src} alt={dogProfileImg.alt} />
                 </RoundImgContainer>
-                <div style={{ flexBasis: '60%' }}>
-                    <H3 $noMargin style={{ width: 'fit-content', borderBottom: '2px solid gray', paddingBottom: '5px' }}>
-                        {name}
-                    </H3>
+                <DesktopFlexBasisContainer flexBasis={60} style={{ width: '100%' }}>
+                    <TabletFlexContainer $justifyContent='center' $padding={8}>
+                        <H3 $noMargin style={{ width: 'fit-content', borderBottom: '2px solid gray', paddingBottom: '5px' }}>
+                            {name}
+                        </H3>
+                    </TabletFlexContainer>
                     <Button $disabled $margin='10px 0px 0px 0px' $opacity={1.0} $width='auto'>
                         {breed}
                     </Button>
@@ -98,7 +100,7 @@ const PetCard: React.FC<PetState> = ({ id, name, breed, birthday, introduction, 
                             </FlexContainer>
                         </Button>
                     </FlexContainer>
-                </div>
+                </DesktopFlexBasisContainer>
                 {isPetUpdateFormModalOpen && <PetForm id={id} name={name} breed={breed} birthday={birthday} introduction={introduction} toUpdate={true} />}
             </FlexContainer>
         </BorderlineContainer>

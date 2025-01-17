@@ -76,7 +76,7 @@ const PetForm: React.FC<Partial<PetState> & { toUpdate?: boolean }> = ({ id, nam
                         <FormDate<Partial<PetState>> name='birthday' label='Birthday' />
                         <FormInput<Partial<PetState>> name='breed' label='Breed*' validators={[requiredValidator]} />
                         <FormInput<Partial<PetState>> name='introduction' label='Introduction*' validators={[requiredValidator]} />
-                        <Button type='submit' $margin='18px 0px 0px 0px'>
+                        <Button type='submit' $margin='18px 0px'>
                             {toUpdate ? 'Update Pet' : 'Add Pet'}
                         </Button>
                     </Form>

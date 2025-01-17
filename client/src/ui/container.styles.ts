@@ -10,7 +10,10 @@ interface FlexContainerProps {
     $alignItems?: string;
     $justifyContent?: string;
     $gap?: number;
+    $tabletFlexDirection?: string;
     $mobileFlexDirection?: string;
+
+    $padding?: number;
 }
 
 interface ImgContainerProps {
@@ -90,10 +93,47 @@ export const FlexContainer = styled.div<FlexContainerProps>`
     justify-content: ${({ $justifyContent }) => ($justifyContent ? $justifyContent : 'center')};
     gap: ${({ $gap }) => ($gap ? $gap : 0)}px;
 
+    @media (max-width: 1000px) {
+        ${({ $tabletFlexDirection }) =>
+            $tabletFlexDirection &&
+            `
+            flex-direction: ${$tabletFlexDirection};
+            `}
+    }
+
     @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
-        flex-direction: ${({ $mobileFlexDirection, $flexDirection }) => ($mobileFlexDirection ? $mobileFlexDirection : $flexDirection ? $flexDirection : 'column')};
-        // min-height: fit-content;
+        ${({ $mobileFlexDirection }) =>
+            $mobileFlexDirection &&
+            `
+            flex-direction: ${$mobileFlexDirection};
+            `}
         gap: ${({ $gap }) => ($gap ? $gap - 2 : 0)}px;
+    }
+`;
+
+export const TabletFlexContainer = styled.div<FlexContainerProps>`
+    @media (max-width: 1000px) {
+        display: flex;
+        flex-direction: ${({ $flexDirection }) => ($flexDirection ? $flexDirection : 'column')};
+        align-items: ${({ $alignItems }) => ($alignItems ? $alignItems : 'center')};
+        justify-content: ${({ $justifyContent }) => ($justifyContent ? $justifyContent : 'center')};
+        gap: ${({ $gap }) => ($gap ? $gap : 0)}px;
+
+        ${({ $padding }) =>
+            $padding &&
+            `
+            padding: ${$padding}px;
+        `};
+    }
+`;
+
+export const MobileFlexContainer = styled.div<FlexContainerProps>`
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        display: flex;
+        flex-direction: ${({ $flexDirection }) => ($flexDirection ? $flexDirection : 'column')};
+        align-items: ${({ $alignItems }) => ($alignItems ? $alignItems : 'center')};
+        justify-content: ${({ $justifyContent }) => ($justifyContent ? $justifyContent : 'center')};
+        gap: ${({ $gap }) => ($gap ? $gap : 0)}px;
     }
 `;
 
@@ -185,10 +225,6 @@ export const DesktopFlexBasisContainer = styled.div<{ flexBasis: number }>`
     @media (max-width: 1000px) {
         flex-basis: auto;
     }
-
-    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
-        flex-basis: auto;
-    }
 `;
 
 export const TabletFlexBasisContainer = styled.div<{ flexBasis: number }>`
@@ -196,10 +232,6 @@ export const TabletFlexBasisContainer = styled.div<{ flexBasis: number }>`
 
     @media (max-width: 1000px) {
         flex-basis: ${({ flexBasis }) => flexBasis}%;
-    }
-
-    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
-        flex-basis: auto;
     }
 `;
 
