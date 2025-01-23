@@ -310,6 +310,7 @@ class BaseModel<P, MN extends Prisma.ModelName> implements BaseModelInterface<P>
         return properties;
     }
 
+    // override in subclass
     subObjectsForCollection(): { [key: string]: BaseModel<any, any> | BaseModel<any, any>[] } {
         return {};
     }

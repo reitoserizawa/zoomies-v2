@@ -6,7 +6,6 @@ class PasswordUtil {
     hashed_password: string;
     is_match: boolean;
 
-    // TODO: update and add secret key
     constructor(public password: string) {
         if (!process.env.SALT_ROUNDS) {
             throw new BadRequestError('Salt rounds must be set');

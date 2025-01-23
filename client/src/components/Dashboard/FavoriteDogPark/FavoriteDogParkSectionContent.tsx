@@ -9,7 +9,7 @@ import { FlexContainer } from '../../../ui/container.styles';
 const FavoriteDogParkSectionContent: React.FC = () => {
     const { data: favoriteDogParks, isFetching: fetchingFavoriteDogParks } = useGetFavoriteDogParksQuery(null);
 
-    // TODO: add error handling
+    // TODO: add not found error
 
     if (fetchingFavoriteDogParks && !favoriteDogParks) {
         return (
