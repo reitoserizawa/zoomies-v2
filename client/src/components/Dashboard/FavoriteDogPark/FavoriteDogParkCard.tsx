@@ -18,18 +18,29 @@ import DogParkModal from '../../DogPark/DogParkModal';
 
 const FavoriteDogParkCardContainer = styled.div`
     height: 280px; // margin from hr 8px added
-    width: auto;
+    width: 100%;
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        height: fit-content;
+    }
 `;
 
 const FavoriteDogParkCardImageContainer = styled.div`
     height: 280px;
-    width: 400px;
+
+    flex-basis: 50%;
 
     img {
-        height: 280px;
-        width: 400px;
+        height: 100%;
+        width: 100%;
 
         object-fit: cover;
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        flex-basis: auto;
+
+        width: 100% !important;
     }
 `;
 
@@ -67,11 +78,11 @@ const FavoriteDogParkCard: React.FC<Partial<UserFavoriteDogParkState>> = ({ id, 
     return (
         <BorderlineContainer>
             <FavoriteDogParkCardContainer onClick={() => dispatch(setDogParkModalId(dogPark?.id))} style={{ cursor: 'pointer' }}>
-                <FlexContainer $flexDirection='row'>
+                <FlexContainer $flexDirection='row' $mobileFlexDirection='column'>
                     <FavoriteDogParkCardImageContainer>
-                        <img src={dogParkExample.src} alt='' />
+                        <img src={dogParkExample.src} alt={dogParkExample.alt} />
                     </FavoriteDogParkCardImageContainer>
-                    <FlexContainer $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start'>
+                    <FlexContainer $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ flexBasis: '50%' }}>
                         <FlexContainer style={{ flexBasis: '95%' }}>
                             <FavoriteDogParkCardContextContainer>
                                 <span>{dogPark?.type}</span>
@@ -79,7 +90,7 @@ const FavoriteDogParkCard: React.FC<Partial<UserFavoriteDogParkState>> = ({ id, 
                                 <P $noMargin>{fullAddress}</P>
                             </FavoriteDogParkCardContextContainer>
                         </FlexContainer>
-                        <FlexContainer $alignItems='flex-start' style={{ flexBasis: '5%' }}>
+                        <FlexContainer $alignItems='center' style={{ flexBasis: '5%' }}>
                             <Button $width='150px' $margin='16px 22px' $borderRadius='30px' $delete onClick={e => handleDeleteFavoriteDogPark(e)}>
                                 <FlexContainer $flexDirection='row' $gap={5}>
                                     Delete <DeleteIcon size='16px' color='white' />
