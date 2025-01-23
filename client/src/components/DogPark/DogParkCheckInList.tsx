@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import moment from 'moment';
 
 import { P } from '../../ui/text-tags.styles';
-import { BorderlineContainer, FlexContainer, RoundImgContainer } from '../../ui/container.styles';
+import { BorderlineContainer, DesktopContainer, DesktopTabletContainer, FlexContainer, RoundImgContainer } from '../../ui/container.styles';
 import { Button } from '../../ui/form.styles';
 
 import { blankProfileImg, dogProfileImg } from '../../images';
@@ -36,18 +36,24 @@ const DogParkCheckInList: React.FC<DogParkCheckInState> = ({ id, dog_park, pet, 
                             <img src={dogProfileImg?.src || ''} alt={dogProfileImg?.alt || 'Dog profile'} />
                         </RoundImgContainer>
                         <P>{pet?.name || 'Unknown Name'}</P>
-                        <P>{pet?.breed || 'Unknown Breed'}</P>
+                        <DesktopContainer>
+                            <P>{pet?.breed || 'Unknown Breed'}</P>
+                        </DesktopContainer>
                     </FlexContainer>
 
                     {/* user */}
                     <FlexContainer $flexDirection='row' $justifyContent='flex-end'>
-                        <P
-                            style={{
-                                textWrap: 'nowrap'
-                            }}
-                        >
-                            Checked-in by {user?.username || 'Unknown User'}
-                        </P>
+                        <DesktopTabletContainer>
+                            <P
+                                $noMargin
+                                style={{
+                                    textWrap: 'nowrap'
+                                }}
+                            >
+                                Checked-in by&nbsp;
+                            </P>
+                        </DesktopTabletContainer>
+                        <P $noMargin>{user?.username || 'Unknown User'}</P>
                         <RoundImgContainer>
                             <img src={blankProfileImg?.src || ''} alt={blankProfileImg?.alt || 'User profile'} />
                         </RoundImgContainer>
