@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { DesktopContainer, DesktopTabletContainer, FlexContainer, ImgContainer, MobileContainer, MobileFlexContainer, TabletFlexBasisContainer } from '../../ui/container.styles';
+import { DesktopContainer, DesktopTabletContainer, FlexContainer, ImgContainer, MobileContainer, TabletFlexBasisContainer } from '../../ui/container.styles';
 import { H1, P } from '../../ui/text-tags.styles';
 import { NavBarLink } from '../../ui/navbar.styles';
 
