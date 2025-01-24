@@ -54,7 +54,7 @@ const DogParkCheckInList: React.FC<DogParkCheckInState> = ({ id, dog_park, pet, 
                             </P>
                         </DesktopTabletContainer>
                         <P $noMargin>{user?.username || 'Unknown User'}</P>
-                        <RoundImgContainer>
+                        <RoundImgContainer style={{ paddingLeft: '16px' }}>
                             <img src={blankProfileImg?.src || ''} alt={blankProfileImg?.alt || 'User profile'} />
                         </RoundImgContainer>
                         {user_owns_check_in && active && (
