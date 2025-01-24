@@ -50,7 +50,7 @@ export const Container = styled.div`
 export const DashboardContetContainer = styled.div`
     max-height: 100%;
     width: 100%;
-    padding: 0px 60px;
+    padding: 0px 30px;
     overflow-y: auto;
 
     @media (max-width: 1000px) {
@@ -242,13 +242,16 @@ export const ImgContainer = styled.div<ImgContainerProps>`
     align-items: center;
     justify-content: center;
 
+    height: ${({ height }) => (height ? height : '100%')};
+    width: ${({ width }) => (width ? width : 'auto')};
+
     img {
         object-fit: cover;
 
         border-radius: ${({ $borderRadius }) => ($borderRadius ? $borderRadius : '5px')};
 
-        height: ${({ height }) => (height ? height : '100px')};
-        width: ${({ width }) => (width ? width : 'auto')};
+        height: 100%;
+        width: 100%;
     }
 `;
 
