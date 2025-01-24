@@ -49,8 +49,18 @@ export const ScrollableModalContainer = styled.div`
 
     overflow-y: scroll;
 
-    height: ft-content;
+    height: auto;
     width: 1000px;
 
     margin: auto;
+
+    @media (max-width: 1000px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        width: 100%;
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        width: calc(100% - 50px);
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
 `;

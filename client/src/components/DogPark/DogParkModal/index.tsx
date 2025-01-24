@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 
-import { BorderlineContainer, FlexContainer, FullScreenContainer, ImgContainer } from '../../../ui/container.styles';
+import { BorderlineContainer, DesktopFlexBasisContainer, FlexContainer, FullScreenContainer, ImgContainer, TabletFlexBasisContainer } from '../../../ui/container.styles';
 import { ScrollableModalContainer } from '../../../ui/modal.styles';
 import { H2, H3, P } from '../../../ui/text-tags.styles';
 
@@ -75,34 +75,45 @@ const Modal: React.FC = () => {
             <ScrollableModalContainer ref={ref}>
                 {/* header */}
                 <ModalHeader dogParkId={dogParkDetails?.id} closeDogParkModal={closeDogParkModal} />
-                <ImgContainer height='500px' width='100%' $borderRadius='0px'>
+                <ImgContainer height='500px' $borderRadius='0px'>
                     <img src={dogParkExample.src} alt={dogParkExample.alt}></img>
                 </ImgContainer>
                 <FlexContainer $gap={30} $flexDirection='row' $alignItems='flex-start' style={{ height: 'fit-content', padding: '30px' }}>
                     {/* main content */}
                     <FlexContainer $alignItems='flex-start' $gap={30} style={{ height: 'fit-content', flexBasis: '70%' }}>
-                        <FlexContainer $flexDirection='row' $justifyContent='space-between' $alignItems='flex-start'>
-                            <FlexContainer $alignItems='flex-start' $gap={10} style={{ flexBasis: '50%' }}>
-                                <H2 $noMargin size={2}>
-                                    {dogParkDetails?.name}
-                                </H2>
-                                <P $noMargin>{dogParkDetails?.address?.full_address}</P>
-                            </FlexContainer>
-                            <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='flex-start' $gap={20} style={{ flexBasis: '50%' }}>
-                                <FlexContainer $gap={10} $alignItems='flex-end' style={{ flexBasis: '40%' }}>
-                                    <H2 $noMargin style={{ display: 'flex', alignItems: 'center' }}>
-                                        {activeCheckInsFromDogPark?.length}
-                                        <DogIcon size='32px'></DogIcon>
-                                    </H2>
-                                    <P $noMargin>Now</P>
+                        <FlexContainer $flexDirection='row' $tabletFlexDirection='column' $gap={30} $justifyContent='space-between' $alignItems='flex-start'>
+                            <TabletFlexBasisContainer flexBasis={100}>
+                                <DesktopFlexBasisContainer flexBasis={50}>
+                                    <FlexContainer $alignItems='flex-start' $gap={10}>
+                                        <H2 $noMargin size={2}>
+                                            {dogParkDetails?.name}
+                                        </H2>
+                                        <P $noMargin>{dogParkDetails?.address?.full_address}</P>
+                                    </FlexContainer>
+                                </DesktopFlexBasisContainer>
+                            </TabletFlexBasisContainer>
+
+                            <DesktopFlexBasisContainer flexBasis={50}>
+                                <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='space-between' $gap={20}>
+                                    <DesktopFlexBasisContainer flexBasis={40}>
+                                        <FlexContainer $gap={10} $alignItems='flex-end'>
+                                            <H2 $noMargin style={{ display: 'flex', alignItems: 'center' }}>
+                                                {activeCheckInsFromDogPark?.length}
+                                                <DogIcon size='32px'></DogIcon>
+                                            </H2>
+                                            <P $noMargin>Now</P>
+                                        </FlexContainer>
+                                    </DesktopFlexBasisContainer>
+                                    <DesktopFlexBasisContainer flexBasis={60}>
+                                        <FlexContainer $gap={10} $alignItems='flex-end'>
+                                            <H2 $noMargin style={{ display: 'flex', alignItems: 'center', textWrap: 'nowrap' }}>
+                                                {dogParkDetails?.most_recent_check_in ? moment(new Date(dogParkDetails?.most_recent_check_in?.checked_in_at)).fromNow() : '-'} <HistoryIcon size='32px' />
+                                            </H2>
+                                            <P $noMargin>Last Check-in</P>
+                                        </FlexContainer>
+                                    </DesktopFlexBasisContainer>
                                 </FlexContainer>
-                                <FlexContainer $gap={10} $alignItems='flex-end' style={{ flexBasis: '60%' }}>
-                                    <H2 $noMargin style={{ display: 'flex', alignItems: 'center' }}>
-                                        {dogParkDetails?.most_recent_check_in ? moment(new Date(dogParkDetails?.most_recent_check_in?.checked_in_at)).fromNow() : '-'} <HistoryIcon size='32px' />
-                                    </H2>
-                                    <P $noMargin>Last Check-in</P>
-                                </FlexContainer>
-                            </FlexContainer>
+                            </DesktopFlexBasisContainer>
                         </FlexContainer>
                         <TagContainer>
                             <TagList>Clean</TagList>
