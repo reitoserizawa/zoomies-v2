@@ -22,7 +22,8 @@ const SideBar: React.FC = () => {
                 flex: '25%',
                 alignSelf: 'flex-start',
                 position: 'sticky',
-                top: '120px'
+                top: '120px',
+                padding: '0 20px'
             }}
         >
             <FlexContainer $alignItems='left' $gap={30}>
