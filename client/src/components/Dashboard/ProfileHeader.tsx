@@ -46,7 +46,14 @@ const ProfileHeader: React.FC = () => {
                         flex: '20%'
                     }}
                 >
-                    <RoundImgContainer height='200px' width='200px'>
+                    <RoundImgContainer
+                        height='200px'
+                        width='200px'
+                        style={{
+                            marginLeft: '20px',
+                            marginRight: '20px'
+                        }}
+                    >
                         <img
                             src={blankProfileImg.src}
                             alt={blankProfileImg.alt}
