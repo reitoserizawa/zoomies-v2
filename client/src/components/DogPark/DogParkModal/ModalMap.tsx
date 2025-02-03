@@ -8,9 +8,10 @@ import { useAppSelector } from '../../../redux/hooks/hooks';
 import { useGetDogParkDetailsQuery } from '../../../redux/reducers/protected-api-slice';
 
 const ModalMapContainer = styled.div`
-    width: 200px;
+    width: 100%;
     height: 200px;
-    margin: 36px;
+
+    z-index: 1;
 
     &: .marker {
         width: 50px;
@@ -24,8 +25,6 @@ const ModalMap: React.FC = () => {
 
     const longitude = dogParkDetails?.address?.longitude;
     const latitude = dogParkDetails?.address?.latitude;
-
-    console.log({ dogParkDetails });
 
     const token = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 

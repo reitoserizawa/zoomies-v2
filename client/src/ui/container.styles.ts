@@ -255,6 +255,22 @@ export const ImgContainer = styled.div<ImgContainerProps>`
     }
 `;
 
+export const DogParkModalHeaderImgContainer = styled.div<ImgContainerProps>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 400px;
+    width: ${({ width }) => (width ? width : 'auto')};
+
+    img {
+        object-fit: cover;
+
+        height: 100%;
+        width: 100%;
+    }
+`;
+
 export const RoundImgContainer = styled.div<ImgContainerProps>`
     display: flex;
     align-items: center;

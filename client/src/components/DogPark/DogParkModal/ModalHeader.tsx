@@ -28,8 +28,14 @@ const ModalHeaderContainer = styled.div`
 
     margin: 0px auto;
 
+    z-index: 100;
+
     @media (max-width: 1000px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
         width: 100%;
+    }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        padding: 5px 10px;
     }
 `;
 

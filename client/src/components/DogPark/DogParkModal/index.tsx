@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 
-import { BorderlineContainer, DesktopFlexBasisContainer, FlexContainer, FullScreenContainer, ImgContainer, TabletFlexBasisContainer } from '../../../ui/container.styles';
+import { BorderlineContainer, DesktopFlexBasisContainer, DogParkModalHeaderImgContainer, FlexContainer, FullScreenContainer, ImgContainer, TabletFlexBasisContainer } from '../../../ui/container.styles';
 import { ScrollableModalContainer } from '../../../ui/modal.styles';
 import { H2, H3, P } from '../../../ui/text-tags.styles';
 
@@ -40,6 +40,21 @@ const TagList = styled.li`
     margin-right: 10px;
 `;
 
+const CheckInBoxContainer = styled.div`
+    width: 100%;
+    position: sticky;
+    top: 90px;
+    flex-basis: 30%;
+    background-color: white;
+    z-index: 100;
+
+    @media (max-width: 1000px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        flex-basis: auto;
+        top: auto;
+        bottom: 30px;
+    }
+`;
+
 const Modal: React.FC = () => {
     const dogParkModalId = useAppSelector(state => state.app.dogParkModalId);
 
@@ -75,70 +90,71 @@ const Modal: React.FC = () => {
             <ScrollableModalContainer ref={ref}>
                 {/* header */}
                 <ModalHeader dogParkId={dogParkDetails?.id} closeDogParkModal={closeDogParkModal} />
-                <ImgContainer height='500px' $borderRadius='0px'>
+                <DogParkModalHeaderImgContainer>
                     <img src={dogParkExample.src} alt={dogParkExample.alt}></img>
-                </ImgContainer>
-                <FlexContainer $gap={30} $flexDirection='row' $alignItems='flex-start' style={{ height: 'fit-content', padding: '30px' }}>
+                </DogParkModalHeaderImgContainer>
+                <FlexContainer $gap={30} $flexDirection='row' $tabletFlexDirection='column' $alignItems='flex-start' style={{ height: 'fit-content', padding: '30px' }}>
                     {/* main content */}
-                    <FlexContainer $alignItems='flex-start' $gap={30} style={{ height: 'fit-content', flexBasis: '70%' }}>
-                        <FlexContainer $flexDirection='row' $tabletFlexDirection='column' $gap={30} $justifyContent='space-between' $alignItems='flex-start'>
-                            <TabletFlexBasisContainer flexBasis={100}>
+                    <DesktopFlexBasisContainer flexBasis={70}>
+                        <FlexContainer $alignItems='flex-start' $gap={30} style={{ height: 'fit-content', flexBasis: '70%' }}>
+                            <FlexContainer $flexDirection='row' $tabletFlexDirection='column' $gap={30} $justifyContent='space-between' $alignItems='flex-start'>
+                                <TabletFlexBasisContainer flexBasis={100}>
+                                    <DesktopFlexBasisContainer flexBasis={50}>
+                                        <FlexContainer $alignItems='flex-start' $gap={10}>
+                                            <H2 $noMargin size={2}>
+                                                {dogParkDetails?.name}
+                                            </H2>
+                                            <P $noMargin>{dogParkDetails?.address?.full_address}</P>
+                                        </FlexContainer>
+                                    </DesktopFlexBasisContainer>
+                                </TabletFlexBasisContainer>
+
                                 <DesktopFlexBasisContainer flexBasis={50}>
-                                    <FlexContainer $alignItems='flex-start' $gap={10}>
-                                        <H2 $noMargin size={2}>
-                                            {dogParkDetails?.name}
-                                        </H2>
-                                        <P $noMargin>{dogParkDetails?.address?.full_address}</P>
+                                    <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='space-between' $gap={20}>
+                                        <DesktopFlexBasisContainer flexBasis={40}>
+                                            <FlexContainer $gap={10} $alignItems='flex-end'>
+                                                <H2 $noMargin style={{ display: 'flex', alignItems: 'center' }}>
+                                                    {activeCheckInsFromDogPark?.length}
+                                                    <DogIcon size='32px'></DogIcon>
+                                                </H2>
+                                                <P $noMargin>Now</P>
+                                            </FlexContainer>
+                                        </DesktopFlexBasisContainer>
+                                        <DesktopFlexBasisContainer flexBasis={60}>
+                                            <FlexContainer $gap={10} $alignItems='flex-end'>
+                                                <H2 $noMargin style={{ display: 'flex', alignItems: 'center', textWrap: 'nowrap' }}>
+                                                    {dogParkDetails?.most_recent_check_in ? moment(new Date(dogParkDetails?.most_recent_check_in?.checked_in_at)).fromNow() : '-'} <HistoryIcon size='32px' />
+                                                </H2>
+                                                <P $noMargin>Last Check-in</P>
+                                            </FlexContainer>
+                                        </DesktopFlexBasisContainer>
                                     </FlexContainer>
                                 </DesktopFlexBasisContainer>
-                            </TabletFlexBasisContainer>
+                            </FlexContainer>
+                            <TagContainer>
+                                <TagList>Clean</TagList>
+                                <TagList>Big</TagList>
+                                <TagList>Separated areas</TagList>
+                                <TagList>Waste bin</TagList>
+                                <TagList>Poop bags</TagList>
+                            </TagContainer>
+                            <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap={10}>
+                                <H3 $marginLeft={0}>Description</H3>
+                                <P $noMargin>This dog park is very clean and big. It has 2 separated areas for small and big puppies. Please make sure to pick up the waste!</P>
+                            </FlexContainer>
 
-                            <DesktopFlexBasisContainer flexBasis={50}>
-                                <FlexContainer $flexDirection='row' $alignItems='flex-start' $justifyContent='space-between' $gap={20}>
-                                    <DesktopFlexBasisContainer flexBasis={40}>
-                                        <FlexContainer $gap={10} $alignItems='flex-end'>
-                                            <H2 $noMargin style={{ display: 'flex', alignItems: 'center' }}>
-                                                {activeCheckInsFromDogPark?.length}
-                                                <DogIcon size='32px'></DogIcon>
-                                            </H2>
-                                            <P $noMargin>Now</P>
-                                        </FlexContainer>
-                                    </DesktopFlexBasisContainer>
-                                    <DesktopFlexBasisContainer flexBasis={60}>
-                                        <FlexContainer $gap={10} $alignItems='flex-end'>
-                                            <H2 $noMargin style={{ display: 'flex', alignItems: 'center', textWrap: 'nowrap' }}>
-                                                {dogParkDetails?.most_recent_check_in ? moment(new Date(dogParkDetails?.most_recent_check_in?.checked_in_at)).fromNow() : '-'} <HistoryIcon size='32px' />
-                                            </H2>
-                                            <P $noMargin>Last Check-in</P>
-                                        </FlexContainer>
-                                    </DesktopFlexBasisContainer>
-                                </FlexContainer>
-                            </DesktopFlexBasisContainer>
+                            <ModalMap />
+                            <ModalCheckInListGroup />
                         </FlexContainer>
-                        <TagContainer>
-                            <TagList>Clean</TagList>
-                            <TagList>Big</TagList>
-                            <TagList>Separated areas</TagList>
-                            <TagList>Waste bin</TagList>
-                            <TagList>Poop bags</TagList>
-                        </TagContainer>
-                        <FlexContainer $alignItems='flex-start' $justifyContent='flex-start' $gap={10}>
-                            <H3 $marginLeft={0}>Description</H3>
-                            <P $noMargin>This dog park is very clean and big. It has 2 separated areas for small and big puppies. Please make sure to pick up the waste!</P>
-                        </FlexContainer>
-                        <ModalCheckInListGroup />
-                    </FlexContainer>
+                    </DesktopFlexBasisContainer>
                     {/* sub content */}
-                    <FlexContainer $gap={30} $flexDirection='column' $justifyContent='flex-start' $alignItems='flex-start' style={{ position: 'sticky', top: '90px', height: 'fit-content', flexBasis: '30%' }}>
-                        <BorderlineContainer style={{ height: '150px' }}>
+                    <CheckInBoxContainer>
+                        <BorderlineContainer>
                             <FlexContainer>
                                 <ModalCheckInForm />
                             </FlexContainer>
                         </BorderlineContainer>
-                        <BorderlineContainer>
-                            <ModalMap />
-                        </BorderlineContainer>
-                    </FlexContainer>
+                    </CheckInBoxContainer>
                 </FlexContainer>
             </ScrollableModalContainer>
         </FullScreenContainer>

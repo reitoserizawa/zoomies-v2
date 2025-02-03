@@ -21,6 +21,10 @@ export const ModalContentContainer = styled.div`
         padding-top: 16px;
         padding-bottom: 16px;
     }
+
+    @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        padding: 5px 10px;
+    }
 `;
 
 export const ModalContainer = styled.div`
@@ -55,12 +59,11 @@ export const ScrollableModalContainer = styled.div`
     margin: auto;
 
     @media (max-width: 1000px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
+        margin: 0;
         width: 100%;
     }
 
     @media (max-width: 600px), (max-height: 480px) and (max-width: 960px) and (orientation: landscape) {
-        width: calc(100% - 50px);
-        padding-top: 16px;
-        padding-bottom: 16px;
+        width: 100%;
     }
 `;
